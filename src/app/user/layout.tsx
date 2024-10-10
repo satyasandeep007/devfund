@@ -51,7 +51,9 @@ export default function RootLayout({
     <div className="flex h-screen bg-[#FCFAF6] dark:bg-gray-900">
       <Sidebar open={open} setOpen={setOpen}>
         <SidebarBody className="justify-between gap-10">
+
           <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden relative">
+            <img src="/menu.svg"  className="w-10 h-10" />
             <div className="mt-8 flex flex-col gap-2">
               {links.map((link, idx) => (
                 <SidebarLink key={idx} link={link} />
