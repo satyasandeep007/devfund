@@ -9,9 +9,9 @@ const DashboardHeader: React.FC = () => {
   return (
     <header className="w-full py-4 px-8 bg-[#FCFAF6] dark:bg-gray-900 flex justify-between items-center ">
       <div className="flex items-center">
-        <p className="text-[26px] font-bold text-left uppercase">
+        {/* <p className="text-[26px] font-bold text-left uppercase">
           <span className="text-[#222] dark:text-white">Base India</span>
-        </p>
+        </p> */}
       </div>
       <div className="flex items-center gap-x-4">
         <ThemeToggle />
