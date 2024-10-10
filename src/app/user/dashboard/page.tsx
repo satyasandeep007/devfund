@@ -26,7 +26,7 @@ const Dashboard: FC = () => {
   
     return (
       <div className="flex h-screen overflow-hidden">
-        {/* Sidebar */}
+        {/* left div */}
         <div className="w-1/4 p-6 bg-white border-r dark:bg-gray-900 dark:text-white">
           {/* Header and Download Button */}
           <div className="flex items-center justify-between mb-6">
@@ -51,7 +51,7 @@ const Dashboard: FC = () => {
           </div>
   
           {/* Drives List */}
-          <div className="space-y-4 overflow-auto h-3/4">
+          <div className="space-y-4">
             {drives.map((drive, index) => (
               <div
                 key={index}
@@ -75,7 +75,7 @@ const Dashboard: FC = () => {
           </div>
         </div>
   
-        {/* Map Section */}
+        {/* right map div */}
         <div className="flex-1 relative bg-gray-200 dark:bg-gray-800">
           {/* Map Placeholder */}
           <div className="absolute inset-0 p-4">
@@ -91,4 +91,4 @@ const Dashboard: FC = () => {
   };
   
   export default Dashboard;
-  
+

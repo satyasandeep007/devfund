@@ -62,7 +62,7 @@ export default function RootLayout({
           </div>
         </SidebarBody>
       </Sidebar>
-      <div className="flex-1 ml-64 flex flex-col">
+      <div className="flex-1 ml-40 flex flex-col">
         <DashboardHeader />
         <main className="flex-1 p-6 overflow-auto">{children}</main>
       </div>
