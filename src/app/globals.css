@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  font-family: 'Epilogue', sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+/* styles/globals.css */
+body {
+  @apply bg-white text-black;
+}
+
+.dark body {
+  @apply bg-gray-900 text-white;
+}
+
+/* Example for components */
+.card {
+  @apply p-4 bg-white rounded shadow;
+}
+
+.dark .card {
+  @apply bg-gray-800;
+}
+
+/* styles/globals.css */
+:root {
+  --bg-color: white;
+  --text-color: black;
+}
+
+.dark :root {
+  --bg-color: #1a202c; /* Dark background color */
+  --text-color: #edf2f7; /* Dark text color */
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
