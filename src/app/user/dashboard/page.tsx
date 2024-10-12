@@ -12,6 +12,7 @@ const Dashboard: FC = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [showDialog, setShowDialog] = useState(false);
   const [showPaymentPopup, setShowPaymentPopup] = useState(false);
+  const [enlargedCard, setEnlargedCard] = useState<number | null>(null);
 
   const cities = ["Bangalore", "Pune", "Mumbai", "Delhi"];
 
@@ -19,17 +20,17 @@ const Dashboard: FC = () => {
       {
         date: "09 Sep 2024, IST 13:26",
         coordinates: "12.993200, 77.701580",
-        imageUrl: "/path-to-image.jpg", // Replace with actual image paths
+        imageUrl: "/driveimg1.png", // Replace with actual image paths
       },
       {
         date: "09 Sep 2024, IST 13:26",
         coordinates: "12.993200, 77.701580",
-        imageUrl: "/path-to-image.jpg",
+        imageUrl: "/driveimg2.png",
       },
       {
         date: "09 Sep 2024, IST 13:26",
         coordinates: "12.993200, 77.701580",
-        imageUrl: "/path-to-image.jpg",
+        imageUrl: "/driveimg3.png",
       },
     ];
   
@@ -100,32 +101,46 @@ const Dashboard: FC = () => {
         </div>
 
         {/* Drives List */}
-        <div className="space-y-4">
+        <div className="h-[calc(100vh-240px)] overflow-y-scroll pr-2 space-y-4 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
           {drives.map((drive, index) => (
             <div
               key={index}
-              className="flex items-center space-x-4 p-4 bg-white rounded-lg shadow dark:bg-gray-800"
+              className={`flex bg-white rounded-md border-2 transition-all duration-300 cursor-pointer ${
+                enlargedCard === index 
+                  ? 'flex-col items-center border-lime-400' 
+                  : 'items-center border-gray-200 hover:border-gray-300'
+              }`}
+              onClick={() => setEnlargedCard(enlargedCard === index ? null : index)}
             >
               <img
                 src={drive.imageUrl}
                 alt="Drive"
-                className="w-16 h-16 rounded-lg object-cover"
+                className={`rounded-mb object-cover ${
+                  enlargedCard === index ? ' rounded-md w-[calc(105%-2rem)] h-auto max-h-80 m-2' : ' rounded-md w-14 h-14 m-2'
+                }`}
               />
-              <div>
-                <p className="flex items-center text-xs font-medium text-gray-400 dark:text-white pt-2 pb-1">
+              {enlargedCard === index && (
+                <div className="w-full border-t border-gray-200 my-2"></div>
+              )}
+              <div className={`flex-grow p-4 ${enlargedCard === index ? 'w-full' : ''}`}>
+                <p className="flex items-center text-xs font-medium text-gray-400 dark:text-white">
                   <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                   {drive.date}
                 </p>
-                <p className="flex items-center text-xs font-medium text-gray-400 dark:text-white pt-1 pb-2">
+                <p className="flex items-center text-xs font-medium text-gray-400 dark:text-white mt-1">
                   <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                   {drive.coordinates}
                 </p>
-                
+                {enlargedCard === index && (
+                  <div>
+                    {/* Add any additional content for enlarged card here */}
+                  </div>
+                )}
               </div>
             </div>
           ))}
@@ -178,4 +193,3 @@ const Dashboard: FC = () => {
 };
 
 export default Dashboard;
-
