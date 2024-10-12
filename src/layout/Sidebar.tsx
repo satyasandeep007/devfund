@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link, { LinkProps } from "next/link";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 import React from "react";
 import {
   IconLogout,
@@ -15,6 +16,7 @@ import {
 
 function Sidebar() {
   const pathname = usePathname();
+  const { data: session }: any = useSession();
 
   return (
     <div className="w-60 shrink-0 md:block h-screen sticky top-0 overflow-hidden">
@@ -33,18 +35,22 @@ function Sidebar() {
           {/* top */}
           <div className="pt-6 text-gray-500 font-medium space-y-2 md:px-2 text-xs">
             <Link
-              href={"/user/dashboard"}
+              href={`/${session?.user?.username}/dashboard`}
               className={`flex ${
-                pathname === "/user/dashboard" ? "text-orange-700" : ""
+                pathname === `/${session?.user?.username}/dashboard`
+                  ? "text-orange-700"
+                  : ""
               } hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
             >
               <IconDashboard />
               Dashboard
             </Link>
             <Link
-              href={"/user/repositories"}
+              href={`/${session?.user?.username}/repositories`}
               className={`flex ${
-                pathname === "/user/repositories" ? "text-orange-700" : ""
+                pathname === `/${session?.user?.username}/repositories`
+                  ? "text-orange-700"
+                  : ""
               } hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
             >
               <IconFiles />
@@ -52,18 +58,22 @@ function Sidebar() {
             </Link>
 
             <Link
-              href={"/user/campaigns"}
+              href={`/${session?.user?.username}/campaigns`}
               className={`flex ${
-                pathname === "/user/campaigns" ? "text-orange-700" : ""
+                pathname === `/${session?.user?.username}/campaigns`
+                  ? "text-orange-700"
+                  : ""
               } hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
             >
               <IconSpeakerphone />
               Campaigns
             </Link>
             <Link
-              href={"/user/profile"}
+              href={`/${session?.user?.username}/profile`}
               className={`flex ${
-                pathname === "/user/profile" ? "text-orange-700" : ""
+                pathname === `/${session?.user?.username}/profile`
+                  ? "text-orange-700"
+                  : ""
               } hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
             >
               <IconUser />
@@ -74,7 +84,9 @@ function Sidebar() {
             <div className="text-gray-500 text-xs font-medium md:px-2">
               <button
                 className={`flex ${
-                  pathname === "/user/settings" ? "text-primary" : ""
+                  pathname === `/${session?.user?.username}/settings`
+                    ? "text-primary"
+                    : ""
                 } hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
               >
                 <IconLogout size={16} />

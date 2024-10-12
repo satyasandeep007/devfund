@@ -39,7 +39,7 @@ const Home: React.FC = () => {
           <button
             onClick={() => {
               if (status === "authenticated") {
-                router.push(`/user/dashboard`);
+                router.push(`/${session?.user?.username}/dashboard`);
               } else {
                 signIn();
               }
