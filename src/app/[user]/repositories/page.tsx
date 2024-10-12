@@ -1,3 +1,5 @@
+import RepositoryPage from "@/pages/RepositoryPage";
+
 export default function Repositories() {
-  return <div>Repositories</div>;
+  return <RepositoryPage />;
 }

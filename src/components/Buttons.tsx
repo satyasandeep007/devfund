@@ -1,6 +1,6 @@
 // components/Buttons.tsx
 "use client";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/helper";
 import React, { ReactNode } from "react";
 
 export const AnimatedButton = ({
