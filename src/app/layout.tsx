@@ -7,7 +7,7 @@ import { cookieToInitialState } from "wagmi";
 import { config } from "@/lib/wagmiConfig";
 import AppKitProvider from "@/app/providers";
 import { Loading } from "@/components/Loading";
-import { ThemeProvider } from "./themeprovider";
+import { ThemeProvider } from "@/layout/themeprovider";
 
 export const metadata: Metadata = {
   title: "Base India",

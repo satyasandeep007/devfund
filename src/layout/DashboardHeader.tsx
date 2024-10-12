@@ -1,7 +1,7 @@
 "use client";
 
 import { useAccount } from "wagmi";
-import ThemeToggle from "../components/ThemeToggle";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const DashboardHeader: React.FC = () => {
   const { isConnected } = useAccount();
