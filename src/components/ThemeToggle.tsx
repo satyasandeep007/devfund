@@ -1,10 +1,8 @@
-// components/ThemeToggle.tsx
-
-import { useTheme } from "@/app/themeprovider";
+import { useGlobalStore } from "@/app/Store";
 import { IconSun, IconMoon } from "@tabler/icons-react";
 
 const ThemeToggle = () => {
-  const { isDarkMode, toggleTheme } = useTheme();
+  const { isDarkMode, toggleTheme } = useGlobalStore();
 
   return (
     <button

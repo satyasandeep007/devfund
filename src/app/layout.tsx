@@ -7,7 +7,6 @@ import { cookieToInitialState } from "wagmi";
 import { config } from "@/lib/wagmiConfig";
 import AppKitProvider from "@/app/providers";
 import { Loading } from "@/components/Loading";
-import { ThemeProvider } from "@/layout/themeprovider";
 
 export const metadata: Metadata = {
   title: "Base India",
@@ -30,11 +29,9 @@ export default function RootLayout({
       </head>
       <body>
         <Loading>
-          <ThemeProvider>
-            <AppKitProvider initialState={initialState}>
-              {children}
-            </AppKitProvider>
-          </ThemeProvider>
+          <AppKitProvider initialState={initialState}>
+            {children}
+          </AppKitProvider>
         </Loading>
       </body>
     </html>
