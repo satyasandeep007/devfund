@@ -6,12 +6,11 @@ import { usePathname } from "next/navigation";
 import React from "react";
 import {
   IconLogout,
-  IconSettings,
   IconUser,
-  IconGitBranch,
   IconBrandGithub,
   IconFiles,
   IconSpeakerphone,
+  IconDashboard,
 } from "@tabler/icons-react";
 
 function Sidebar() {
@@ -34,57 +33,48 @@ function Sidebar() {
           {/* top */}
           <div className="pt-6 text-gray-500 font-medium space-y-2 md:px-2 text-xs">
             <Link
-              href={"/app/repositories"}
+              href={"/user/dashboard"}
               className={`flex ${
-                pathname === "/app/repositories" ? "text-orange-700" : ""
+                pathname === "/user/dashboard" ? "text-orange-700" : ""
+              } hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
+            >
+              <IconDashboard />
+              Dashboard
+            </Link>
+            <Link
+              href={"/user/repositories"}
+              className={`flex ${
+                pathname === "/user/repositories" ? "text-orange-700" : ""
               } hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
             >
               <IconFiles />
               Repositories
             </Link>
-            <Link
-              href={"/app/pull-requests"}
-              className={`flex ${
-                pathname === "/app/pull-requests" ? "text-orange-700" : ""
-              } hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
-            >
-              <IconGitBranch />
-              Pull Requests
-            </Link>
 
             <Link
-              href={"/app/campaigns"}
+              href={"/user/campaigns"}
               className={`flex ${
-                pathname === "/app/campaigns" ? "text-orange-700" : ""
+                pathname === "/user/campaigns" ? "text-orange-700" : ""
               } hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
             >
               <IconSpeakerphone />
               Campaigns
             </Link>
             <Link
-              href={"/app/profile"}
+              href={"/user/profile"}
               className={`flex ${
-                pathname === "/app/profile" ? "text-orange-700" : ""
+                pathname === "/user/profile" ? "text-orange-700" : ""
               } hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
             >
               <IconUser />
               Profile
-            </Link>
-            <Link
-              href={"/app/settings"}
-              className={`flex ${
-                pathname === "/app/settings" ? "text-orange-700" : ""
-              } hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
-            >
-              <IconSettings />
-              Settings
             </Link>
           </div>
           <div>
             <div className="text-gray-500 text-xs font-medium md:px-2">
               <button
                 className={`flex ${
-                  pathname === "/app/settings" ? "text-primary" : ""
+                  pathname === "/user/settings" ? "text-primary" : ""
                 } hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
               >
                 <IconLogout size={16} />
