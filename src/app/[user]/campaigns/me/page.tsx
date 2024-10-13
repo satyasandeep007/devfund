@@ -1,3 +1,5 @@
+import MyCampaignsPage from "@/pages/MyCampaignsPage";
+
 export default function MyCampaigns() {
-  return <div>MyCampaigns</div>;
+  return <MyCampaignsPage />;
 }
