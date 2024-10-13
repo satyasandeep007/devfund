@@ -17,12 +17,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="flex flex-col min-h-screen">
-        <Header />
+        {/* <Header /> */}
         <main className="flex-grow">
           <Loading>
-            <AppKitProvider>
-              {children}
-            </AppKitProvider>
+            <AppKitProvider>{children}</AppKitProvider>
           </Loading>
         </main>
       </body>
