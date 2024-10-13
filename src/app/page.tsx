@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"; // Updated import for client-side n
 import { useEffect } from "react";
 
 import { useSession, signIn } from "next-auth/react";
-
+import Header from "@/components/header";
 const Home: React.FC = () => {
   const { isConnected } = useAccount();
   const router = useRouter(); // Use useRouter for client-side navigation
@@ -53,7 +53,8 @@ const Home: React.FC = () => {
           </button>
         </div>
       </div> */}
-      <Hero isConnected={isConnected} />
+      <Header />
+      <Hero />
     </main>
   );
 };
