@@ -2,7 +2,7 @@
   "name": "hardhat-project",
   "scripts": {
     "compile": "hardhat compile",
-    "flatten": "hardhat flatten ./contracts/FundAProject.sol > flatten/flattenedFundAProject.sol",
+    "flatten": "hardhat flatten ./contracts/DevFund.sol > flatten/flattenedDevFund.sol",
     "deploy": "hardhat run --network base scripts/deploy.ts --verbose",
     "upgrade": "hardhat run --network base scripts/upgrade.ts",
     "verify": "hardhat verify --network base 0xB20D3271769A0CCFAe255F2456F3163668144Bxx"
@@ -12,6 +12,7 @@
     "hardhat": "^2.22.13"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^5.0.2"
+    "@openzeppelin/contracts": "^5.0.2",
+    "dotenv": "^16.4.5"
   }
 }
