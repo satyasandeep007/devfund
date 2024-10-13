@@ -19,7 +19,7 @@ const Header: React.FC = () => {
         <div>
           <a 
             href="/download" 
-            className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
+            className="bg-black text-white px-4 py-2 rounded hover:bg-[#3C62FF]"
           >
             Connect Wallet
           </a>
