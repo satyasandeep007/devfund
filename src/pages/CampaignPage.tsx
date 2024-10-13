@@ -17,7 +17,7 @@ const CampaignPage = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="max-w-6xl mx-auto px-4 py-8">
+      <div className="mx-auto px-4 py-8">
         {/* Hero Section */}
         <div className="flex items-start mb-8">
           <div className="flex-1">
