@@ -5,7 +5,7 @@ const Hero = () => {
     <div className="max-w-7xl mx-auto px-4 py-8">  
       <main className="flex flex-col md:flex-row justify-between items-center">
         <div className="md:w-1/2 mb-8 md:mb-0">
-          <h2 className="text-6xl font-bold leading-tight mb-6">
+          <h2 className="text-6xl font-medium leading-tight mb-6">
             Open source,<br />
             cross-platform<br />
             To Refine Your Code
