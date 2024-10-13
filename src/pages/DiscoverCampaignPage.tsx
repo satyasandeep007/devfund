@@ -2,10 +2,29 @@
 
 import { useState } from "react";
 import { CampaignCard } from "@/components/CampaignCard";
-import { sampleCampaigns } from "@/lib/mockUtil/campaignData";
 import Image from "next/image";
 
-const DiscoverCampaignPage = () => {
+interface Campaign {
+  id: number;
+  title: string;
+  usdcBalance: string;
+  ethBalance: string;
+  owner: string;
+  gitUrl: string;
+  description: string;
+  fundingGoal: string;
+  donationCount: string;
+  endDate: string;
+  status: string;
+}
+
+interface DiscoverCampaignPageProps {
+  campaigns: Campaign[];
+}
+
+const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
+  campaigns,
+}) => {
   const [activeTab, setActiveTab] = useState("work");
 
   const tabs = [
@@ -75,8 +94,8 @@ const DiscoverCampaignPage = () => {
 
         {/* Campaign Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {sampleCampaigns.map((campaign) => (
-            <CampaignCard key={campaign.githubRepo.id} campaign={campaign} />
+          {campaigns.map((campaign) => (
+            <CampaignCard key={campaign.id} campaign={campaign} />
           ))}
         </div>
       </div>

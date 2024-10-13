@@ -3,29 +3,44 @@ import Link from "next/link";
 import { FollowerPointerCard } from "@/components/ui/following-pointer";
 import { IconEye, IconHeart } from "@tabler/icons-react";
 
-export function CampaignCard({ campaign }: { campaign: any }) {
+type Campaign = {
+  description: string;
+  donationCount: string;
+  endDate: string;
+  ethBalance: string;
+  fundingGoal: string;
+  gitUrl: string;
+  id: number;
+  owner: string;
+  status: string;
+  title: string;
+  usdcBalance: string;
+};
+
+export function CampaignCard({ campaign }: { campaign: Campaign }) {
+  const repoFullName = campaign.gitUrl.split("/").slice(-2).join("/");
+  const repoOwner = repoFullName.split("/")[0];
+
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col">
       <FollowerPointerCard
         title={
           <TitleComponent
-            title={campaign.githubRepo.name}
-            avatar={`https://github.com/${
-              campaign.githubRepo.fullName.split("/")[0]
-            }.png`}
+            title={campaign.title}
+            avatar={`https://github.com/${repoOwner}.png`}
           />
         }
       >
         <div className="h-48 bg-blue-500 relative">
           <Image
-            src={`https://opengraph.githubassets.com/1/${campaign.githubRepo.fullName}`}
+            src={`https://opengraph.githubassets.com/1/${repoFullName}`}
             alt={campaign.title}
             layout="fill"
             objectFit="cover"
             className="group-hover:scale-105 transform object-cover transition duration-200"
           />
         </div>
-        <Link href={`/${campaign.user}/campaigns/${campaign.id}`} passHref>
+        <Link href={`/campaigns/${campaign.id}`} passHref>
           <div className="p-6 flex-grow flex flex-col">
             <h2 className="font-bold text-xl mb-2 text-gray-800 line-clamp-1">
               {campaign.title}
@@ -37,19 +52,17 @@ export function CampaignCard({ campaign }: { campaign: any }) {
               <div className="flex items-center space-x-2">
                 <IconHeart className="w-5 h-5 text-red-500" />
                 <span className="text-sm text-gray-600">
-                  {campaign.likes} likes
+                  {campaign.donationCount} donations
                 </span>
               </div>
               <div className="flex items-center space-x-2">
                 <IconEye className="w-5 h-5 text-blue-500" />
-                <span className="text-sm text-gray-600">
-                  {campaign.views} views
-                </span>
+                <span className="text-sm text-gray-600">{campaign.status}</span>
               </div>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-sm font-semibold text-gray-500">
-                Goal: ${campaign.fundingGoal.toLocaleString()}
+                Goal: ${parseInt(campaign.fundingGoal).toLocaleString()}
               </span>
               <div className="space-x-2">
                 <button className="bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-blue-600 transition-colors">
