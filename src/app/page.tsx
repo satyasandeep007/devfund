@@ -19,8 +19,8 @@ const Home: React.FC = () => {
   // }, [isConnected, router]);
 
   return (
-    <main className="h-screen bg-[#fff] dark:bg-[#1a1a1a]">
-      <div className="w-full max-w-7xl mx-auto py-8 flex justify-between items-center">
+    <main className="h-screen bg-[#f0f0f0] dark:bg-[#1a1a1a]">
+      {/* <div className="w-full max-w-7xl mx-auto py-8 flex justify-between items-center">
         <p className="text-[26px] font-bold text-left uppercase">
           <span className="text-[#222] dark:text-white">Base India</span> {""}
         </p>
@@ -52,7 +52,7 @@ const Home: React.FC = () => {
             →
           </button>
         </div>
-      </div>
+      </div> */}
       <Hero isConnected={isConnected} />
     </main>
   );
