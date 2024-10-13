@@ -4,7 +4,8 @@ import { useState } from "react";
 import { CampaignCard } from "@/components/CampaignCard";
 import { sampleCampaigns } from "@/lib/mockUtil/campaignData";
 import Image from "next/image";
-const CampaignPage = () => {
+
+const DiscoverCampaignPage = () => {
   const [activeTab, setActiveTab] = useState("work");
 
   const tabs = [
@@ -83,4 +84,4 @@ const CampaignPage = () => {
   );
 };
 
-export default CampaignPage;
+export default DiscoverCampaignPage;

@@ -1,3 +1,5 @@
-export default function Github() {
-  return <div>Github</div>;
+import GithubProfilePage from "@/pages/GithubProfilePage";
+
+export default function GithubProfile() {
+  return <GithubProfilePage />;
 }

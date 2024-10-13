@@ -1,3 +1,5 @@
-export default function Wallet() {
-  return <div>Wallet</div>;
+import WalletProfilePage from "@/pages/WalletProfilePage";
+
+export default function WalletProfile() {
+  return <WalletProfilePage />;
 }
