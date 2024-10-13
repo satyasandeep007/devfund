@@ -4,7 +4,7 @@ pragma solidity 0.8.20;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "./DevFundContributorNFT.sol";
 
-contract Devfund {
+contract DevFund {
     address payable public owner;
     DevFundContributorNFT public devFundContributorNFT;
     IERC20 public usdcToken;
@@ -16,7 +16,6 @@ contract Devfund {
         address owner,
         string gitUrl,
         string description,
-        // string category,
         uint256 fundingGoal,
         uint256 donationCount,
         uint256 endDate,
@@ -34,7 +33,6 @@ contract Devfund {
         address owner;
         string gitUrl;
         string description;
-        // string category;
         uint256 fundingGoal;
         uint256 donationCount;
         uint256 endDate;
@@ -53,38 +51,55 @@ contract Devfund {
         string calldata _title,
         string calldata _gitUrl,
         string calldata _description,
-        // string calldata _category,
         uint256 _fundingGoal
-    ) public returns (bool) {
-        campaigns.push(
-            Campaign(
-                _title,
-                0,
-                0,
-                msg.sender,
-                _gitUrl,
-                _description,
-                // _category,
-                _fundingGoal,
-                0,
-                0,
-                "active"
-            )
-        );
-        emit CampaignCreated(
+    ) public returns (uint256) {
+        uint256 campaignId = _createCampaign(
             _title,
-            0,
-            0,
-            msg.sender,
             _gitUrl,
             _description,
-            // _category,
-            _fundingGoal,
-            0,
-            0,
-            "active"
+            _fundingGoal
         );
-        return true;
+        _emitCampaignCreated(campaignId);
+        return campaignId;
+    }
+
+    function _createCampaign(
+        string calldata _title,
+        string calldata _gitUrl,
+        string calldata _description,
+        uint256 _fundingGoal
+    ) private returns (uint256) {
+        Campaign memory newCampaign = Campaign({
+            title: _title,
+            usdcBalance: 0,
+            ethBalance: 0,
+            owner: msg.sender,
+            gitUrl: _gitUrl,
+            description: _description,
+            fundingGoal: _fundingGoal,
+            donationCount: 0,
+            endDate: 0,
+            status: "active"
+        });
+
+        campaigns.push(newCampaign);
+        return campaigns.length - 1;
+    }
+
+    function _emitCampaignCreated(uint256 campaignId) private {
+        Campaign memory campaign = campaigns[campaignId];
+        emit CampaignCreated(
+            campaign.title,
+            campaign.usdcBalance,
+            campaign.ethBalance,
+            campaign.owner,
+            campaign.gitUrl,
+            campaign.description,
+            campaign.fundingGoal,
+            campaign.donationCount,
+            campaign.endDate,
+            campaign.status
+        );
     }
 
     function fundUSDC(uint256 _amount, uint256 campaignNo) public {
