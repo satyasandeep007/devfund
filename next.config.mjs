@@ -4,7 +4,11 @@ const nextConfig = {
     domains: [
       "icoholder.com",
       "assets.aceternity.com",
+      "ui.aceternity.com",
       "avatars.githubusercontent.com",
+      "opengraph.githubassets.com",
+      "github.com",
+      "cdn.dribbble.com",
     ],
   },
   webpack: (config) => {

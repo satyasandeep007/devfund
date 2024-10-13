@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"; // Updated import for client-side n
 import { useEffect } from "react";
 
 import { useSession, signIn } from "next-auth/react";
-
+import Header from "@/components/header";
 const Home: React.FC = () => {
   const { isConnected } = useAccount();
   const router = useRouter(); // Use useRouter for client-side navigation
@@ -19,8 +19,8 @@ const Home: React.FC = () => {
   // }, [isConnected, router]);
 
   return (
-    <main className="h-screen bg-[#fff] dark:bg-[#1a1a1a]">
-      <div className="w-full max-w-7xl mx-auto py-8 flex justify-between items-center">
+    <main className="h-screen bg-[#f0f0f0] dark:bg-[#1a1a1a]">
+      {/* <div className="w-full max-w-7xl mx-auto py-8 flex justify-between items-center">
         <p className="text-[26px] font-bold text-left uppercase">
           <span className="text-[#222] dark:text-white">Base India</span> {""}
         </p>
@@ -52,8 +52,9 @@ const Home: React.FC = () => {
             →
           </button>
         </div>
-      </div>
-      <Hero isConnected={isConnected} />
+      </div> */}
+      <Header />
+      <Hero />
     </main>
   );
 };
