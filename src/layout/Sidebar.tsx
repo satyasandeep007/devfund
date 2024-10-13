@@ -20,16 +20,16 @@ function Sidebar() {
 
   return (
     <div className="w-60 shrink-0 md:block h-screen sticky top-0 overflow-hidden">
-      <div className="w-full h-full bg-white border-r">
-        <div className="p-4 md:p-6 flex group items-center gap-2">
+      <div className="w-full h-full bg-white border-r flex flex-col">
+        <div className="p-6 flex items-center gap-2">
+          <IconBrandGithub size={24} />
           <div>
             <h1 className="text-sm font-medium text-gray-800">Git Campaigns</h1>
-            <p className="text-xs text-gray-500 font-small">Base India 2024</p>
-            <IconBrandGithub />
+            <p className="text-xs text-gray-500">Base India 2024</p>
           </div>
         </div>
 
-        <hr className="bg-gray-400 mx-2" />
+        <hr className="bg-gray-200 mx-2" />
 
         <div className="flex flex-col h-full justify-between">
           {/* top */}
@@ -80,46 +80,35 @@ function Sidebar() {
               Profile
             </Link>
           </div>
+
+          {/* bottom */}
           <div>
-            <div className="text-gray-500 text-xs font-medium md:px-2">
+            <div className="text-gray-500 text-xs font-medium px-2">
               <button
-                className={`flex ${
-                  pathname === `/${session?.user?.username}/settings`
-                    ? "text-primary"
-                    : ""
-                } hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
+                className="flex hover:px-8 duration-200 px-6 py-2 items-center gap-2 w-full"
+                onClick={(e) => {
+                  e.preventDefault();
+                  // Add logout logic here
+                }}
               >
                 <IconLogout size={16} />
-                <a
-                  className="text-gray-500"
-                  onClick={(e) => {
-                    e.preventDefault();
-                  }}
-                >
-                  Logout
-                </a>
+                <span>Logout</span>
               </button>
             </div>
 
-            <hr className="bg-gray-400 mx-2 my-4" />
+            <hr className="bg-gray-200 mx-2 my-4" />
 
-            {/* bottom */}
-            <div className="flex pb-32 justify-between px-4 md:px-6 items-center cursor-pointer hover:pr-5 duration-200">
-              <div className="flex items-center gap-2">
-                <Image
-                  src={"https://avatars.githubusercontent.com/u/52450973?v=4"}
-                  alt={"user"}
-                  width={36}
-                  height={36}
-                  className="rounded-full"
-                />
-
-                <div className="">
-                  <p className="text-sm font-semibold text-gray-800">
-                    John Doe
-                  </p>
-                  <p className="text-xs font-medium text-gray-500">@johndoe</p>
-                </div>
+            <div className="flex  pb-32 px-6 py-4 items-center cursor-pointer hover:bg-gray-100 transition-colors">
+              <Image
+                src={"https://avatars.githubusercontent.com/u/52450973?v=4"}
+                alt={"user"}
+                width={36}
+                height={36}
+                className="rounded-full"
+              />
+              <div className="ml-3">
+                <p className="text-sm font-semibold text-gray-800">John Doe</p>
+                <p className="text-xs font-medium text-gray-500">@johndoe</p>
               </div>
             </div>
           </div>
