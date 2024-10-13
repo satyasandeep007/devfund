@@ -11,7 +11,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="h-screen"
+      className="h-screen flex"
     >
       {/* backdrop */}
       <AnimatePresence>
@@ -22,11 +22,11 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
         />
       </AnimatePresence>
 
-      <div className="grid md:grid-cols-[240px_1fr] w-screen overflow-x-hidden">
-        <div className="hidden md:block">
-          <Sidebar />
-        </div>
+      <div className="hidden md:block w-40  h-screen fixed top-0 left-0">
+        <Sidebar />
+      </div>
 
+      <div className="flex-1 md:ml-60 overflow-x-hidden">
         <div className="w-full overflow-x-auto max-w-[1440px] mx-auto">
           <DashboardHeader />
           {children}
