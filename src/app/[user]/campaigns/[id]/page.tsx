@@ -9,7 +9,6 @@ interface CampaignDetailProps {
 }
 
 const CampaignDetail: React.FC<CampaignDetailProps> = async ({ params }) => {
-  // Fetch campaign details here (replace with actual data fetching logic)
   const campaignData = {
     title: "Open Source Funding Campaign",
     description: "Support our open source project and help us reach our goals!",
