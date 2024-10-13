@@ -13,7 +13,7 @@ export function CampaignCard({ campaign }: { campaign: any }) {
           />
         }
       >
-        <div className="h-48 bg-navy-blue relative">
+        <div className="h-48 bg-blue-500 relative">
           <Image
             src={`https://opengraph.githubassets.com/1/${campaign.githubRepo.fullName}`}
             alt={campaign.title}
@@ -33,7 +33,7 @@ export function CampaignCard({ campaign }: { campaign: any }) {
             <span className="text-sm font-semibold text-gray-500">
               Goal: ${campaign.fundingGoal.toLocaleString()}
             </span>
-            <button className="bg-navy-blue text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-800 transition-colors">
+            <button className="bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-blue-600 transition-colors">
               Donate
             </button>
           </div>

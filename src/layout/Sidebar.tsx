@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link, { LinkProps } from "next/link";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import React from "react";
@@ -19,8 +19,8 @@ function Sidebar() {
   const { data: session }: any = useSession();
 
   return (
-    <div className="w-60 shrink-0 md:block h-screen sticky top-0 overflow-hidden">
-      <div className="w-full h-full bg-white border-r flex flex-col">
+    <div className="w-60 shrink-0 md:block h-screen sticky top-0 overflow-hidden border-r border-gray-900">
+      <div className="w-full h-full bg-white flex flex-col">
         <div className="p-6 flex items-center gap-2">
           <IconBrandGithub size={24} />
           <div>
@@ -29,81 +29,60 @@ function Sidebar() {
           </div>
         </div>
 
-        <hr className="bg-gray-200 mx-2" />
+        <hr className="border-gray-200" />
 
-        <div className="flex flex-col h-full justify-between">
+        <div className="flex flex-col flex-grow justify-between">
           {/* top */}
           <div className="pt-6 text-gray-500 font-medium space-y-2 md:px-2 text-xs">
-            <Link
+            <NavLink
               href={`/${session?.user?.username}/dashboard`}
-              className={`flex ${
-                pathname === `/${session?.user?.username}/dashboard`
-                  ? "text-orange-700"
-                  : ""
-              } hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
+              icon={<IconDashboard size={18} />}
             >
-              <IconDashboard />
               Dashboard
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               href={`/${session?.user?.username}/repositories`}
-              className={`flex ${
-                pathname === `/${session?.user?.username}/repositories`
-                  ? "text-orange-700"
-                  : ""
-              } hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
+              icon={<IconFiles size={18} />}
             >
-              <IconFiles />
               Repositories
-            </Link>
-
-            <Link
+            </NavLink>
+            <NavLink
               href={`/${session?.user?.username}/campaigns`}
-              className={`flex ${
-                pathname === `/${session?.user?.username}/campaigns`
-                  ? "text-orange-700"
-                  : ""
-              } hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
+              icon={<IconSpeakerphone size={18} />}
             >
-              <IconSpeakerphone />
               Campaigns
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               href={`/${session?.user?.username}/profile`}
-              className={`flex ${
-                pathname === `/${session?.user?.username}/profile`
-                  ? "text-orange-700"
-                  : ""
-              } hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
+              icon={<IconUser size={18} />}
             >
-              <IconUser />
               Profile
-            </Link>
+            </NavLink>
           </div>
 
           {/* bottom */}
-          <div>
-            <div className="text-gray-500 text-xs font-medium px-2">
+          <div className="mt-auto">
+            <div className="text-gray-500 text-sm font-medium">
               <button
-                className="flex hover:px-8 duration-200 px-6 py-2 items-center gap-2 w-full"
+                className="flex w-full px-4 py-2 items-center gap-2 hover:bg-gray-100 transition-colors"
                 onClick={(e) => {
                   e.preventDefault();
                   // Add logout logic here
                 }}
               >
-                <IconLogout size={16} />
+                <IconLogout size={18} />
                 <span>Logout</span>
               </button>
             </div>
 
-            <hr className="bg-gray-200 mx-2 my-4" />
+            <hr className="border-gray-200 my-2" />
 
-            <div className="flex  pb-32 px-6 py-4 items-center cursor-pointer hover:bg-gray-100 transition-colors">
+            <div className="flex px-4 py-3 items-center cursor-pointer hover:bg-gray-100 transition-colors">
               <Image
                 src={"https://avatars.githubusercontent.com/u/52450973?v=4"}
                 alt={"user"}
-                width={36}
-                height={36}
+                width={32}
+                height={32}
                 className="rounded-full"
               />
               <div className="ml-3">
@@ -118,18 +97,28 @@ function Sidebar() {
   );
 }
 
-const NavLink = React.forwardRef<
-  LinkProps,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, href, ...props }) => (
-  <Link
-    href={href!}
-    className={`flex ${
-      window.location.pathname === href! ? "text-primary" : ""
-    } hover:px-8 duration-200 rounded-md w-full py-2 px-6 items-center gap-2`}
-    {...props}
-  />
-));
-NavLink.displayName = "NavLink";
+interface NavLinkProps {
+  href: string;
+  icon: React.ReactNode;
+  children: React.ReactNode;
+}
+
+const NavLink: React.FC<NavLinkProps> = ({ href, icon, children }) => {
+  const pathname = usePathname();
+  const isActive = pathname === href;
+  console.log(pathname, href, isActive);
+
+  return (
+    <Link
+      href={href}
+      className={`flex items-center px-4 py-2 ${
+        isActive ? "text-orange-700 bg-orange-50" : "text-gray-600"
+      } hover:bg-gray-100 transition-colors`}
+    >
+      <span className="mr-3">{icon}</span>
+      {children}
+    </Link>
+  );
+};
 
 export default Sidebar;

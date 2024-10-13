@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-
 const {
   default: flattenColorPalette,
 } = require("tailwindcss/lib/util/flattenColorPalette");
@@ -21,13 +20,11 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
-      colors: {
-        "navy-blue": "#0D1117",
-      },
     },
   },
-  plugins: [require("@tailwindcss/line-clamp"), addVariablesForColors],
+  plugins: [addVariablesForColors],
 };
+
 export default config;
 
 // This plugin adds each Tailwind color as a global CSS variable, e.g. var(--gray-200).
