@@ -1,5 +1,6 @@
 import { CampaignCard } from "@/components/CampaignCard";
 import { sampleCampaigns } from "@/lib/mockUtil/campaignData";
+
 const CampaignPage = () => {
   return (
     <div className="min-h-screen bg-gray-100">

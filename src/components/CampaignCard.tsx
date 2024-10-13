@@ -1,5 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
 import { FollowerPointerCard } from "@/components/ui/following-pointer";
+import { IconEye, IconHeart } from "@tabler/icons-react";
+
 export function CampaignCard({ campaign }: { campaign: any }) {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col">
@@ -19,29 +22,48 @@ export function CampaignCard({ campaign }: { campaign: any }) {
             alt={campaign.title}
             layout="fill"
             objectFit="cover"
-            className="group-hover:scale-95 group-hover:rounded-2xl transform object-cover transition duration-200"
+            className="group-hover:scale-105 transform object-cover transition duration-200"
           />
         </div>
-        <div className="p-6 flex-grow flex flex-col">
-          <h2 className="font-bold text-xl mb-2 text-gray-800 line-clamp-1">
-            {campaign.title}
-          </h2>
-          <p className="text-gray-600 mb-4 flex-grow line-clamp-3">
-            {campaign.description}
-          </p>
-          <div className="flex justify-between items-center">
-            <span className="text-sm font-semibold text-gray-500">
-              Goal: ${campaign.fundingGoal.toLocaleString()}
-            </span>
-            <button className="bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-blue-600 transition-colors">
-              Donate
-            </button>
+        <Link href={`/${campaign.user}/campaigns/${campaign.id}`} passHref>
+          <div className="p-6 flex-grow flex flex-col">
+            <h2 className="font-bold text-xl mb-2 text-gray-800 line-clamp-1">
+              {campaign.title}
+            </h2>
+            <p className="text-gray-600 mb-4 flex-grow line-clamp-3">
+              {campaign.description}
+            </p>
+            <div className="flex justify-between items-center mb-4">
+              <div className="flex items-center space-x-2">
+                <IconHeart className="w-5 h-5 text-red-500" />
+                <span className="text-sm text-gray-600">
+                  {campaign.likes} likes
+                </span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <IconEye className="w-5 h-5 text-blue-500" />
+                <span className="text-sm text-gray-600">
+                  {campaign.views} views
+                </span>
+              </div>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm font-semibold text-gray-500">
+                Goal: ${campaign.fundingGoal.toLocaleString()}
+              </span>
+              <div className="space-x-2">
+                <button className="bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-blue-600 transition-colors">
+                  Donate
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
+        </Link>
       </FollowerPointerCard>
     </div>
   );
 }
+
 const TitleComponent = ({
   title,
   avatar,
