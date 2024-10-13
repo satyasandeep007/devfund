@@ -1,5 +1,18 @@
+"use client";
+
 import MyCampaignsPage from "@/pages/MyCampaignsPage";
+import { useDevFund } from "@/context/DevFundContext";
+import { useAccount } from "wagmi";
 
 export default function MyCampaigns() {
-  return <MyCampaignsPage />;
+  const { campaigns, isLoading } = useDevFund();
+  const { address } = useAccount();
+
+  const myCampaigns = campaigns?.filter(
+    (campaign) => campaign.owner === address
+  );
+
+  if (isLoading) return <div>Loading...</div>;
+
+  return <MyCampaignsPage campaigns={myCampaigns || []} />;
 }
