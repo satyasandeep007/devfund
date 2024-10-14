@@ -1,3 +1,5 @@
+import CreateCampaignPage from "@/pages/CreateCampaignPage";
+
 export default function CreateCampaign() {
-  return <div>CreateCampaign</div>;
+  return <CreateCampaignPage />;
 }

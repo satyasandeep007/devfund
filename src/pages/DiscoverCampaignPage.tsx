@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { CampaignCard } from "@/components/CampaignCard";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 interface Campaign {
   id: number;
@@ -25,6 +27,8 @@ interface DiscoverCampaignPageProps {
 const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
   campaigns,
 }) => {
+  const { data: session }: any = useSession();
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState("work");
 
   const tabs = [
@@ -54,7 +58,12 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
               <span>2,270 likes</span>
             </div>
             <div className="flex space-x-4">
-              <button className="bg-gray-900 text-white px-4 py-2 rounded-md">
+              <button
+                onClick={() => {
+                  router.push(`/${session?.user?.username}/campaigns/create`);
+                }}
+                className="bg-gray-900 text-white px-4 py-2 rounded-md"
+              >
                 Create Campaign
               </button>
             </div>
