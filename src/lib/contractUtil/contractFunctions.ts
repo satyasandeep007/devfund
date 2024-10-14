@@ -76,13 +76,19 @@ export const getAllCampaigns = async () => {
   }
 };
 
-export const createProject = (name: string, gitUrl: string, chain: number) => {
+export const createCampaign = (
+  title: string,
+  gitUrl: string,
+  description: string,
+  fundingGoal: number,
+  chain: number
+) => {
   const contractAddress: string = getContractConfig("MAIN_CONTRACT").ADDRESS;
   const abi = getContractConfig("MAIN_CONTRACT").ABI;
   const uoCallData = encodeFunctionData({
     abi,
-    functionName: "createProject",
-    args: [name, gitUrl],
+    functionName: "createCampaign",
+    args: [title, gitUrl, description, fundingGoal],
   });
   const uo = [{ target: contractAddress, data: uoCallData, value: "0" }];
   return { uo };
