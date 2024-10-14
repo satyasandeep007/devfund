@@ -821,6 +821,11 @@ const MAIN_CONTRACT_ABI = [
         name: "_fundingGoal",
         type: "uint256",
       },
+      {
+        internalType: "uint256",
+        name: "_endDate",
+        type: "uint256",
+      },
     ],
     name: "createCampaign",
     outputs: [
@@ -1191,7 +1196,7 @@ export type Config = {
 const BASE_CONFIG = {
   usdc: "0xD733D48f2a7F57D4559F98ae07f87Dab595E3523",
   nft: "0x2f8b248b69208647865B47f35B7784B348c6bbd0",
-  main: "0x0E5A4530c6f1D4A3b9Ce9f3B9F28D48826be7DdB",
+  main: "0xCe5609b1a715EB39B8dADBadcc8409e4a2739689",
 };
 
 export type ContractConfig = {
