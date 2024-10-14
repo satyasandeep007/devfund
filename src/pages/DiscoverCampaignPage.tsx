@@ -9,7 +9,7 @@ import { useAccount } from "wagmi";
 import { toast } from "react-toastify";
 import { useDevFund } from "@/context/DevFundContext";
 import SendModal from "@/components/SendModal";
-import axios from "axios";
+
 interface Campaign {
   id: number;
   title: string;
