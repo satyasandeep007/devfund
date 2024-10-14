@@ -3,7 +3,6 @@ import { toast } from "react-toastify";
 
 interface SendModalProps {
   onClose: () => void;
-  balance: string | null;
   marketPrice: number;
   handleDonate: (e: React.FormEvent) => any;
   campaign: any;
@@ -11,11 +10,14 @@ interface SendModalProps {
   setDonationType: any;
   donationAmount: string;
   donationType: string;
+  ethBalance: string;
+  usdcBalance: string;
 }
 
 const SendModal: React.FC<SendModalProps> = ({
   onClose,
-  balance,
+  ethBalance,
+  usdcBalance,
   marketPrice,
   handleDonate,
   campaign,
@@ -27,8 +29,9 @@ const SendModal: React.FC<SendModalProps> = ({
   const [loading, setLoading] = useState(false);
 
   const handleMax = () => {
+    const balance = donationType === "USDC" ? usdcBalance : ethBalance;
     if (balance) {
-      setDonationAmount(balance); // Set amount to the user's balance
+      setDonationAmount(balance);
     }
   };
 
@@ -148,9 +151,14 @@ const SendModal: React.FC<SendModalProps> = ({
             <div className="flex justify-between text-md text-[#7991A4]">
               <span className="font-semibold">Balance</span>
               <span>
-                {balance} USDC /{" "}
-                {balance
-                  ? (parseFloat(balance) * marketPrice).toFixed(2)
+                {donationType === "USDC" ? usdcBalance : ethBalance}{" "}
+                {donationType} /{" "}
+                {donationType === "USDC"
+                  ? usdcBalance
+                    ? (parseFloat(usdcBalance) * marketPrice).toFixed(2)
+                    : "0.00"
+                  : ethBalance
+                  ? (parseFloat(ethBalance) * marketPrice).toFixed(2)
                   : "0.00"}{" "}
                 USD
               </span>

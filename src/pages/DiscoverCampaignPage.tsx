@@ -33,7 +33,7 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
 }) => {
   const { address } = useAccount();
   const { data: session }: any = useSession();
-  const { fundUSDC, fundEth, refreshCampaigns } = useDevFund();
+  const { fundUSDC, fundEth, refreshCampaigns, tokenBalances } = useDevFund();
 
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("all");
@@ -42,8 +42,11 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
 
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
   const [marketPrice, setMarketPrice] = useState(0);
-  const [balance, setBalance] = useState("0");
+  const [usdcBalance, setUSDCBalance] = useState("0");
+  const [ethBalance, setETHBalance] = useState("0");
   const [campaignId, setCampaignId]: any = useState(null);
+
+  console.log(tokenBalances, "tokenBalances");
 
   const tabs = [
     { id: "all", label: "All Campaigns" },
@@ -61,6 +64,28 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
 
     fetchMarketPrice();
   }, [address]);
+
+  useEffect(() => {
+    if (tokenBalances && tokenBalances.length > 0) {
+      const _usdcBal = tokenBalances?.find(
+        (i) => i.contract_ticker_symbol === "TRNSK"
+      );
+      const usdcBal: any = (
+        parseFloat(_usdcBal.balance) /
+        10 ** _usdcBal.contract_decimals
+      ).toFixed(4);
+      const _ethBal = tokenBalances?.find(
+        (i) => i.contract_ticker_symbol === "ETH"
+      );
+      const ethBal: any = (
+        parseFloat(_ethBal.balance) /
+        10 ** _ethBal.contract_decimals
+      ).toFixed(4);
+
+      setUSDCBalance(usdcBal);
+      setETHBalance(ethBal);
+    }
+  }, [tokenBalances]);
 
   const toggleSendModalOpen = (e: React.FormEvent, campaignId: number) => {
     e.preventDefault();
@@ -178,7 +203,8 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
       {isSendModalOpen && (
         <SendModal
           onClose={toggleSendModalClose}
-          balance={balance}
+          usdcBalance={usdcBalance}
+          ethBalance={ethBalance}
           marketPrice={marketPrice}
           handleDonate={(e) => handleDonate(e)}
           setDonationAmount={setDonationAmount}
