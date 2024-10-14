@@ -27,7 +27,7 @@ export const Loading = ({ children }: any) => {
   return !loading ? (
     <div>{children}</div>
   ) : (
-    <div className="bg-gradient-to-r  from-blue-200 via-blue-300 to-blue-500    w-full min-h-[100vh] flex justify-center items-center">
+    <div className="bg-gradient-to-r  from-indigo-700 to-blue-700    w-full min-h-[100vh] flex justify-center items-center">
       <div className="flex overflow-hidden rounded-2xl ">
         <AnimatePresence>
           <svg
