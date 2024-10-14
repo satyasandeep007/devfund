@@ -23,7 +23,7 @@ const Hero = () => {
               height={20}
               alt="github"
             />
-            <Image src="/github.svg" width={768} height={108} alt="github" />
+            <Image src="/github_animation.svg" width={768} height={108} alt="github" />
             <Image
               src="/hero_graph-bottom.svg"
               width={768}
