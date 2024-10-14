@@ -1,19 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
-import { createCampaign } from "../lib/contractUtil/contractFunctions";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-const repositories = [
-  { id: 1, name: "MyProject/repo1" },
-  { id: 2, name: "MyProject/repo2" },
-  { id: 3, name: "MyProject/repo3" },
-  // Add more repositories as needed
-];
+import { useDevFund } from "@/context/DevFundContext";
+import { useGitHubRepos } from "@/context/GithubContext";
 
 export default function CreateCampaignPage() {
   const router = useRouter();
   const { data: session }: any = useSession();
+  const { createCampaign } = useDevFund();
+  const { repos, loading } = useGitHubRepos();
+
   const [formData, setFormData] = useState({
     title: "",
     gitUrl: "",
@@ -96,11 +94,17 @@ export default function CreateCampaignPage() {
                 required
               >
                 <option value="">Select a repository</option>
-                {repositories.map((repo) => (
-                  <option key={repo.id} value={repo.name}>
-                    {repo.name}
+                {loading ? (
+                  <option value="" disabled>
+                    Loading repositories...
                   </option>
-                ))}
+                ) : (
+                  repos.map((repo: any) => (
+                    <option key={repo.id} value={repo.html_url}>
+                      {repo.full_name}
+                    </option>
+                  ))
+                )}
               </select>
             </div>
           </div>
