@@ -9,6 +9,9 @@ const nextConfig = {
       "opengraph.githubassets.com",
       "github.com",
       "cdn.dribbble.com",
+      "logos.covalenthq.com",
+      "www.datocms-assets.com",
+      "placehold.co",
     ],
   },
   webpack: (config) => {

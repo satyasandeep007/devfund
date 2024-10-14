@@ -123,7 +123,7 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
             </h1>
             <div className="flex items-center text-sm text-gray-600 mb-6">
               <span className="mr-6">952 Campaigns</span>
-              <span>188 Total Repo's</span>
+              <span>188 Total Repos</span>
             </div>
             <button
               onClick={() => {
