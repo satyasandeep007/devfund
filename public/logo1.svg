@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.3.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1769 397.7" style="enable-background:new 0 0 1769 397.7;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#0052FF;}
+	.st1{clip-path:url(#SVGID_2_);}
+	.st2{fill:#FFFFFF;}
+	.st3{fill:#1D1D1B;}
+</style>
+<g>
+	<path class="st0" d="M94.8,33.1h262.7c21.5,0,38.9,17.4,38.9,38.9v262.7c0,21.5-17.4,38.9-38.9,38.9H94.8
+		c-21.5,0-38.9-17.4-38.9-38.9V72C55.9,50.5,73.3,33.1,94.8,33.1z"/>
+	<g>
+		<defs>
+			<rect id="SVGID_1_" x="128.3" y="105.5" width="195.7" height="195.7"/>
+		</defs>
+		<clipPath id="SVGID_2_">
+			<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
+		</clipPath>
+		<g class="st1">
+			<path class="st2" d="M226,301.2c54.1,0,98-43.8,98-97.9s-43.9-97.9-98-97.9c-51.4,0-93.5,39.4-97.7,89.6h129.6v16.5H128.3
+				C132.5,261.8,174.7,301.2,226,301.2z"/>
+		</g>
+	</g>
+</g>
+<g>
+	<g>
+		<path class="st3" d="M452.1,108.2h89.7c51.7,0,83,42.5,83,93.8c0,51-31.4,93.5-83,93.5h-89.7V108.2z M504.4,154.2v95.4h31.1
+			c26,0,36.8-21.2,36.8-47.5s-10.8-47.8-36.8-47.8H504.4z"/>
+		<path class="st3" d="M644.6,108.2h144.8v45.9h-92.5v25h86.5v43.1h-86.5v27.3h96v45.9H644.6V108.2z"/>
+		<path class="st3" d="M801.5,108.2h57.7l39.6,118.8L939,108.2h57.4l-71,187.3h-52.6L801.5,108.2z"/>
+		<path class="st3" d="M1017.5,108.8h129v15.5h-111.9v71.6h105.8v14.9h-105.8v84.9h-17.1V108.8z"/>
+		<path class="st3" d="M1191.7,108.8v126.8c0,28.8,16.8,48.5,52.9,48.5c35.8,0,52.6-19.6,52.6-48.5V108.8h17.4v129
+			c0,38-25.4,61.8-70,61.8c-44.7,0-70-23.8-70-61.8v-129H1191.7z"/>
+		<path class="st3" d="M1356.2,108.8h17.1l116.9,157.5V108.8h17.1v187h-17.1l-116.9-157.2v157.2h-17.1V108.8z"/>
+		<path class="st3" d="M1550.7,108.8h78c51.3,0,82.7,42.1,82.7,93.5c0,51.7-31.4,93.5-82.7,93.5h-78V108.8z M1568.1,124.3v155.9
+			h58.9c44.1,0,66.9-36.8,66.9-78c0-41.5-22.8-78-66.9-78H1568.1z"/>
+	</g>
+	<rect x="1008.4" y="124.4" class="st2" width="45.1" height="39.8"/>
+	<rect x="1541.1" y="218.2" class="st2" width="45.1" height="62"/>
+	<polygon class="st2" points="1378.7,171.9 1338.3,120.8 1346,101.2 1383.4,152.5 	"/>
+	<rect x="697.3" y="169.6" class="st2" width="10.9" height="147"/>
+	<polygon class="st2" points="950.3,339.7 938.6,343.2 891,203.9 901.8,203.9 	"/>
+</g>
+</svg>

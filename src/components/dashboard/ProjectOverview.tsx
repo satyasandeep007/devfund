@@ -1,26 +1,38 @@
 import React from "react";
+import { IconType } from 'react-icons';
+import { FaRegStar, FaMoneyBillWave, FaCode } from 'react-icons/fa';
+import { MdCampaign } from 'react-icons/md';
 
 interface StatCardProps {
   title: string;
   value: number | string;
   unit?: string;
   color: string;
+  icon: IconType; // Changed to IconType
 }
 
-const StatCard: React.FC<StatCardProps> = ({ title, value, unit, color }) => {
+const StatCard: React.FC<StatCardProps> = ({ title, value, unit, color, icon: Icon }) => {
+  const getColorClasses = (color: string) => {
+    const colorMap: { [key: string]: { bg: string, text: string } } = {
+      pink: { bg: 'bg-pink-100', text: 'text-pink-500' },
+      yellow: { bg: 'bg-yellow-100', text: 'text-yellow-500' },
+      green: { bg: 'bg-green-100', text: 'text-green-500' },
+      purple: { bg: 'bg-purple-100', text: 'text-purple-500' },
+    };
+    return colorMap[color] || { bg: 'bg-gray-100', text: 'text-gray-500' };
+  };
+
+  const { bg, text } = getColorClasses(color);
+
   return (
-    <div className={`bg-${color}-100 rounded-lg p-4 flex flex-col w-64`}>
-      <div className={`bg-${color}-500 text-white rounded-full w-8 h-8 flex items-center justify-center mb-3`}>
-        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-          <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-          <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
-        </svg>
+    <div className={`${bg} rounded-lg p-6 flex flex-col w-64`}>
+      <div className={`${text} rounded-full w-12 h-12 flex items-center justify-center mb-4`}>
+        <Icon className="w-6 h-6" />
       </div>
-      <div className="flex items-baseline mb-1">
-        <span className="text-3xl font-bold">{value}</span>
-        {unit && <span className="text-xl ml-1">{unit}</span>}
+      <div className="flex flex-col">
+        <span className="text-3xl font-bold mb-1">{value}{unit && <span className="text-xl ml-1">{unit}</span>}</span>
+        <span className="text-sm text-gray-600">{title}</span>
       </div>
-      <span className="text-sm text-gray-600">{title}</span>
     </div>
   );
 };
@@ -31,10 +43,10 @@ const ProjectOverview: React.FC = () => {
       <h2 className="text-xl font-bold mb-2">Today's</h2>
       <h3 className="text-gray-600 mb-4">Summary</h3>
       <div className="flex justify-between space-x-4">
-        <StatCard title="Active Campaigns" value="20k" color="pink" />
-        <StatCard title="Stars" value="08" color="yellow" />
-        <StatCard title="Amount Raised" value="125" unit="Base" color="green" />
-        <StatCard title="Total Repos" value="35" color="purple" />
+        <StatCard title="Active Campaigns" value="20k" color="pink" icon={MdCampaign} />
+        <StatCard title="Stars" value="08" color="yellow" icon={FaRegStar} />
+        <StatCard title="Amount Raised" value="125" unit="Base" color="green" icon={FaMoneyBillWave} />
+        <StatCard title="Total Repos" value="35" color="purple" icon={FaCode} />
       </div>
     </div>
   );

@@ -21,11 +21,13 @@ function Sidebar() {
     <div className="w-64 shrink-0 md:block h-screen fixed top-0 left-0 overflow-y-auto bg-white border-r border-gray-200">
       <div className="w-full h-full bg-white flex flex-col">
         <div className="p-4 flex items-center gap-2 border-b border-gray-200">
-          <IconBrandGithub size={24} />
-          <div>
-            <h1 className="text-sm font-semibold text-gray-800">DevFund</h1>
-            <p className="text-xs text-gray-500">Base India 2024</p>
-          </div>
+          <Image
+            src="/logo_sidebar.svg"
+            alt="DevFund Logo"
+            width={180}
+            height={40}
+            priority
+          />
         </div>
 
         <div className="flex flex-col flex-grow justify-between py-4">
