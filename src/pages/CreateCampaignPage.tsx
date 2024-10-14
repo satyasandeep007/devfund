@@ -5,11 +5,12 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useDevFund } from "@/context/DevFundContext";
 import { useGitHubRepos } from "@/context/GithubContext";
+import { toast } from "react-toastify";
 
 export default function CreateCampaignPage() {
   const router = useRouter();
   const { data: session }: any = useSession();
-  const { createCampaign } = useDevFund();
+  const { createCampaign, refreshCampaigns } = useDevFund();
   const { repos, loading } = useGitHubRepos();
 
   const [formData, setFormData] = useState({
@@ -40,6 +41,17 @@ export default function CreateCampaignPage() {
         chain
       );
       console.log("Project created:", result);
+      await refreshCampaigns();
+      toast("🦄 Project created!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       // TODO: Handle successful project creation
       router.push(`/${session?.user?.username}/campaigns/me`); // Redirect to dashboard after creation
     } catch (error) {
