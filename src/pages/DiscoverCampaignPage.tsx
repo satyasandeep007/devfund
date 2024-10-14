@@ -30,14 +30,12 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
   const { address } = useAccount();
   const { data: session }: any = useSession();
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState("work");
+  const [activeTab, setActiveTab] = useState("all");
 
   const tabs = [
-    { id: "work", label: "Work" },
-    { id: "collections", label: "Collections" },
-    { id: "liked", label: "Liked Shots" },
-    { id: "members", label: "Members" },
-    { id: "about", label: "About" },
+    { id: "all", label: "All Campaigns" },
+    { id: "ongoing", label: "Ongoing" },
+    { id: "completed", label: "Completed" },
   ];
 
   const handleDonate = (campaignId: number) => {
@@ -48,40 +46,35 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="mx-auto px-4 py-8">
+      <div className="mx-auto px-4 py-8 max-w-6xl">
         {/* Hero Section */}
-        <div className="flex items-start mb-8">
-          <div className="flex-1">
-            <div className="bg-green-400 w-16 h-16 rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4">
-              V
+        <div className="flex flex-row items-start mb-12">
+          <div className="flex-1 pr-8">
+            <h1 className="text-5xl font-bold mb-8">
+              Innovative projects,<br />
+              contribute to open<br />
+              source success
+            </h1>
+            <div className="flex items-center text-sm text-gray-600 mb-6">
+              <span className="mr-6">952 Campaigns</span>
+              <span>188 Total Repo's</span>
             </div>
-            <h1 className="text-4xl font-bold mb-2">Open Source</h1>
-            <p className="text-xl text-gray-600 mb-4">
-              A Creative Studio; Crafting UX/UI, Branding, and Development
-            </p>
-            <div className="flex items-center text-sm text-gray-500 mb-4">
-              <span className="mr-4">9,507 followers</span>
-              <span className="mr-4">147 following</span>
-              <span>2,270 likes</span>
-            </div>
-            <div className="flex space-x-4">
-              <button
-                onClick={() => {
-                  router.push(`/${session?.user?.username}/campaigns/create`);
-                }}
-                className="bg-gray-900 text-white px-4 py-2 rounded-md"
-              >
-                Create Campaign
-              </button>
-            </div>
+            <button
+              onClick={() => {
+                router.push(`/${session?.user?.username}/campaigns/create`);
+              }}
+              className="bg-indigo-600 text-white px-6 py-3 rounded-md text-lg font-medium"
+            >
+              Create Campaign
+            </button>
           </div>
-          <div className="w-1/2">
+          <div className="flex-1">
             <Image
-              src="https://cdn.dribbble.com/users/6567474/profile/masthead/1fa860e1-8afe-49be-b766-6cc3c01c53b7/1111.png"
-              alt="Hero"
-              className="w-full h-auto rounded-lg"
-              width={100}
-              height={100}
+              src="/discover_img.png"
+              alt="Open Source Collaboration"
+              width={500}
+              height={400}
+              className="rounded-lg object-cover"
             />
           </div>
         </div>
@@ -91,21 +84,16 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
           {tabs.map((tab) => (
             <button
               key={tab.id}
-              className={`px-4 py-2 mr-4 font-medium ${
+              className={`px-5 py-1 mx-2 mb-2 font-medium text-sm ${
                 activeTab === tab.id
                   ? "text-black border-b-2 border-black"
-                  : "text-gray-500 hover:text-black"
+                  : "text-gray-400 hover:text-black"
               }`}
               onClick={() => setActiveTab(tab.id)}
             >
               {tab.label}
             </button>
           ))}
-          <div className="flex-grow"></div>
-          <select className="border-none bg-transparent text-gray-700">
-            <option>Featured Shots</option>
-            {/* Add more options as needed */}
-          </select>
         </div>
 
         {/* Campaign Cards */}

@@ -13,7 +13,7 @@ const Hero = () => {
             </span>
           </h2>
           <div className="p-4  mb-6 ">
-            <img src="/hero_graph.svg"  />
+            <img src="/github.svg" alt="github" />
             
           </div>
           
