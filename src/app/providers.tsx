@@ -6,7 +6,7 @@ import { createWeb3Modal } from "@web3modal/wagmi/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
 import { SessionProvider } from "next-auth/react";
-import { DevFundProvider } from "@/context/DevFundContext";
+import { GlobalProvider } from "@/context/GlobalContext";
 const queryClient = new QueryClient();
 
 if (!projectId) throw new Error("Project ID is not defined");
@@ -41,9 +41,9 @@ export default function AppKitProvider({
   return (
     <WagmiProvider config={config} initialState={initialState}>
       <QueryClientProvider client={queryClient}>
-        <DevFundProvider>
-          <SessionProvider>{children}</SessionProvider>
-        </DevFundProvider>
+        <SessionProvider>
+          <GlobalProvider>{children}</GlobalProvider>
+        </SessionProvider>
       </QueryClientProvider>
     </WagmiProvider>
   );

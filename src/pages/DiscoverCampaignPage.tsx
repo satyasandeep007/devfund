@@ -5,7 +5,7 @@ import { CampaignCard } from "@/components/CampaignCard";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-
+import { useAccount } from "wagmi";
 interface Campaign {
   id: number;
   title: string;
@@ -27,6 +27,7 @@ interface DiscoverCampaignPageProps {
 const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
   campaigns,
 }) => {
+  const { address } = useAccount();
   const { data: session }: any = useSession();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("work");
@@ -38,6 +39,12 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
     { id: "members", label: "Members" },
     { id: "about", label: "About" },
   ];
+
+  const handleDonate = (campaignId: number) => {
+    console.log(campaignId);
+
+    // router.push(`/campaigns/${campaignId}/donate`);
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -104,7 +111,13 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
         {/* Campaign Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {campaigns.map((campaign) => (
-            <CampaignCard key={campaign.id} campaign={campaign} />
+            <CampaignCard
+              key={campaign.id}
+              campaign={campaign}
+              canDonate={true}
+              handleDonate={handleDonate}
+              isMyCampaign={campaign.owner === address}
+            />
           ))}
         </div>
       </div>

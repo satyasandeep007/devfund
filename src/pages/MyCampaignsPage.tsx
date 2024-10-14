@@ -23,7 +23,12 @@ const MyCampaignsPage = ({ campaigns }: { campaigns: Campaign[] }) => {
         {/* Campaign Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {campaigns.map((campaign) => (
-            <CampaignCard key={campaign.id} campaign={campaign} />
+            <CampaignCard
+              key={campaign.id}
+              campaign={campaign}
+              canDonate={false}
+              handleDonate={() => {}}
+            />
           ))}
         </div>
       </div>

@@ -14,7 +14,7 @@ import * as contractFunctions from "@/lib/contractUtil/contractFunctions";
 
 // Define the shape of the context
 interface DevFundContextType {
-  createProject: typeof contractFunctions.createProject;
+  createCampaign: typeof contractFunctions.createCampaign;
   fundUSDC: typeof contractFunctions.fundUSDC;
   fundEth: typeof contractFunctions.fundEth;
   withdrawUSDC: typeof contractFunctions.withdrawUSDC;
@@ -71,7 +71,7 @@ export const DevFundProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
   const value: DevFundContextType = {
-    createProject: contractFunctions.createProject,
+    createCampaign: contractFunctions.createCampaign,
     fundUSDC: contractFunctions.fundUSDC,
     fundEth: contractFunctions.fundEth,
     withdrawUSDC: contractFunctions.withdrawUSDC,
