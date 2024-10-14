@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import React from "react";
 import {
-  IconGitBranch,
   IconLayoutDashboard,
   IconSpeakerphone,
   IconBrandGithub,
@@ -38,12 +37,6 @@ function Sidebar() {
                 icon={<IconLayoutDashboard size={18} />}
               >
                 Overview
-              </NavLink>
-              <NavLink
-                href={`/${session?.user?.username}/repositories`}
-                icon={<IconGitBranch size={18} />}
-              >
-                Repository
               </NavLink>
             </NavSection>
 
