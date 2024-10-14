@@ -39,6 +39,11 @@ interface ContributionData {
   count: number;
 }
 
+interface ContributionDay {
+  date: string;
+  count: number;
+}
+
 const GithubProfilePage: React.FC = () => {
   const { status, data: session }: any = useSession();
   const [user, setUser] = useState<GithubUser | null>(null);
@@ -83,17 +88,26 @@ const GithubProfilePage: React.FC = () => {
 
       // Fetch contribution data (last 30 days)
       const contributionResponse = await fetch(
-        `https://api.github.com/users/${username}/events`
+        `https://api.github.com/users/${username}/events?per_page=100`
       );
       const contributionEvents = await contributionResponse.json();
+
+      const oneYearAgo = new Date();
+      oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+
       const contributionMap = new Map<string, number>();
 
-      const thirtyDaysAgo = new Date();
-      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+      for (
+        let d = new Date(oneYearAgo);
+        d <= new Date();
+        d.setDate(d.getDate() + 1)
+      ) {
+        contributionMap.set(d.toISOString().split("T")[0], 0);
+      }
 
       contributionEvents.forEach((event: any) => {
         const date = new Date(event.created_at);
-        if (date >= thirtyDaysAgo) {
+        if (date >= oneYearAgo) {
           const dateString = date.toISOString().split("T")[0];
           contributionMap.set(
             dateString,
@@ -147,54 +161,63 @@ const GithubProfilePage: React.FC = () => {
           <div className="w-3/4">
             <h2 className="text-xl font-semibold mb-4">Popular repositories</h2>
             <div className="grid grid-cols-2 gap-4">
-              {popularRepos.map((repo) => (
-                <div key={repo.name} className="bg-white rounded-lg shadow p-4">
-                  <div className="flex justify-between items-center mb-2">
-                    <h3 className="text-blue-500 font-semibold">{repo.name}</h3>
-                    <span className="text-gray-500 text-sm">
-                      {repo.visibility}
-                    </span>
+              {popularRepos &&
+                popularRepos.length > 0 &&
+                popularRepos.map((repo) => (
+                  <div
+                    key={repo.name}
+                    className="bg-white rounded-lg shadow p-4"
+                  >
+                    <div className="flex justify-between items-center mb-2">
+                      <h3 className="text-blue-500 font-semibold">
+                        {repo.name}
+                      </h3>
+                      <span className="text-gray-500 text-sm">
+                        {repo.visibility}
+                      </span>
+                    </div>
+                    <div className="flex items-center">
+                      <span
+                        className={`w-3 h-3 rounded-full mr-2 ${
+                          repo.language === "CSS"
+                            ? "bg-purple-500"
+                            : repo.language === "SCSS"
+                            ? "bg-pink-500"
+                            : repo.language === "HTML"
+                            ? "bg-orange-500"
+                            : "bg-gray-500"
+                        }`}
+                      ></span>
+                      <span className="text-sm text-gray-600">
+                        {repo.language}
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex items-center">
-                    <span
-                      className={`w-3 h-3 rounded-full mr-2 ${
-                        repo.language === "CSS"
-                          ? "bg-purple-500"
-                          : repo.language === "SCSS"
-                          ? "bg-pink-500"
-                          : repo.language === "HTML"
-                          ? "bg-orange-500"
-                          : "bg-gray-500"
-                      }`}
-                    ></span>
-                    <span className="text-sm text-gray-600">
-                      {repo.language}
-                    </span>
-                  </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
         </div>
 
         <div className="mt-8">
-          {otherRepos.map((repo) => (
-            <div
-              key={repo.name}
-              className="bg-white rounded-lg shadow p-4 mb-4 flex justify-between items-center"
-            >
-              <div>
-                <h3 className="text-blue-500 font-semibold">{repo.name}</h3>
-                <p className="text-sm text-gray-600">
-                  Forks {repo.forks_count} · Stars {repo.stargazers_count} ·
-                  Created by {user?.login}
-                </p>
+          {otherRepos &&
+            otherRepos.length > 0 &&
+            otherRepos.map((repo) => (
+              <div
+                key={repo.name}
+                className="bg-white rounded-lg shadow p-4 mb-4 flex justify-between items-center"
+              >
+                <div>
+                  <h3 className="text-blue-500 font-semibold">{repo.name}</h3>
+                  <p className="text-sm text-gray-600">
+                    Forks {repo.forks_count} · Stars {repo.stargazers_count} ·
+                    Created by {user?.login}
+                  </p>
+                </div>
+                <button className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+                  Create Campaign
+                </button>
               </div>
-              <button className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
-                Create Campaign
-              </button>
-            </div>
-          ))}
+            ))}
         </div>
 
         <div className="w-3/4">
@@ -222,6 +245,11 @@ const GithubProfilePage: React.FC = () => {
             </ResponsiveContainer>
           </div>
         </div>
+
+        <div className="mt-8">
+          <h2 className="text-xl font-semibold mb-4">Contributions</h2>
+          <ContributionGraph data={contributionData} />
+        </div>
       </div>
     </div>
   );
@@ -236,5 +264,38 @@ const StatCard: React.FC<{ title: string; value: number }> = ({
     <p className="text-3xl font-bold">{value}</p>
   </div>
 );
+
+const ContributionGraph: React.FC<{ data: ContributionDay[] }> = ({ data }) => {
+  const getColor = (count: number) => {
+    if (count === 0) return "bg-gray-100";
+    if (count >= 1) return "bg-green-200";
+    if (count >= 3) return "bg-green-300";
+    if (count >= 5) return "bg-green-400";
+    return "bg-green-500";
+  };
+
+  const weeks = [];
+  for (let i = 0; i < data.length; i += 7) {
+    weeks.push(data.slice(i, i + 7));
+  }
+
+  return (
+    <div className="bg-white rounded-lg shadow p-4 overflow-x-auto">
+      <div className="flex">
+        {weeks.map((week, weekIndex) => (
+          <div key={weekIndex} className="flex flex-col">
+            {week.map((day, dayIndex) => (
+              <div
+                key={`${weekIndex}-${dayIndex}`}
+                className={`w-3 h-3 m-0.5 ${getColor(day.count)}`}
+                title={`${day.date}: ${day.count} contributions`}
+              />
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 export default GithubProfilePage;
