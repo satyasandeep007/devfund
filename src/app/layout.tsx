@@ -5,8 +5,8 @@ import { Loading } from "@/components/Loading";
 import Header from "@/components/header";
 
 export const metadata: Metadata = {
-  title: "RefineCode",
-  description: "open source, cross-platform refine your code",
+  title: "DivFund",
+  description: "open source, cross-platform DivFund your code",
 };
 
 export default function RootLayout({
