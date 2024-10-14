@@ -8,6 +8,7 @@ const nextConfig = {
       "avatars.githubusercontent.com",
       "opengraph.githubassets.com",
       "github.com",
+      "cdn.dribbble.com",
     ],
   },
   webpack: (config) => {

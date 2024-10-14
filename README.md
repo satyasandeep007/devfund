@@ -1,1 +1,3 @@
-## Base India 2024
+## DevFund
+
+DevFund is a platform for developers to fund open source projects.

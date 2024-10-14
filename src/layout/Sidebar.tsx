@@ -6,89 +6,98 @@ import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import React from "react";
 import {
-  IconLogout,
-  IconUser,
-  IconBrandGithub,
-  IconFiles,
+  IconGitBranch,
+  IconLayoutDashboard,
   IconSpeakerphone,
-  IconDashboard,
+  IconBrandGithub,
+  IconWallet,
+  IconLogout,
 } from "@tabler/icons-react";
 
 function Sidebar() {
-  const pathname = usePathname();
   const { data: session }: any = useSession();
 
   return (
-    <div className="w-60 shrink-0 md:block h-screen sticky top-0 overflow-hidden border-r border-gray-900">
+    <div className="w-64 shrink-0 md:block h-screen fixed top-0 left-0 overflow-y-auto bg-white border-r border-gray-200">
       <div className="w-full h-full bg-white flex flex-col">
-        <div className="p-6 flex items-center gap-2">
+        <div className="p-4 flex items-center gap-2 border-b border-gray-200">
           <IconBrandGithub size={24} />
           <div>
-            <h1 className="text-sm font-medium text-gray-800">Git Campaigns</h1>
+            <h1 className="text-sm font-semibold text-gray-800">DevFund</h1>
             <p className="text-xs text-gray-500">Base India 2024</p>
           </div>
         </div>
 
-        <hr className="border-gray-200" />
+        <div className="flex flex-col flex-grow justify-between py-4">
+          <div className="space-y-4">
+            <NavSection title="MY DASHBOARD" className="pt-4">
+              <NavLink
+                href={`/${session?.user?.username}/dashboard`}
+                icon={<IconLayoutDashboard size={18} />}
+              >
+                Overview
+              </NavLink>
+              <NavLink
+                href={`/${session?.user?.username}/repositories`}
+                icon={<IconGitBranch size={18} />}
+              >
+                Repository
+              </NavLink>
+            </NavSection>
 
-        <div className="flex flex-col flex-grow justify-between">
-          {/* top */}
-          <div className="pt-6 text-gray-500 font-medium space-y-2 md:px-2 text-xs">
-            <NavLink
-              href={`/${session?.user?.username}/dashboard`}
-              icon={<IconDashboard size={18} />}
-            >
-              Dashboard
-            </NavLink>
-            <NavLink
-              href={`/${session?.user?.username}/repositories`}
-              icon={<IconFiles size={18} />}
-            >
-              Repositories
-            </NavLink>
-            <NavLink
-              href={`/${session?.user?.username}/campaigns`}
-              icon={<IconSpeakerphone size={18} />}
-            >
-              Campaigns
-            </NavLink>
-            <NavLink
-              href={`/${session?.user?.username}/profile`}
-              icon={<IconUser size={18} />}
-            >
-              Profile
-            </NavLink>
+            <NavSection title="CAMPAIGNS">
+              <NavLink
+                href={`/${session?.user?.username}/campaigns/discover`}
+                icon={<IconSpeakerphone size={18} />}
+              >
+                Discover
+              </NavLink>
+              <NavLink
+                href={`/${session?.user?.username}/campaigns/me`}
+                icon={<IconSpeakerphone size={18} />}
+              >
+                My Campaigns
+              </NavLink>
+            </NavSection>
+
+            <NavSection title="USER PROFILE">
+              <NavLink
+                href={`/${session?.user?.username}/profile/github`}
+                icon={<IconBrandGithub size={18} />}
+              >
+                Github
+              </NavLink>
+              <NavLink
+                href={`/${session?.user?.username}/profile/wallet`}
+                icon={<IconWallet size={18} />}
+              >
+                Wallet
+              </NavLink>
+            </NavSection>
           </div>
 
-          {/* bottom */}
-          <div className="mt-auto">
-            <div className="text-gray-500 text-sm font-medium">
-              <button
-                className="flex w-full px-4 py-2 items-center gap-2 hover:bg-gray-100 transition-colors"
-                onClick={(e) => {
-                  e.preventDefault();
-                  // Add logout logic here
-                }}
-              >
-                <IconLogout size={18} />
-                <span>Logout</span>
-              </button>
-            </div>
-
-            <hr className="border-gray-200 my-2" />
-
-            <div className="flex px-4 py-3 items-center cursor-pointer hover:bg-gray-100 transition-colors">
-              <Image
-                src={"https://avatars.githubusercontent.com/u/52450973?v=4"}
-                alt={"user"}
-                width={32}
-                height={32}
-                className="rounded-full"
-              />
-              <div className="ml-3">
-                <p className="text-sm font-semibold text-gray-800">John Doe</p>
-                <p className="text-xs font-medium text-gray-500">@johndoe</p>
+          <div className="mt-auto border-t border-gray-200 py-2">
+            <div className="flex items-center justify-between px-4 py-3 hover:bg-gray-100 transition-colors cursor-pointer">
+              <div className="flex items-center">
+                <Image
+                  src={session?.user?.image || "/default-avatar.png"}
+                  alt="user"
+                  width={32}
+                  height={32}
+                  className="rounded-full"
+                />
+                <div className="ml-3">
+                  <p className="text-sm font-medium text-gray-800">
+                    {session?.user?.name || "User Name"}
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    @{session?.user?.username || "username"}
+                  </p>
+                </div>
               </div>
+              <button className="text-gray-500 hover:text-gray-700">
+                <IconLogout size={18} />
+              </button>
             </div>
           </div>
         </div>
@@ -106,18 +115,38 @@ interface NavLinkProps {
 const NavLink: React.FC<NavLinkProps> = ({ href, icon, children }) => {
   const pathname = usePathname();
   const isActive = pathname === href;
-  console.log(pathname, href, isActive);
 
   return (
     <Link
       href={href}
-      className={`flex items-center px-4 py-2 ${
-        isActive ? "text-orange-700 bg-orange-50" : "text-gray-600"
+      className={`flex items-center px-4 py-2 text-sm ${
+        isActive ? "text-blue-600 bg-blue-50 font-medium" : "text-gray-700"
       } hover:bg-gray-100 transition-colors`}
     >
-      <span className="mr-3">{icon}</span>
+      <span className="mr-3 text-gray-500">{icon}</span>
       {children}
     </Link>
+  );
+};
+
+interface NavSectionProps {
+  title: string;
+  children: React.ReactNode;
+  className?: string;
+}
+
+const NavSection: React.FC<NavSectionProps> = ({
+  title,
+  children,
+  className = "",
+}) => {
+  return (
+    <div className={`mb-6 ${className}`}>
+      {" "}
+      {/* Add the className prop here */}
+      <h2 className="px-4 mb-2 text-xs font-semibold text-gray-500">{title}</h2>
+      <div>{children}</div>
+    </div>
   );
 };
 
