@@ -13,6 +13,7 @@ import {
 import * as contractFunctions from "@/lib/contractUtil/contractFunctions";
 import { getWalletBalancesApi } from "@/lib/api/balance";
 import { useAccount } from "wagmi";
+import { getMarketPricesApi } from "@/lib/api/marketPrice";
 
 // Define the shape of the context
 interface DevFundContextType {
@@ -33,6 +34,8 @@ interface DevFundContextType {
   campaigns: Campaign[] | null;
   isLoading: boolean;
   walletBalancesLoading: boolean;
+  ethMarketPrice: number;
+  usdcMarketPrice: number;
 }
 
 type Campaign = {
@@ -64,9 +67,12 @@ export const DevFundProvider: React.FC<{ children: ReactNode }> = ({
   const [nftBalances, setNftBalances] = useState<any[] | null>(null);
   const [walletBalancesLoading, setWalletBalancesLoading] =
     useState<boolean>(false);
+  const [ethMarketPrice, setETHMarketPrice] = useState(0);
+  const [usdcMarketPrice, setUSDCMarketPrice] = useState(0);
 
   useEffect(() => {
     fetchCampaigns();
+    fetchMarketPrices();
   }, []);
 
   useEffect(() => {
@@ -74,6 +80,18 @@ export const DevFundProvider: React.FC<{ children: ReactNode }> = ({
 
     fetchWalletBalances(address);
   }, [address]);
+
+  const fetchMarketPrices = async () => {
+    if (address) {
+      try {
+        const { usdcPriceInUSD, ethPriceInUSD } = await getMarketPricesApi();
+        setETHMarketPrice(ethPriceInUSD);
+        setUSDCMarketPrice(usdcPriceInUSD);
+      } catch (error) {
+        console.error("Error fetching market prices:", error);
+      }
+    }
+  };
 
   const fetchCampaigns = async () => {
     try {
@@ -121,6 +139,8 @@ export const DevFundProvider: React.FC<{ children: ReactNode }> = ({
     nftBalances,
     fetchWalletBalances,
     walletBalancesLoading,
+    ethMarketPrice,
+    usdcMarketPrice,
   };
 
   return (
