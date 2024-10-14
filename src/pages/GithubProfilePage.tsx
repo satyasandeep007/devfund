@@ -3,6 +3,14 @@
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 
 interface GithubUser {
   login: string;
@@ -19,11 +27,27 @@ interface GithubRepo {
   visibility: string;
 }
 
+interface GithubStats {
+  public_repos: number;
+  followers: number;
+  following: number;
+  public_gists: number;
+}
+
+interface ContributionData {
+  date: string;
+  count: number;
+}
+
 const GithubProfilePage: React.FC = () => {
   const { status, data: session }: any = useSession();
   const [user, setUser] = useState<GithubUser | null>(null);
   const [popularRepos, setPopularRepos] = useState<GithubRepo[]>([]);
   const [otherRepos, setOtherRepos] = useState<GithubRepo[]>([]);
+  const [stats, setStats] = useState<GithubStats | null>(null);
+  const [contributionData, setContributionData] = useState<ContributionData[]>(
+    []
+  );
 
   useEffect(() => {
     if (session?.user?.username) {
@@ -50,6 +74,39 @@ const GithubProfilePage: React.FC = () => {
       );
       const otherReposData = await otherReposResponse.json();
       setOtherRepos(otherReposData);
+
+      const statsResponse = await fetch(
+        `https://api.github.com/users/${username}`
+      );
+      const statsData = await statsResponse.json();
+      setStats(statsData);
+
+      // Fetch contribution data (last 30 days)
+      const contributionResponse = await fetch(
+        `https://api.github.com/users/${username}/events`
+      );
+      const contributionEvents = await contributionResponse.json();
+      const contributionMap = new Map<string, number>();
+
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+      contributionEvents.forEach((event: any) => {
+        const date = new Date(event.created_at);
+        if (date >= thirtyDaysAgo) {
+          const dateString = date.toISOString().split("T")[0];
+          contributionMap.set(
+            dateString,
+            (contributionMap.get(dateString) || 0) + 1
+          );
+        }
+      });
+
+      const contributionArray = Array.from(
+        contributionMap,
+        ([date, count]) => ({ date, count })
+      );
+      setContributionData(contributionArray);
     } catch (error) {
       console.error("Error fetching GitHub data:", error);
     }
@@ -139,9 +196,45 @@ const GithubProfilePage: React.FC = () => {
             </div>
           ))}
         </div>
+
+        <div className="w-3/4">
+          <h2 className="text-xl font-semibold mb-4">GitHub Stats</h2>
+          <div className="grid grid-cols-4 gap-4 mb-8">
+            {stats && (
+              <>
+                <StatCard title="Public Repos" value={stats.public_repos} />
+                <StatCard title="Followers" value={stats.followers} />
+                <StatCard title="Following" value={stats.following} />
+                <StatCard title="Public Gists" value={stats.public_gists} />
+              </>
+            )}
+          </div>
+
+          <h2 className="text-xl font-semibold mb-4">Contribution Activity</h2>
+          <div className="bg-white rounded-lg shadow p-4 mb-8">
+            <ResponsiveContainer width="100%" height={200}>
+              <BarChart data={contributionData}>
+                <XAxis dataKey="date" />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="count" fill="#8884d8" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
+
+const StatCard: React.FC<{ title: string; value: number }> = ({
+  title,
+  value,
+}) => (
+  <div className="bg-white rounded-lg shadow p-4">
+    <h3 className="text-lg font-semibold mb-2">{title}</h3>
+    <p className="text-3xl font-bold">{value}</p>
+  </div>
+);
 
 export default GithubProfilePage;
