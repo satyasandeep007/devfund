@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { createCampaign } from "../lib/contractUtil/contractFunctions";
 import { useRouter } from "next/navigation";
-
+import { useSession } from "next-auth/react";
 const repositories = [
   { id: 1, name: "MyProject/repo1" },
   { id: 2, name: "MyProject/repo2" },
@@ -13,6 +13,7 @@ const repositories = [
 
 export default function CreateCampaignPage() {
   const router = useRouter();
+  const { data: session }: any = useSession();
   const [formData, setFormData] = useState({
     title: "",
     gitUrl: "",
@@ -42,7 +43,7 @@ export default function CreateCampaignPage() {
       );
       console.log("Project created:", result);
       // TODO: Handle successful project creation
-      router.push("/dashboard"); // Redirect to dashboard after creation
+      router.push(`/${session?.user?.username}/campaigns/me`); // Redirect to dashboard after creation
     } catch (error) {
       console.error("Error creating project:", error);
       // TODO: Handle error

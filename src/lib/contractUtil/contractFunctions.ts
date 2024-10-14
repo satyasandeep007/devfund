@@ -76,22 +76,51 @@ export const getAllCampaigns = async () => {
   }
 };
 
-export const createCampaign = (
+export const createCampaign = async (
   title: string,
   gitUrl: string,
   description: string,
   fundingGoal: number,
   chain: number
 ) => {
-  const contractAddress: string = getContractConfig("MAIN_CONTRACT").ADDRESS;
-  const abi = getContractConfig("MAIN_CONTRACT").ABI;
-  const uoCallData = encodeFunctionData({
-    abi,
-    functionName: "createCampaign",
-    args: [title, gitUrl, description, fundingGoal],
-  });
-  const uo = [{ target: contractAddress, data: uoCallData, value: "0" }];
-  return { uo };
+  // Ensure window.ethereum is available
+  if (typeof window.ethereum !== "undefined") {
+    try {
+      // Request account access
+      // await window.ethereum.request({ method: 'eth_requestAccounts' });
+
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+
+      const contractAddress: string =
+        getContractConfig("MAIN_CONTRACT").ADDRESS;
+      const abi = getContractConfig("MAIN_CONTRACT").ABI;
+
+      const contract = new ethers.Contract(contractAddress, abi, signer);
+
+      // Convert fundingGoal to BigNumber if it's in ether
+      //   const fundingGoalWei = ethers.parseEther(fundingGoal.toString());
+
+      // Call the createCampaign function
+      const tx = await contract.createCampaign(
+        title,
+        gitUrl,
+        description,
+        fundingGoal
+      );
+
+      // Wait for the transaction to be mined
+      const receipt = await tx.wait();
+
+      console.log("Campaign created successfully:", receipt);
+      return receipt;
+    } catch (error) {
+      console.error("Error creating campaign:", error);
+      throw error;
+    }
+  } else {
+    throw new Error("Ethereum provider not found");
+  }
 };
 
 export const fundUSDC = (amount: number, projectNo: number, chain: number) => {
