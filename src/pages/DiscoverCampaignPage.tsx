@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CampaignCard } from "@/components/CampaignCard";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -8,6 +8,8 @@ import { useSession } from "next-auth/react";
 import { useAccount } from "wagmi";
 import { toast } from "react-toastify";
 import { useDevFund } from "@/context/DevFundContext";
+import SendModal from "@/components/SendModal";
+
 interface Campaign {
   id: number;
   title: string;
@@ -34,13 +36,14 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
   const { fundUSDC, fundEth, refreshCampaigns } = useDevFund();
 
   const router = useRouter();
-<<<<<<< HEAD
   const [activeTab, setActiveTab] = useState("all");
-=======
-  const [activeTab, setActiveTab] = useState("work");
   const [donationAmount, setDonationAmount] = useState("1");
   const [donationType, setDonationType] = useState("USDC"); // or 'USDC'
->>>>>>> a731a12a542b23b1f0f347a1d64b9e8cc8bdc683
+
+  const [isSendModalOpen, setIsSendModalOpen] = useState(false);
+  const [marketPrice, setMarketPrice] = useState(0);
+  const [balance, setBalance] = useState("0");
+  const [campaignId, setCampaignId]: any = useState(null);
 
   const tabs = [
     { id: "all", label: "All Campaigns" },
@@ -48,7 +51,29 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
     { id: "completed", label: "Completed" },
   ];
 
-  const handleDonate = async (e: React.FormEvent, campaignId: number) => {
+  useEffect(() => {
+    const fetchMarketPrice = async () => {
+      if (address) {
+        const price: any = 1; // todo: change it
+        setMarketPrice(price);
+      }
+    };
+
+    fetchMarketPrice();
+  }, [address]);
+
+  const toggleSendModalOpen = (e: React.FormEvent, campaignId: number) => {
+    e.preventDefault();
+    setCampaignId(campaignId);
+    setIsSendModalOpen(true);
+  };
+
+  const toggleSendModalClose = () => {
+    setCampaignId(null);
+    setIsSendModalOpen(false);
+  };
+
+  const handleDonate = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const chain = 1;
@@ -61,6 +86,8 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
       } else {
         result = await fundEth(amount, projectNo, chain);
       }
+
+      await toggleSendModalClose();
 
       console.log("Donation made:", result);
       await refreshCampaigns();
@@ -75,9 +102,6 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
         progress: undefined,
         theme: "light",
       });
-
-      // Redirect to campaign page after donation
-      router.push(`/${session?.user?.username}/campaigns/discover`);
     } catch (error) {
       console.error("Error making donation:", error);
       toast.error("Error making donation. Please try again.");
@@ -91,8 +115,10 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
         <div className="flex flex-row items-start mb-12">
           <div className="flex-1 pr-8">
             <h1 className="text-5xl font-bold mb-8">
-              Innovative projects,<br />
-              contribute to open<br />
+              Innovative projects,
+              <br />
+              contribute to open
+              <br />
               source success
             </h1>
             <div className="flex items-center text-sm text-gray-600 mb-6">
@@ -143,12 +169,27 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
               key={campaign.id}
               campaign={campaign}
               canDonate={true}
-              handleDonate={(e) => handleDonate(e, campaign.id)}
+              handleDonate={(e) => toggleSendModalOpen(e, campaign.id)}
               isMyCampaign={campaign.owner === address}
             />
           ))}
         </div>
       </div>
+      {isSendModalOpen && (
+        <SendModal
+          onClose={toggleSendModalClose}
+          balance={balance}
+          marketPrice={marketPrice}
+          handleDonate={(e) => handleDonate(e)}
+          setDonationAmount={setDonationAmount}
+          setDonationType={setDonationType}
+          donationAmount={donationAmount}
+          donationType={donationType}
+          campaign={
+            (campaigns && campaigns.find((i) => i.id == campaignId)) || null
+          }
+        />
+      )}
     </div>
   );
 };
