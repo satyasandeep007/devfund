@@ -3,7 +3,8 @@ import { toast } from "react-toastify";
 
 interface SendModalProps {
   onClose: () => void;
-  marketPrice: number;
+  usdcMarketPrice: number;
+  ethMarketPrice: number;
   handleDonate: (e: React.FormEvent) => any;
   campaign: any;
   setDonationAmount: any;
@@ -18,7 +19,8 @@ const SendModal: React.FC<SendModalProps> = ({
   onClose,
   ethBalance,
   usdcBalance,
-  marketPrice,
+  ethMarketPrice,
+  usdcMarketPrice,
   handleDonate,
   campaign,
   setDonationAmount,
@@ -27,6 +29,9 @@ const SendModal: React.FC<SendModalProps> = ({
   donationAmount,
 }) => {
   const [loading, setLoading] = useState(false);
+
+  const marketPrice =
+    donationType === "USDC" ? usdcMarketPrice : ethMarketPrice;
 
   const handleMax = () => {
     const balance = donationType === "USDC" ? usdcBalance : ethBalance;

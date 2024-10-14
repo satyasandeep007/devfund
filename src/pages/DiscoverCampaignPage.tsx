@@ -9,7 +9,7 @@ import { useAccount } from "wagmi";
 import { toast } from "react-toastify";
 import { useDevFund } from "@/context/DevFundContext";
 import SendModal from "@/components/SendModal";
-
+import axios from "axios";
 interface Campaign {
   id: number;
   title: string;
@@ -33,7 +33,14 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
 }) => {
   const { address } = useAccount();
   const { data: session }: any = useSession();
-  const { fundUSDC, fundEth, refreshCampaigns, tokenBalances } = useDevFund();
+  const {
+    fundUSDC,
+    fundEth,
+    refreshCampaigns,
+    tokenBalances,
+    ethMarketPrice,
+    usdcMarketPrice,
+  } = useDevFund();
 
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("all");
@@ -41,7 +48,7 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
   const [donationType, setDonationType] = useState("USDC"); // or 'USDC'
 
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
-  const [marketPrice, setMarketPrice] = useState(0);
+
   const [usdcBalance, setUSDCBalance] = useState("0");
   const [ethBalance, setETHBalance] = useState("0");
   const [campaignId, setCampaignId]: any = useState(null);
@@ -53,17 +60,6 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
     { id: "ongoing", label: "Ongoing" },
     { id: "completed", label: "Completed" },
   ];
-
-  useEffect(() => {
-    const fetchMarketPrice = async () => {
-      if (address) {
-        const price: any = 1; // todo: change it
-        setMarketPrice(price);
-      }
-    };
-
-    fetchMarketPrice();
-  }, [address]);
 
   useEffect(() => {
     if (tokenBalances && tokenBalances.length > 0) {
@@ -205,7 +201,8 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
           onClose={toggleSendModalClose}
           usdcBalance={usdcBalance}
           ethBalance={ethBalance}
-          marketPrice={marketPrice}
+          usdcMarketPrice={usdcMarketPrice}
+          ethMarketPrice={ethMarketPrice}
           handleDonate={(e) => handleDonate(e)}
           setDonationAmount={setDonationAmount}
           setDonationType={setDonationType}
