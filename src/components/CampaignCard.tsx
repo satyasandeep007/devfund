@@ -17,7 +17,17 @@ type Campaign = {
   usdcBalance: string;
 };
 
-export function CampaignCard({ campaign }: { campaign: Campaign }) {
+export function CampaignCard({
+  campaign,
+  canDonate,
+  handleDonate,
+  isMyCampaign,
+}: {
+  campaign: Campaign;
+  canDonate: boolean;
+  handleDonate: (campaignId: number) => void;
+  isMyCampaign?: boolean;
+}) {
   const repoFullName = campaign.gitUrl.split("/").slice(-2).join("/");
   const repoOwner = repoFullName.split("/")[0];
 
@@ -54,6 +64,7 @@ export function CampaignCard({ campaign }: { campaign: Campaign }) {
                 <span className="text-sm text-gray-600">
                   {campaign.donationCount} donations
                 </span>
+                <span>{isMyCampaign ? "Yours" : ""}</span>
               </div>
               <div className="flex items-center space-x-2">
                 <IconEye className="w-5 h-5 text-blue-500" />
@@ -64,11 +75,17 @@ export function CampaignCard({ campaign }: { campaign: Campaign }) {
               <span className="text-sm font-semibold text-gray-500">
                 Goal: ${parseInt(campaign.fundingGoal).toLocaleString()}
               </span>
-              <div className="space-x-2">
-                <button className="bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-blue-600 transition-colors">
-                  Donate
-                </button>
-              </div>
+              {canDonate && (
+                <div className="space-x-2">
+                  <button
+                    // disabled={isMyCampaign} //todo: uncomment
+                    onClick={() => handleDonate(campaign.id)}
+                    className="bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-blue-600 transition-colors"
+                  >
+                    Donate
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </Link>
