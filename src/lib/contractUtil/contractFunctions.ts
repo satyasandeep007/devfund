@@ -81,6 +81,7 @@ export const createCampaign = async (
   gitUrl: string,
   description: string,
   fundingGoal: number,
+  endDate: number,
   chain: number
 ) => {
   // Ensure window.ethereum is available
@@ -106,7 +107,8 @@ export const createCampaign = async (
         title,
         gitUrl,
         description,
-        fundingGoal
+        fundingGoal,
+        endDate
       );
 
       // Wait for the transaction to be mined
@@ -123,43 +125,83 @@ export const createCampaign = async (
   }
 };
 
-export const fundUSDC = (amount: number, projectNo: number, chain: number) => {
-  const contractAddress: string = getContractConfig("MAIN_CONTRACT").ADDRESS;
-  const abi = getContractConfig("MAIN_CONTRACT").ABI;
-  const approveCallData = encodeFunctionData({
-    abi: getContractConfig("USDC_CONTRACT").ABI,
-    functionName: "approve",
-    args: [contractAddress, parseEther(`${amount}`)],
-  });
+export const fundUSDC = async (
+  amount: number,
+  projectNo: number,
+  chain: number
+) => {
+  if (typeof window.ethereum !== "undefined") {
+    try {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
 
-  const uoCallData = encodeFunctionData({
-    abi,
-    functionName: "fundUSDC",
-    args: [parseEther(`${amount}`), projectNo],
-  });
+      const contractAddress: string =
+        getContractConfig("MAIN_CONTRACT").ADDRESS;
+      const abi = getContractConfig("MAIN_CONTRACT").ABI;
+      const contract = new ethers.Contract(contractAddress, abi, signer);
 
-  const uo = [
-    {
-      target: getContractConfig("USDC_CONTRACT").ADDRESS,
-      data: approveCallData,
-      value: "0",
-    },
-    { target: contractAddress, data: uoCallData, value: "0" },
-  ];
+      const usdcContractAddress: string =
+        getContractConfig("USDC_CONTRACT").ADDRESS;
+      const usdcAbi = getContractConfig("USDC_CONTRACT").ABI;
+      const usdcContract = new ethers.Contract(
+        usdcContractAddress,
+        usdcAbi,
+        signer
+      );
 
-  return { uo };
+      // Convert amount to Wei
+      const amountWei = ethers.parseUnits(amount.toString(), 6); // USDC has 6 decimal places
+
+      // Approve USDC transfer
+      const approveTx = await usdcContract.approve(contractAddress, amountWei);
+      await approveTx.wait();
+
+      // Fund USDC
+      const fundTx = await contract.fundUSDC(amountWei, projectNo);
+      const receipt = await fundTx.wait();
+
+      console.log("USDC funding successful:", receipt);
+      return receipt;
+    } catch (error) {
+      console.error("Error funding USDC:", error);
+      throw error;
+    }
+  } else {
+    throw new Error("Ethereum provider not found");
+  }
 };
 
-export const fundEth = (amount: number, projectNo: number, chain: number) => {
-  const contractAddress: string = getContractConfig("MAIN_CONTRACT").ADDRESS;
-  const abi = getContractConfig("MAIN_CONTRACT").ABI;
-  const uoCallData = encodeFunctionData({
-    abi,
-    functionName: "fundEth",
-    args: [projectNo],
-  });
-  const uo = [{ target: contractAddress, data: uoCallData, value: amount }];
-  return { uo };
+export const fundEth = async (
+  amount: number,
+  projectNo: number,
+  chain: number
+) => {
+  if (typeof window.ethereum !== "undefined") {
+    try {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+
+      const contractAddress: string =
+        getContractConfig("MAIN_CONTRACT").ADDRESS;
+      const abi = getContractConfig("MAIN_CONTRACT").ABI;
+      const contract = new ethers.Contract(contractAddress, abi, signer);
+
+      // Convert amount to Wei
+      const amountWei = ethers.parseEther(amount.toString());
+
+      // Fund ETH
+      const fundTx = await contract.fundEth(projectNo, { value: amountWei });
+      const receipt = await fundTx.wait();
+
+      console.log("ETH funding successful:", receipt);
+      return receipt;
+    } catch (error) {
+      console.error("Error funding ETH:", error);
+      throw error;
+    }
+  } else {
+    throw new Error("Ethereum provider not found");
+  }
 };
 
 export const withdrawUSDC = (

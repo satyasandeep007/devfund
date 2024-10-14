@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { useDevFund } from "@/context/DevFundContext";
 import { useGitHubRepos } from "@/context/GithubContext";
 import { toast } from "react-toastify";
+import { addDays } from "date-fns"; // Make sure to install and import date-fns
 
 export default function CreateCampaignPage() {
   const router = useRouter();
@@ -33,11 +34,18 @@ export default function CreateCampaignPage() {
     e.preventDefault();
     try {
       const chain = 1; // Replace with actual chain ID
+      const currentDate = new Date();
+      const endDate = addDays(currentDate, Number(formData.duration));
+      const endDateTimestamp = Math.floor(endDate.getTime() / 1000); // Convert to seconds
+
+      console.log(endDateTimestamp, "endDateTimestamp");
+
       const result = await createCampaign(
         formData.title,
         formData.gitUrl,
         formData.description,
         Number(formData.fundingGoal),
+        endDateTimestamp,
         chain
       );
       console.log("Project created:", result);

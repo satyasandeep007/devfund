@@ -6,6 +6,8 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useAccount } from "wagmi";
+import { toast } from "react-toastify";
+import { useDevFund } from "@/context/DevFundContext";
 interface Campaign {
   id: number;
   title: string;
@@ -29,8 +31,16 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
 }) => {
   const { address } = useAccount();
   const { data: session }: any = useSession();
+  const { fundUSDC, fundEth, refreshCampaigns } = useDevFund();
+
   const router = useRouter();
+<<<<<<< HEAD
   const [activeTab, setActiveTab] = useState("all");
+=======
+  const [activeTab, setActiveTab] = useState("work");
+  const [donationAmount, setDonationAmount] = useState("1");
+  const [donationType, setDonationType] = useState("USDC"); // or 'USDC'
+>>>>>>> a731a12a542b23b1f0f347a1d64b9e8cc8bdc683
 
   const tabs = [
     { id: "all", label: "All Campaigns" },
@@ -38,10 +48,40 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
     { id: "completed", label: "Completed" },
   ];
 
-  const handleDonate = (campaignId: number) => {
-    console.log(campaignId);
+  const handleDonate = async (e: React.FormEvent, campaignId: number) => {
+    e.preventDefault();
+    try {
+      const chain = 1;
+      const amount = Number(donationAmount);
+      const projectNo = Number(campaignId);
 
-    // router.push(`/campaigns/${campaignId}/donate`);
+      let result;
+      if (donationType === "USDC") {
+        result = await fundUSDC(amount, projectNo, chain);
+      } else {
+        result = await fundEth(amount, projectNo, chain);
+      }
+
+      console.log("Donation made:", result);
+      await refreshCampaigns();
+
+      toast(`🦄 ${donationType} Donation successful!`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+
+      // Redirect to campaign page after donation
+      router.push(`/${session?.user?.username}/campaigns/discover`);
+    } catch (error) {
+      console.error("Error making donation:", error);
+      toast.error("Error making donation. Please try again.");
+    }
   };
 
   return (
@@ -103,7 +143,7 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
               key={campaign.id}
               campaign={campaign}
               canDonate={true}
-              handleDonate={handleDonate}
+              handleDonate={(e) => handleDonate(e, campaign.id)}
               isMyCampaign={campaign.owner === address}
             />
           ))}

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FollowerPointerCard } from "@/components/ui/following-pointer";
 import { IconEye, IconHeart } from "@tabler/icons-react";
+import { format } from "date-fns";
 
 type Campaign = {
   description: string;
@@ -25,11 +26,15 @@ export function CampaignCard({
 }: {
   campaign: Campaign;
   canDonate: boolean;
-  handleDonate: (campaignId: number) => void;
+  handleDonate: (e: React.FormEvent) => any;
   isMyCampaign?: boolean;
 }) {
   const repoFullName = campaign.gitUrl.split("/").slice(-2).join("/");
   const repoOwner = repoFullName.split("/")[0];
+
+  const formattedEndDate = campaign?.endDate
+    ? format(new Date(parseInt(campaign.endDate) * 1000), "PPP")
+    : "N/A";
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col">
@@ -75,11 +80,14 @@ export function CampaignCard({
               <span className="text-sm font-semibold text-gray-500">
                 Goal: ${parseInt(campaign.fundingGoal).toLocaleString()}
               </span>
+              <span className="text-sm font-semibold text-gray-500">
+                End Date: ${formattedEndDate}
+              </span>
               {canDonate && (
                 <div className="space-x-2">
                   <button
                     // disabled={isMyCampaign} //todo: uncomment
-                    onClick={() => handleDonate(campaign.id)}
+                    onClick={handleDonate}
                     className="bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-blue-600 transition-colors"
                   >
                     Donate

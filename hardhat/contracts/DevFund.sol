@@ -61,13 +61,15 @@ contract DevFund {
         string calldata _title,
         string calldata _gitUrl,
         string calldata _description,
-        uint256 _fundingGoal
+        uint256 _fundingGoal,
+        uint256 _endDate
     ) public returns (uint256) {
         uint256 campaignId = _createCampaign(
             _title,
             _gitUrl,
             _description,
-            _fundingGoal
+            _fundingGoal,
+            _endDate
         );
         _emitCampaignCreated(campaignId);
         return campaignId;
@@ -77,7 +79,8 @@ contract DevFund {
         string calldata _title,
         string calldata _gitUrl,
         string calldata _description,
-        uint256 _fundingGoal
+        uint256 _fundingGoal,
+        uint256 _endDate
     ) private returns (uint256) {
         Campaign memory newCampaign = Campaign({
             title: _title,
@@ -88,7 +91,7 @@ contract DevFund {
             description: _description,
             fundingGoal: _fundingGoal,
             donationCount: 0,
-            endDate: 0,
+            endDate: _endDate,
             status: "active"
         });
 
