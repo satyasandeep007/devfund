@@ -2,10 +2,33 @@
 
 import { useState } from "react";
 import { CampaignCard } from "@/components/CampaignCard";
-import { sampleCampaigns } from "@/lib/mockUtil/campaignData";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
-const DiscoverCampaignPage = () => {
+interface Campaign {
+  id: number;
+  title: string;
+  usdcBalance: string;
+  ethBalance: string;
+  owner: string;
+  gitUrl: string;
+  description: string;
+  fundingGoal: string;
+  donationCount: string;
+  endDate: string;
+  status: string;
+}
+
+interface DiscoverCampaignPageProps {
+  campaigns: Campaign[];
+}
+
+const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
+  campaigns,
+}) => {
+  const { data: session }: any = useSession();
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState("work");
 
   const tabs = [
@@ -35,7 +58,12 @@ const DiscoverCampaignPage = () => {
               <span>2,270 likes</span>
             </div>
             <div className="flex space-x-4">
-              <button className="bg-gray-900 text-white px-4 py-2 rounded-md">
+              <button
+                onClick={() => {
+                  router.push(`/${session?.user?.username}/campaigns/create`);
+                }}
+                className="bg-gray-900 text-white px-4 py-2 rounded-md"
+              >
                 Create Campaign
               </button>
             </div>
@@ -75,8 +103,8 @@ const DiscoverCampaignPage = () => {
 
         {/* Campaign Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {sampleCampaigns.map((campaign) => (
-            <CampaignCard key={campaign.githubRepo.id} campaign={campaign} />
+          {campaigns.map((campaign) => (
+            <CampaignCard key={campaign.id} campaign={campaign} />
           ))}
         </div>
       </div>

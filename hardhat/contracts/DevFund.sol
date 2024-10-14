@@ -47,6 +47,16 @@ contract DevFund {
         devFundContributorNFT = DevFundContributorNFT(nftAddress);
     }
 
+    function getCampaigns() public view returns (Campaign[] memory) {
+        Campaign[] memory campaignArray = new Campaign[](campaigns.length);
+
+        for (uint256 i = 0; i < campaigns.length; i++) {
+            campaignArray[i] = campaigns[i];
+        }
+
+        return campaignArray;
+    }
+
     function createCampaign(
         string calldata _title,
         string calldata _gitUrl,
