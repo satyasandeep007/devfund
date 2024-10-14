@@ -14,8 +14,7 @@ const Hero = () => {
             </span>
           </h2>
           <div className="p-4  mb-6 ">
-
-            <Image src="/hero_graph.svg" width={128} height={128} alt="Base" />
+            <img src="/github.svg" alt="github" />
             
           </div>
           
