@@ -7,7 +7,7 @@ const Hero = () => {
     <div className="max-w-7xl mx-auto px-4 py-8">
       <main className="flex flex-row justify-between  h-full">
         <div className="h-full flex flex-col justify-between gap-14">
-          <h2 className="text-7xl font-semibold leading-tight mb-6">
+          <h2 className="text-7xl font-bold leading-tight mb-6 mt-10">
             Open source,
             <br />
             cross-platform
@@ -47,7 +47,7 @@ const Hero = () => {
 
         <div className="md:w-1/3 py-6">
           <div className="h-full flex flex-col justify-between items-center gap-16">
-            <p className="text-xl font-thin ">
+            <p className="text-lg font-thin ">
               Audacity is an easy-to-use, multi-track audio <br /> editor and
               recorder. Audacity is free, open <br /> source, and cross-platform
               software.
@@ -60,9 +60,9 @@ const Hero = () => {
             <div>
               {" "}
               
-              <p className="text-xl font-thin">
+              <p className="text-lg font-thin">
                 Contribute to Audacity by helping us with code,
-                <br /> documentation, translations, user support and <br /> by
+                documentation, translations, user support and by
                 testing our latest code.
               </p>
             </div>

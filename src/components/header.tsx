@@ -13,7 +13,7 @@ const Header: React.FC = () => {
        <div className="w-full"> <nav aria-label="Main navigation w-full">
             <ul className="flex items-center justify-center space-x-6">
               <li>
-                <a href="/about" className=" hover:text-blue-700">
+                {/* <a href="/about" className=" hover:text-blue-700">
                   Discover
                 </a>
               </li>
@@ -25,7 +25,7 @@ const Header: React.FC = () => {
               <li>
                 <a href="/help" className=" hover:text-blue-700">
                   My Profile
-                </a>
+                </a> */}
               </li>
             </ul>
           </nav></div>
