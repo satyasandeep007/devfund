@@ -7,8 +7,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const metadata: Metadata = {
-  title: "DivFund",
-  description: "open source, cross-platform DivFund your code",
+  title: "DevFund",
+  description: "open source, cross-platform DevFund your code",
 };
 
 export default function RootLayout({

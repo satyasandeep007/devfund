@@ -6,7 +6,7 @@ const Header: React.FC = () => {
       <div className="flex justify-between items-center max-w-7xl mx-auto">
         <div className="flex items-center">
           <h1 className="text-2xl font-bold mr-8">
-            <a href="/" className="text-black hover:text-gray-700">DivFund®</a>
+            <a href="/" className="text-black hover:text-gray-700">DevFund®</a>
           </h1>
           <nav aria-label="Main navigation">
             <ul className="flex space-x-6">

@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 const Hero = () => {
   return (
@@ -13,7 +14,8 @@ const Hero = () => {
             </span>
           </h2>
           <div className="p-4  mb-6 ">
-            <img src="/hero_graph.svg"  />
+
+            <Image src="/hero_graph.svg" width={128} height={128} alt="Base" />
             
           </div>
           
@@ -25,7 +27,8 @@ const Hero = () => {
           </p>
           <div className="mb-6">
             {/* Placeholder for the oval shape */}
-            <div className="w-32 h-32 bg-gray-300 rounded-full mx-auto"></div>
+            {/* <div className="w-32 h-32 bg-gray-300 rounded-full mx-auto"></div> */}
+            <Image src="/base.svg" width={128} height={128} alt="Base" />
           </div>
           <h3 className=" font-semibold mb-4 text-sm">Get Involved</h3>
           <p className="mb-4 text-sm">
