@@ -11,6 +11,8 @@ import {
   getChainConfig,
 } from "@/lib/contractUtil/constants";
 import * as contractFunctions from "@/lib/contractUtil/contractFunctions";
+import { getWalletBalancesApi } from "@/lib/api/balance";
+import { useAccount } from "wagmi";
 
 // Define the shape of the context
 interface DevFundContextType {
@@ -25,9 +27,12 @@ interface DevFundContextType {
   getChainConfig: typeof getChainConfig;
   getCampaignById: typeof contractFunctions.getCampaignById;
   refreshCampaigns: () => Promise<void>;
-
+  tokenBalances: any[] | null;
+  nftBalances: any[] | null;
+  fetchWalletBalances: (address: string) => Promise<void>;
   campaigns: Campaign[] | null;
   isLoading: boolean;
+  walletBalancesLoading: boolean;
 }
 
 type Campaign = {
@@ -51,12 +56,24 @@ const DevFundContext = createContext<DevFundContextType | undefined>(undefined);
 export const DevFundProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  const { address }: any = useAccount();
+
   const [campaigns, setCampaigns] = useState<Campaign[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [tokenBalances, setTokenBalances] = useState<any[] | null>(null);
+  const [nftBalances, setNftBalances] = useState<any[] | null>(null);
+  const [walletBalancesLoading, setWalletBalancesLoading] =
+    useState<boolean>(false);
 
   useEffect(() => {
     fetchCampaigns();
   }, []);
+
+  useEffect(() => {
+    if (!address) return;
+
+    fetchWalletBalances(address);
+  }, [address]);
 
   const fetchCampaigns = async () => {
     try {
@@ -70,6 +87,22 @@ export const DevFundProvider: React.FC<{ children: ReactNode }> = ({
       setIsLoading(false);
     }
   };
+
+  const fetchWalletBalances = async (address: string) => {
+    if (address) {
+      try {
+        setWalletBalancesLoading(true);
+        const apiData = await getWalletBalancesApi(address);
+
+        setTokenBalances(apiData.tokens);
+        setNftBalances(apiData.nfts);
+        setWalletBalancesLoading(false);
+      } catch (error) {
+        console.error("Error fetching balances:", error);
+      }
+    }
+  };
+
   const value: DevFundContextType = {
     createCampaign: contractFunctions.createCampaign,
     fundUSDC: contractFunctions.fundUSDC,
@@ -84,6 +117,10 @@ export const DevFundProvider: React.FC<{ children: ReactNode }> = ({
     refreshCampaigns: fetchCampaigns,
     campaigns,
     isLoading,
+    tokenBalances,
+    nftBalances,
+    fetchWalletBalances,
+    walletBalancesLoading,
   };
 
   return (
