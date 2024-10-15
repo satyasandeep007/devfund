@@ -95,7 +95,7 @@ function Sidebar() {
 
         <div className="flex flex-col flex-grow justify-between py-4">
           <div className="space-y-4">
-            <NavSection title="MY DASHBOARD" className="mb-4 text-sm">
+            <NavSection title="MY DASHBOARD" className="mb-4 text-xs">
               <NavLink
                 href={`/user/dashboard`}
                 activeIcon="/ic_dashbaord_active.svg"
@@ -106,7 +106,7 @@ function Sidebar() {
             </NavSection>
             <div className="my-4 border-t border-gray-200"></div>
 
-            <NavSection title="CAMPAIGNS" className="text-sm mt-4">
+            <NavSection title="CAMPAIGNS" className="text-xs mt-4">
               <NavLink
                 href={`/user/campaigns/discover`}
                 activeIcon="/ic_discover_active.svg"
@@ -124,7 +124,7 @@ function Sidebar() {
             </NavSection>
             <div className="my-4 border-t border-gray-200"></div>
 
-            <NavSection title="USER PROFILE" className="text-sm mt-4">
+            <NavSection title="USER PROFILE" className="text-xs mt-4">
               <NavLink
                 href={`/user/profile/github`}
                 activeIcon="/ic_profile_active.svg"
