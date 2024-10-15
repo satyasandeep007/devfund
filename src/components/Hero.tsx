@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { IconChevronRight } from "@tabler/icons-react";
-import router from "next/router";
+import Link from "next/link";
 
 const Hero = () => {
   return (
@@ -24,7 +24,12 @@ const Hero = () => {
               height={20}
               alt="github"
             />
-            <Image src="/github_animation_m.svg" width={768} height={108} alt="github" />
+            <Image
+              src="/github_animation_m.svg"
+              width={768}
+              height={108}
+              alt="github"
+            />
             <Image
               src="/hero_graph-bottom.svg"
               width={768}
@@ -34,17 +39,18 @@ const Hero = () => {
           </div>
 
           <div className="flex space-x-4">
-            <a  onClick={() => {
-              router.push("/submit-campaign");
-            }} className="text-black-500 border p-3 border-black">
+            <Link
+              href="/user/campaigns/create"
+              className="text-black-500 border p-3 border-black hover:bg-gray-100 transition-colors"
+            >
               Submit a campaign
-            </a>
-            <a
-              href="#"
-              className="text-black-500 p-3 flex items-center justify-center"
+            </Link>
+            <Link
+              href="/user/dashboard"
+              className="text-black-500 p-3 flex items-center justify-center hover:underline"
             >
               <span>Discover more</span> <IconChevronRight size={20} />
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -55,18 +61,18 @@ const Hero = () => {
               recorder. Audacity is free, open <br /> source, and cross-platform
               software.
             </p>
-            
+
             <div className="flex flex-col items-center">
-            <h3 className="mx-auto font-semibold mb-4 text-lg">Only on Base</h3>
+              <h3 className="mx-auto font-semibold mb-4 text-lg">
+                Only on Base
+              </h3>
               <Image src="/base.svg" width={200} height={200} alt="Base" />
             </div>
             <div>
               {" "}
-              
               <p className="text-lg font-thin">
-                Contribute to Audacity by helping us with code,
-                documentation, translations, user support and by
-                testing our latest code.
+                Contribute to Audacity by helping us with code, documentation,
+                translations, user support and by testing our latest code.
               </p>
             </div>
           </div>
