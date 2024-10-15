@@ -13,94 +13,6 @@ import {
   IconLogout,
 } from "@tabler/icons-react";
 
-function Sidebar() {
-  const { data: session }: any = useSession();
-
-  return (
-    <div className="w-64 shrink-0 md:block h-screen fixed top-0 left-0 overflow-y-auto bg-white border-r border-gray-200">
-      <div className="w-full h-full bg-white flex flex-col">
-        <div className="p-4 flex items-center gap-2 border-b border-gray-200">
-          <Image
-            src="/logo1.svg"
-            alt="DevFund Logo"
-            width={180}
-            height={40}
-            priority
-          />
-        </div>
-
-        <div className="flex flex-col flex-grow justify-between py-4">
-          <div className="space-y-4">
-            <NavSection title="MY DASHBOARD" className="pt-4">
-              <NavLink
-                href={`/${session?.user?.username}/dashboard`}
-                icon="/icons/dashboard.png"
-              >
-                Overview
-              </NavLink>
-            </NavSection>
-
-            <NavSection title="CAMPAIGNS">
-              <NavLink
-                href={`/${session?.user?.username}/campaigns/discover`}
-                icon="/icons/speakerphone.png"
-              >
-                Discover
-              </NavLink>
-              <NavLink
-                href={`/${session?.user?.username}/campaigns/me`}
-                icon="/icons/speakerphone.png"
-              >
-                My Campaigns
-              </NavLink>
-            </NavSection>
-
-            <NavSection title="USER PROFILE">
-              <NavLink
-                href={`/${session?.user?.username}/profile/github`}
-                icon="/icons/github.png"
-              >
-                Github
-              </NavLink>
-              <NavLink
-                href={`/${session?.user?.username}/profile/wallet`}
-                icon="/icons/wallet.png"
-              >
-                Wallet
-              </NavLink>
-            </NavSection>
-          </div>
-
-          <div className="mt-auto border-t border-gray-200 py-2">
-            <div className="flex items-center justify-between px-4 py-3 hover:bg-gray-100 transition-colors cursor-pointer">
-              <div className="flex items-center">
-                <Image
-                  src={session?.user?.image || "/default-avatar.png"}
-                  alt="user"
-                  width={32}
-                  height={32}
-                  className="rounded-full"
-                />
-                <div className="ml-3">
-                  <p className="text-sm font-medium text-gray-800">
-                    {session?.user?.name || "User Name"}
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    @{session?.user?.username || "username"}
-                  </p>
-                </div>
-              </div>
-              <button className="text-gray-500 hover:text-gray-700">
-                <IconLogout size={18} />
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 interface NavLinkProps {
   href: string;
   icon: string;
@@ -154,5 +66,95 @@ const NavSection: React.FC<NavSectionProps> = ({
     </div>
   );
 };
+
+function Sidebar() {
+  const { data: session }: any = useSession();
+
+  return (
+    <div className="w-64 shrink-0 md:block h-screen fixed top-0 left-0 overflow-y-auto bg-white border-r border-gray-200">
+      <div className="w-full h-full bg-white flex flex-col">
+        <div className="p-4 flex items-center gap-2 border-b border-gray-200">
+          <Image
+            src="/logo1.svg"
+            alt="DevFund Logo"
+            width={180}
+            height={40}
+            priority
+          />
+        </div>
+
+        <div className="flex flex-col flex-grow justify-between py-4">
+          <div className="space-y-4">
+            <NavSection title="MY DASHBOARD" className="mb-4 text-sm">
+              <NavLink
+                href={`/${session?.user?.username}/dashboard`}
+                icon="/ic_dashboard.svg"
+              >
+                Overview
+              </NavLink>
+            </NavSection>
+            <div className="my-4 border-t border-gray-200"></div>
+
+            <NavSection title="CAMPAIGNS" className="text-sm mt-4">
+              <NavLink
+                href={`/${session?.user?.username}/campaigns/discover`}
+                icon="/ic_camp.svg"
+              >
+                Discover
+              </NavLink>
+              <NavLink
+                href={`/${session?.user?.username}/campaigns/me`}
+                icon="/ic_discover.svg"
+              >
+                My Campaigns
+              </NavLink>
+            </NavSection>
+            <div className="my-4 border-t border-gray-200"></div>
+
+            <NavSection title="USER PROFILE" className="text-sm mt-4">
+              <NavLink
+                href={`/${session?.user?.username}/profile/github`}
+                icon="/ic_profile.svg"
+              >
+                Github
+              </NavLink>
+              <NavLink
+                href={`/${session?.user?.username}/profile/wallet`}
+                icon="/ic_wallet.svg"
+              >
+                Wallet
+              </NavLink>
+            </NavSection>
+          </div>
+
+          {/* <div className="mt-auto border-t border-gray-200 py-2">
+            <div className="flex items-center justify-between px-4 py-3 hover:bg-gray-100 transition-colors cursor-pointer">
+              <div className="flex items-center">
+                <Image
+                  src={session?.user?.image || "/default-avatar.png"}
+                  alt="user"
+                  width={32}
+                  height={32}
+                  className="rounded-full"
+                />
+                <div className="ml-3">
+                  <p className="text-sm font-medium text-gray-800">
+                    {session?.user?.name || "User Name"}
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    @{session?.user?.username || "username"}
+                  </p>
+                </div>
+              </div>
+              <button className="text-gray-500 hover:text-gray-700">
+                <IconLogout size={18} />
+              </button>
+            </div>
+          </div> */}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default Sidebar;
