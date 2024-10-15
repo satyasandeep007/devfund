@@ -46,7 +46,7 @@ const Hero = () => {
               Create Campaign
             </Link>
             <Link
-              href="/user/dashboard"
+              href="/user/campaigns/discover"
               className="text-black-500 p-3 flex items-center justify-center hover:font-semibold"
             >
               <span>Discover Campaigns</span> <IconChevronRight size={20} />
