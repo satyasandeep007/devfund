@@ -34,18 +34,20 @@ const StatCard: React.FC<StatCardProps> = ({
   const { bg, text } = getColorClasses(color);
 
   return (
-    <div className={`${bg} rounded-lg p-6 flex flex-col w-64`}>
-      <div
-        className={`${text} rounded-full w-12 h-12 flex items-center justify-center mb-4`}
-      >
-        <Icon size={24} stroke={1.5} />
-      </div>
-      <div className="flex flex-col">
-        <span className="text-3xl font-bold mb-1">
-          {value}
-          {unit && <span className="text-xl ml-1">{unit}</span>}
-        </span>
+    <div className={`${bg} rounded-lg p-4 flex flex-col w-64`}>
+      <div className="flex items-center mb-2">
+        <div
+          className={`${text} rounded-full w-10 h-10 flex items-center justify-center mr-3`}
+        >
+          <Icon size={20} stroke={1.5} />
+        </div>
         <span className="text-sm text-gray-600">{title}</span>
+      </div>
+      <div className="flex items-baseline">
+        <span className="text-2xl font-bold">
+          {value}
+        </span>
+        {unit && <span className="text-lg ml-1">{unit}</span>}
       </div>
     </div>
   );

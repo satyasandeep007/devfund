@@ -34,7 +34,7 @@ function Sidebar() {
             <NavSection title="MY DASHBOARD" className="pt-4">
               <NavLink
                 href={`/${session?.user?.username}/dashboard`}
-                icon={<IconLayoutDashboard size={18} />}
+                icon="/icons/dashboard.png"
               >
                 Overview
               </NavLink>
@@ -43,13 +43,13 @@ function Sidebar() {
             <NavSection title="CAMPAIGNS">
               <NavLink
                 href={`/${session?.user?.username}/campaigns/discover`}
-                icon={<IconSpeakerphone size={18} />}
+                icon="/icons/speakerphone.png"
               >
                 Discover
               </NavLink>
               <NavLink
                 href={`/${session?.user?.username}/campaigns/me`}
-                icon={<IconSpeakerphone size={18} />}
+                icon="/icons/speakerphone.png"
               >
                 My Campaigns
               </NavLink>
@@ -58,13 +58,13 @@ function Sidebar() {
             <NavSection title="USER PROFILE">
               <NavLink
                 href={`/${session?.user?.username}/profile/github`}
-                icon={<IconBrandGithub size={18} />}
+                icon="/icons/github.png"
               >
                 Github
               </NavLink>
               <NavLink
                 href={`/${session?.user?.username}/profile/wallet`}
-                icon={<IconWallet size={18} />}
+                icon="/icons/wallet.png"
               >
                 Wallet
               </NavLink>
@@ -103,7 +103,7 @@ function Sidebar() {
 
 interface NavLinkProps {
   href: string;
-  icon: React.ReactNode;
+  icon: string;
   children: React.ReactNode;
 }
 
@@ -112,15 +112,25 @@ const NavLink: React.FC<NavLinkProps> = ({ href, icon, children }) => {
   const isActive = pathname === href;
 
   return (
-    <Link
-      href={href}
-      className={`flex items-center px-4 py-2 text-sm ${
-        isActive ? "text-blue-600 bg-blue-50 font-medium" : "text-gray-700"
-      } hover:bg-gray-100 transition-colors`}
-    >
-      <span className="mr-3 text-gray-500">{icon}</span>
-      {children}
-    </Link>
+    <div className="mx-2">
+      <Link
+        href={href}
+        className={`flex items-center px-4 py-3 text-sm rounded-md ${
+          isActive
+            ? "text-white bg-blue-600 font-medium"
+            : "text-gray-600 hover:bg-gray-200"
+        } transition-colors`}
+      >
+        <Image
+          src={icon}
+          alt=""
+          width={16}
+          height={16}
+          className={`mr-3 ${isActive ? "brightness-0 invert" : ""}`}
+        />
+        <span className={`text-xs font-semibold ${isActive ? "text-white" : "text-gray-400"}`}>{children}</span>
+      </Link>
+    </div>
   );
 };
 
