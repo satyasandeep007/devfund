@@ -205,33 +205,59 @@ export const fundEth = async (
   }
 };
 
-export const withdrawUSDC = (
-  amount: number,
-  projectNo: number,
-  chain: number
-) => {
-  const contractAddress: string = getContractConfig("MAIN_CONTRACT").ADDRESS;
-  const abi = getContractConfig("MAIN_CONTRACT").ABI;
-  const uoCallData = encodeFunctionData({
-    abi,
-    functionName: "withdrawUSDC",
-    args: [BigInt(amount), projectNo],
-  });
-  const uo = [{ target: contractAddress, data: uoCallData, value: "0" }];
-  return { uo };
+export const withdrawUSDC = async (projectNo: number) => {
+  if (typeof window.ethereum !== "undefined") {
+    try {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+
+      const contractAddress: string =
+        getContractConfig("MAIN_CONTRACT").ADDRESS;
+      const abi = getContractConfig("MAIN_CONTRACT").ABI;
+      const contract = new ethers.Contract(contractAddress, abi, signer);
+
+      // Withdraw USDC
+      const withdrawTx = await contract.withdrawUSDC(projectNo);
+      const receipt = await withdrawTx.wait();
+
+      console.log("USDC withdrawal successful:", receipt);
+      return receipt;
+    } catch (error) {
+      console.error("Error withdrawing USDC:", error);
+      throw error;
+    }
+  } else {
+    throw new Error("Ethereum provider not found");
+  }
 };
 
-export const withdrawEth = (projectNo: number, chain: number) => {
-  const contractAddress: string = getContractConfig("MAIN_CONTRACT").ADDRESS;
-  const abi = getContractConfig("MAIN_CONTRACT").ABI;
-  const uoCallData = encodeFunctionData({
-    abi,
-    functionName: "withdrawEth",
-    args: [projectNo],
-  });
-  const uo = [{ target: contractAddress, data: uoCallData, value: "0" }];
-  return { uo };
+export const withdrawEth = async (projectNo: number) => {
+  if (typeof window.ethereum !== "undefined") {
+    try {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+
+      const contractAddress: string =
+        getContractConfig("MAIN_CONTRACT").ADDRESS;
+      const abi = getContractConfig("MAIN_CONTRACT").ABI;
+      const contract = new ethers.Contract(contractAddress, abi, signer);
+
+      // Withdraw ETH
+      const withdrawTx = await contract.withdrawEth(projectNo);
+      const receipt = await withdrawTx.wait();
+
+      console.log("ETH withdrawal successful:", receipt);
+      return receipt;
+    } catch (error) {
+      console.error("Error withdrawing ETH:", error);
+      throw error;
+    }
+  } else {
+    throw new Error("Ethereum provider not found");
+  }
 };
+
+// ... existing code ...
 
 export const getProjectFundInUSD = async (projectNo: number, chain: number) => {
   const contractAddress: string = getContractConfig("MAIN_CONTRACT").ADDRESS;

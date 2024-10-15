@@ -1,19 +1,15 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import Image from "next/image";
 import { format } from "date-fns";
-import {
-  IconEye,
-  IconHeart,
-  IconBrandGithub,
-  IconStar,
-  IconGitFork,
-} from "@tabler/icons-react";
+import { IconEye, IconHeart, IconBrandGithub } from "@tabler/icons-react";
 
 import ReceiveModal from "@/components/ReceiveModal";
 import { useAccount } from "wagmi";
+import { useDevFund } from "@/context/DevFundContext";
+import { toast } from "react-toastify";
 
 type Campaign = {
   description: string;
@@ -45,6 +41,10 @@ export function CampaignCard({
   usdcMarketPrice: number;
 }) {
   const { address }: any = useAccount();
+
+  const { withdrawEth, withdrawUSDC, refreshCampaigns, tokenBalances } =
+    useDevFund();
+
   const repoFullName = campaign.gitUrl.split("/").slice(-2).join("/");
   const repoOwner = repoFullName.split("/")[0];
 
@@ -64,8 +64,38 @@ export function CampaignCard({
     parseFloat(campaign.ethBalance) * ethMarketPrice +
     parseFloat(campaign.usdcBalance) * usdcMarketPrice;
 
-  console.log(totalRaisedUSD, "tpat;a", ethMarketPrice, usdcMarketPrice);
-  console.log(campaign);
+  const handleWithdraw = async (withdrawalType: string) => {
+    try {
+      const projectNo = Number(campaign.id);
+      console.log(campaign.id, withdrawalType);
+
+      let result;
+      if (withdrawalType === "USDC") {
+        result = await withdrawUSDC(projectNo);
+      } else {
+        result = await withdrawEth(projectNo);
+      }
+
+      console.log("Withdrawal made:", result);
+      await refreshCampaigns();
+
+      toggleReceiveModal();
+
+      toast(`🎉 Withdrawal successful!`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } catch (error) {
+      console.error("Error making withdrawal:", error);
+      toast.error("Error making withdrawal. Please try again.");
+    }
+  };
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col">
@@ -173,6 +203,9 @@ export function CampaignCard({
           onClose={toggleReceiveModal}
           address={address}
           campaign={campaign}
+          ethMarketPrice={ethMarketPrice}
+          usdcMarketPrice={usdcMarketPrice}
+          handleWithdraw={handleWithdraw}
         />
       )}
     </div>
