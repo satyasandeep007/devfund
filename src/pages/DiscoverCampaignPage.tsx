@@ -171,7 +171,7 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
           {tabs.map((tab) => (
             <button
               key={tab.id}
-              className={`px-5 py-1 mx-2 mb-2 font-medium text-sm ${
+              className={`px-5 py-1 mx-2 font-medium text-sm ${
                 activeTab === tab.id
                   ? "text-black border-b-2 border-black"
                   : "text-gray-400 hover:text-black"
