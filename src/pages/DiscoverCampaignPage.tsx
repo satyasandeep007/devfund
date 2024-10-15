@@ -148,7 +148,7 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
             </div>
             <button
               onClick={() => {
-                router.push(`/${session?.user?.username}/campaigns/create`);
+                router.push(`/user/campaigns/create`);
               }}
               className="bg-black text-white px-6 py-3 rounded-md text-lg font-medium"
             >
