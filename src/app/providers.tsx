@@ -25,9 +25,10 @@ createWeb3Modal({
   enableOnramp: true,
   themeMode: "light",
   themeVariables: {
-    "--w3m-font-family": "Epilogue",
+    "--w3m-font-family": "Manrope",
     "--w3m-accent": "#222",
-    "--w3m-border-radius-master": "0px",
+    // "--wcm-background-color": "#fff",
+    "--w3m-border-radius-master": "1px",
   },
 });
 

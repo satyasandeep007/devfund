@@ -25,7 +25,7 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  font-family: 'Epilogue', sans-serif;
+  font-family: 'Manrope', sans-serif;
 }
 
 @layer utilities {

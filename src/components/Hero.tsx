@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { IconChevronRight } from "@tabler/icons-react";
+import router from "next/router";
 
 const Hero = () => {
   return (
@@ -33,7 +34,9 @@ const Hero = () => {
           </div>
 
           <div className="flex space-x-4">
-            <a href="#" className="text-black-500 border p-3 border-black">
+            <a  onClick={() => {
+              router.push("/submit-campaign");
+            }} className="text-black-500 border p-3 border-black">
               Submit a campaign
             </a>
             <a
