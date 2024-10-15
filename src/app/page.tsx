@@ -11,12 +11,13 @@ import Header from "@/components/header";
 const Home: React.FC = () => {
   const { isConnected } = useAccount();
 
-  const router = useRouter(); // Use useRouter for client-side navigation
+  const router = useRouter();
   const { data: session }: any = useSession();
 
   useEffect(() => {
     if (isConnected) {
-      router.push(`/${session.user.username}/dashboard`); // Use router.push for navigation
+      // router.push(`/${session.user.username}/dashboard`);
+      router.push(`/satyasandeep007/dashboard`);
     }
   }, [isConnected, router, session.user.username]);
 
