@@ -15,7 +15,7 @@ const Home: React.FC = () => {
   // useEffect(() => {
   //   if (isConnected) {
   //     // router.push(`/${session.user.username}/dashboard`);
-  //     router.push(`/satyasandeep007/dashboard`);
+  //     router.push(`/user/dashboard`);
   //   }
   // }, [isConnected, router]);
 

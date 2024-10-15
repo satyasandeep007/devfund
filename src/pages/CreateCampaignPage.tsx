@@ -61,7 +61,7 @@ export default function CreateCampaignPage() {
         theme: "light",
       });
       // TODO: Handle successful project creation
-      router.push(`/${session?.user?.username}/campaigns/me`); // Redirect to dashboard after creation
+      router.push(`/user/campaigns/me`); // Redirect to dashboard after creation
     } catch (error) {
       console.error("Error creating project:", error);
       // TODO: Handle error

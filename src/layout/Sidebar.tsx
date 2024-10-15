@@ -97,7 +97,7 @@ function Sidebar() {
           <div className="space-y-4">
             <NavSection title="MY DASHBOARD" className="mb-4 text-sm">
               <NavLink
-                href={`/${session?.user?.username}/dashboard`}
+                href={`/user/dashboard`}
                 activeIcon="/ic_dashbaord_active.svg"
                 inactiveIcon="/ic_dashbaord.svg"
               >
@@ -108,14 +108,14 @@ function Sidebar() {
 
             <NavSection title="CAMPAIGNS" className="text-sm mt-4">
               <NavLink
-                href={`/${session?.user?.username}/campaigns/discover`}
+                href={`/user/campaigns/discover`}
                 activeIcon="/ic_discover_active.svg"
                 inactiveIcon="/ic_discover.svg"
               >
                 Discover
               </NavLink>
               <NavLink
-                href={`/${session?.user?.username}/campaigns/me`}
+                href={`/user/campaigns/me`}
                 activeIcon="/ic_camp_active.svg"
                 inactiveIcon="/ic_camp.svg"
               >
@@ -126,14 +126,14 @@ function Sidebar() {
 
             <NavSection title="USER PROFILE" className="text-sm mt-4">
               <NavLink
-                href={`/${session?.user?.username}/profile/github`}
+                href={`/user/profile/github`}
                 activeIcon="/ic_profile_active.svg"
                 inactiveIcon="/ic_profile.svg"
               >
                 Github
               </NavLink>
               <NavLink
-                href={`/${session?.user?.username}/profile/wallet`}
+                href={`/user/profile/wallet`}
                 activeIcon="/ic_wallet_active.svg"
                 inactiveIcon="/ic_wallet.svg"
               >
