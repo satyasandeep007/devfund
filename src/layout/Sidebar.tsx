@@ -9,11 +9,12 @@ import React from "react";
 
 interface NavLinkProps {
   href: string;
-  icon: string;
+  activeIcon: string;
+  inactiveIcon: string;
   children: React.ReactNode;
 }
 
-const NavLink: React.FC<NavLinkProps> = ({ href, icon, children }) => {
+const NavLink: React.FC<NavLinkProps> = ({ href, activeIcon, inactiveIcon, children }) => {
   const pathname = usePathname();
   const isActive = pathname === href;
 
@@ -23,16 +24,16 @@ const NavLink: React.FC<NavLinkProps> = ({ href, icon, children }) => {
         href={href}
         className={`flex items-center px-4 py-3 text-sm rounded-md ${
           isActive
-            ? "text-white bg-blue-600 font-medium"
+            ? "text-white bg-black font-medium"
             : "text-gray-600 hover:bg-gray-200"
         } transition-colors`}
       >
         <Image
-          src={icon}
+          src={isActive ? activeIcon : inactiveIcon}
           alt=""
           width={16}
           height={16}
-          className={`mr-3 ${isActive ? "brightness-0 invert" : ""}`}
+          className="mr-3"
         />
         <span className={`text-xs font-semibold ${isActive ? "text-white" : "text-gray-400"}`}>{children}</span>
       </Link>
@@ -68,13 +69,17 @@ function Sidebar() {
     <div className="w-64 shrink-0 md:block h-screen fixed top-0 left-0 overflow-y-auto bg-white border-r border-gray-200">
       <div className="w-full h-full bg-white flex flex-col">
         <div className="p-4 flex items-center gap-2 border-b border-gray-200">
-          <Image
-            src="/logo1.svg"
-            alt="DevFund Logo"
-            width={180}
-            height={40}
-            priority
-          />
+        <h1 className="text-2xl font-bold mr-8 flex items-center">
+            <Image
+              src="/logo.svg"
+              width={40}
+              height={40}
+              className="mr-2"
+            />
+            <a href="/" className="text-black hover:text-gray-700">
+              DevFund
+            </a>
+          </h1>
         </div>
 
         <div className="flex flex-col flex-grow justify-between py-4">
@@ -82,7 +87,8 @@ function Sidebar() {
             <NavSection title="MY DASHBOARD" className="mb-4 text-sm">
               <NavLink
                 href={`/${session?.user?.username}/dashboard`}
-                icon="/ic_dashboard.svg"
+                activeIcon="/ic_dashbaord_active.svg"
+                inactiveIcon="/ic_dashbaord.svg"
               >
                 Overview
               </NavLink>
@@ -92,13 +98,15 @@ function Sidebar() {
             <NavSection title="CAMPAIGNS" className="text-sm mt-4">
               <NavLink
                 href={`/${session?.user?.username}/campaigns/discover`}
-                icon="/ic_camp.svg"
+                activeIcon="/ic_discover_active.svg"
+                inactiveIcon="/ic_discover.svg"
               >
                 Discover
               </NavLink>
               <NavLink
                 href={`/${session?.user?.username}/campaigns/me`}
-                icon="/ic_discover.svg"
+                activeIcon="/ic_camp_active.svg"
+                inactiveIcon="/ic_camp.svg"
               >
                 My Campaigns
               </NavLink>
@@ -108,13 +116,15 @@ function Sidebar() {
             <NavSection title="USER PROFILE" className="text-sm mt-4">
               <NavLink
                 href={`/${session?.user?.username}/profile/github`}
-                icon="/ic_profile.svg"
+                activeIcon="/ic_profile_active.svg"
+                inactiveIcon="/ic_profile.svg"
               >
                 Github
               </NavLink>
               <NavLink
                 href={`/${session?.user?.username}/profile/wallet`}
-                icon="/ic_wallet.svg"
+                activeIcon="/ic_wallet_active.svg"
+                inactiveIcon="/ic_wallet.svg"
               >
                 Wallet
               </NavLink>

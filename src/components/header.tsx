@@ -1,11 +1,18 @@
 import React from "react";
+import Image from "next/image";
 
 const Header = ({ isConnected }: any) => {
   return (
     <header className="bg-[#f0f0f0] p-4">
       <div className="flex justify-between items-center max-w-7xl mx-auto">
         <div className="flex items-center w-full">
-          <h1 className="text-2xl font-bold mr-8">
+          <h1 className="text-2xl font-bold mr-8 flex items-center">
+            <Image
+              src="/logo.svg"
+              width={40}
+              height={40}
+              className="mr-2"
+            />
             <a href="/" className="text-black hover:text-gray-700">
               DevFund
             </a>

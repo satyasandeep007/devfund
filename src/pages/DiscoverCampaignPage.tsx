@@ -150,7 +150,7 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
               onClick={() => {
                 router.push(`/${session?.user?.username}/campaigns/create`);
               }}
-              className="bg-indigo-600 text-white px-6 py-3 rounded-md text-lg font-medium"
+              className="bg-black text-white px-6 py-3 rounded-md text-lg font-medium"
             >
               Create Campaign
             </button>
