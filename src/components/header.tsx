@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const Header = ({ isConnected }: any) => {
   return (
-    <header className="bg-[#f0f0f0] p-4">
+    <header className="bg-[#f0f0f0] p-4 h-[10vh]">
       <div className="flex justify-between items-center max-w-7xl mx-auto">
         <div className="flex items-center w-full">
           <h1 className="text-2xl font-bold mr-8 flex items-center">

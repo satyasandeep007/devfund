@@ -5,10 +5,10 @@ import Link from "next/link";
 
 const Hero = () => {
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="max-w-7xl mx-auto px-4 py-8 h-[90vh]">
       <main className="flex flex-row justify-between  h-full">
-        <div className="h-full flex flex-col justify-between gap-14">
-          <h2 className="text-7xl font-bold leading-tight mb-6 mt-10">
+        <div className="h-full flex flex-col justify-between">
+          <h2 className="text-7xl font-bold leading-tight">
             Open source,
             <br />
             cross-platform
@@ -17,7 +17,7 @@ const Hero = () => {
               To Refine Code
             </span>
           </h2>
-          <div className="p-4  mb-6 ">
+          <div className="p-4">
             <Image
               src="/hero_graph-top.svg"
               width={768}
@@ -43,19 +43,19 @@ const Hero = () => {
               href="/user/campaigns/create"
               className="text-black-500 border p-3 border-black hover:bg-gray-100 transition-colors"
             >
-              Submit a campaign
+              Create Campaign
             </Link>
             <Link
               href="/user/dashboard"
-              className="text-black-500 p-3 flex items-center justify-center hover:underline"
+              className="text-black-500 p-3 flex items-center justify-center hover:font-semibold"
             >
-              <span>Discover more</span> <IconChevronRight size={20} />
+              <span>Discover Campaigns</span> <IconChevronRight size={20} />
             </Link>
           </div>
         </div>
 
         <div className="md:w-1/3 py-6">
-          <div className="h-full flex flex-col justify-between items-center gap-16">
+          <div className="h-full flex flex-col justify-between items-center">
             <p className="text-lg font-thin ">
               Audacity is an easy-to-use, multi-track audio <br /> editor and
               recorder. Audacity is free, open <br /> source, and cross-platform
@@ -63,7 +63,7 @@ const Hero = () => {
             </p>
 
             <div className="flex flex-col items-center">
-              <h3 className="mx-auto font-semibold mb-4 text-lg">
+              <h3 className="mx-auto font-semibold text-lg">
                 Only on Base
               </h3>
               <Image src="/base.svg" width={200} height={200} alt="Base" />
