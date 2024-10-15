@@ -71,30 +71,7 @@ function Sidebar() {
             </NavSection>
           </div>
 
-          <div className="mt-auto border-t border-gray-200 py-2">
-            <div className="flex items-center justify-between px-4 py-3 hover:bg-gray-100 transition-colors cursor-pointer">
-              <div className="flex items-center">
-                <Image
-                  src={session?.user?.image || "/default-avatar.png"}
-                  alt="user"
-                  width={32}
-                  height={32}
-                  className="rounded-full"
-                />
-                <div className="ml-3">
-                  <p className="text-sm font-medium text-gray-800">
-                    {session?.user?.name || "User Name"}
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    @{session?.user?.username || "username"}
-                  </p>
-                </div>
-              </div>
-              <button className="text-gray-500 hover:text-gray-700">
-                <IconLogout size={18} />
-              </button>
-            </div>
-          </div>
+         
         </div>
       </div>
     </div>
