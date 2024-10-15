@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import React from "react";
 
-
 interface NavLinkProps {
   href: string;
   activeIcon: string;
@@ -14,7 +13,12 @@ interface NavLinkProps {
   children: React.ReactNode;
 }
 
-const NavLink: React.FC<NavLinkProps> = ({ href, activeIcon, inactiveIcon, children }) => {
+const NavLink: React.FC<NavLinkProps> = ({
+  href,
+  activeIcon,
+  inactiveIcon,
+  children,
+}) => {
   const pathname = usePathname();
   const isActive = pathname === href;
 
@@ -35,7 +39,13 @@ const NavLink: React.FC<NavLinkProps> = ({ href, activeIcon, inactiveIcon, child
           height={16}
           className="mr-3"
         />
-        <span className={`text-xs font-semibold ${isActive ? "text-white" : "text-gray-400"}`}>{children}</span>
+        <span
+          className={`text-xs font-semibold ${
+            isActive ? "text-white" : "text-gray-400"
+          }`}
+        >
+          {children}
+        </span>
       </Link>
     </div>
   );
@@ -69,12 +79,13 @@ function Sidebar() {
     <div className="w-64 shrink-0 md:block h-screen fixed top-0 left-0 overflow-y-auto bg-white border-r border-gray-200">
       <div className="w-full h-full bg-white flex flex-col">
         <div className="p-4 flex items-center gap-2 border-b border-gray-200">
-        <h1 className="text-2xl font-bold mr-8 flex items-center">
+          <h1 className="text-2xl font-bold mr-8 flex items-center">
             <Image
               src="/logo.svg"
               width={40}
               height={40}
               className="mr-2"
+              alt="logo"
             />
             <a href="/" className="text-black hover:text-gray-700">
               DevFund
@@ -130,31 +141,6 @@ function Sidebar() {
               </NavLink>
             </NavSection>
           </div>
-
-          {/* <div className="mt-auto border-t border-gray-200 py-2">
-            <div className="flex items-center justify-between px-4 py-3 hover:bg-gray-100 transition-colors cursor-pointer">
-              <div className="flex items-center">
-                <Image
-                  src={session?.user?.image || "/default-avatar.png"}
-                  alt="user"
-                  width={32}
-                  height={32}
-                  className="rounded-full"
-                />
-                <div className="ml-3">
-                  <p className="text-sm font-medium text-gray-800">
-                    {session?.user?.name || "User Name"}
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    @{session?.user?.username || "username"}
-                  </p>
-                </div>
-              </div>
-              <button className="text-gray-500 hover:text-gray-700">
-                <IconLogout size={18} />
-              </button>
-            </div>
-          </div> */}
         </div>
       </div>
     </div>
