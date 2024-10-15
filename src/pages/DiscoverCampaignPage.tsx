@@ -180,19 +180,42 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
         </div>
 
         {/* Campaign Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {campaigns.map((campaign) => (
-            <CampaignCard
-              key={campaign.id}
-              campaign={campaign}
-              canDonate={true}
-              handleDonate={(e) => toggleSendModalOpen(e, campaign.id)}
-              isMyCampaign={campaign.owner === address}
-              ethMarketPrice={Number(ethMarketPrice)}
-              usdcMarketPrice={Number(usdcMarketPrice)}
+        {campaigns.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {campaigns.map((campaign) => (
+              <CampaignCard
+                key={campaign.id}
+                campaign={campaign}
+                canDonate={true}
+                handleDonate={(e) => toggleSendModalOpen(e, campaign.id)}
+                isMyCampaign={campaign.owner === address}
+                ethMarketPrice={Number(ethMarketPrice)}
+                usdcMarketPrice={Number(usdcMarketPrice)}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center py-16">
+            <Image
+              src="/no-data.svg"
+              alt="No campaigns found"
+              width={200}
+              height={200}
+              className="mb-8"
             />
-          ))}
-        </div>
+            <h2 className="text-2xl font-semibold mb-4">No Campaigns Found</h2>
+            <p className="text-gray-600 mb-8 text-center max-w-md">
+              There are currently no campaigns available. Be the first to create
+              a campaign and start your open-source journey!
+            </p>
+            <button
+              onClick={() => router.push(`/user/campaigns/create`)}
+              className="bg-black text-white px-6 py-3 rounded-md text-lg font-medium"
+            >
+              Create Campaign
+            </button>
+          </div>
+        )}
       </div>
       {isSendModalOpen && (
         <SendModal
