@@ -55,7 +55,7 @@ export function CampaignCard({
           className="group-hover:scale-105 transform object-cover transition duration-200"
         />
       </div>
-      <Link href={`/campaigns/${campaign.id}`} passHref>
+      <Link href={`/user/campaigns/view/${campaign.id}`} passHref>
         <div className="p-6 flex-grow flex flex-col">
           <h2 className="font-bold text-xl mb-2 text-gray-800 line-clamp-1">
             {campaign.title}

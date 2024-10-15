@@ -54,8 +54,9 @@ export const getAllCampaigns = async () => {
         (campaign: any, index: number) => ({
           id: index,
           title: campaign[0],
-          usdcBalance: campaign[1].toString(),
-          ethBalance: campaign[2].toString(),
+          usdcBalance: ethers.formatUnits(campaign[1], 6), // USDC has 6 decimal places
+          ethBalance: ethers.formatEther(campaign[2]), // ETH has 18 decimal places
+
           owner: campaign[3],
           gitUrl: campaign[4],
           description: campaign[5],

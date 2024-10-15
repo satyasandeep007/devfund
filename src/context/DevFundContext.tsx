@@ -31,7 +31,7 @@ interface DevFundContextType {
   tokenBalances: any[] | null;
   nftBalances: any[] | null;
   fetchWalletBalances: (address: string) => Promise<void>;
-  campaigns: Campaign[] | null;
+  campaigns: Campaign[];
   isLoading: boolean;
   walletBalancesLoading: boolean;
   ethMarketPrice: number;
@@ -61,7 +61,7 @@ export const DevFundProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const { address }: any = useAccount();
 
-  const [campaigns, setCampaigns] = useState<Campaign[] | null>(null);
+  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [tokenBalances, setTokenBalances] = useState<any[] | null>(null);
   const [nftBalances, setNftBalances] = useState<any[] | null>(null);
@@ -82,14 +82,14 @@ export const DevFundProvider: React.FC<{ children: ReactNode }> = ({
   }, [address]);
 
   const fetchMarketPrices = async () => {
-    if (address) {
-      try {
-        const { usdcPriceInUSD, ethPriceInUSD } = await getMarketPricesApi();
-        setETHMarketPrice(ethPriceInUSD);
-        setUSDCMarketPrice(usdcPriceInUSD);
-      } catch (error) {
-        console.error("Error fetching market prices:", error);
-      }
+    try {
+      const { usdcPriceInUSD, ethPriceInUSD } = await getMarketPricesApi();
+      console.log(usdcPriceInUSD, ethPriceInUSD, "marktey");
+
+      setETHMarketPrice(ethPriceInUSD);
+      setUSDCMarketPrice(usdcPriceInUSD);
+    } catch (error) {
+      console.error("Error fetching market prices:", error);
     }
   };
 
