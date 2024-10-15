@@ -46,7 +46,7 @@ const Hero = () => {
               Submit a campaign
             </Link>
             <Link
-              href="/user/dashboard"
+              href="/user/campaigns/discover"
               className="text-black-500 p-3 flex items-center justify-center hover:underline"
             >
               <span>Discover more</span> <IconChevronRight size={20} />
