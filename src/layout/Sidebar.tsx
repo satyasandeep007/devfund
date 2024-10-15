@@ -5,13 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import React from "react";
-import {
-  IconLayoutDashboard,
-  IconSpeakerphone,
-  IconBrandGithub,
-  IconWallet,
-  IconLogout,
-} from "@tabler/icons-react";
+
 
 interface NavLinkProps {
   href: string;
@@ -71,8 +65,8 @@ function Sidebar() {
   const { data: session }: any = useSession();
 
   return (
-    <div className="w-64 shrink-0 md:block h-screen fixed top-0 left-0 overflow-y-auto bg-[#1a1a1a] border-r border-gray-200">
-      <div className="w-full h-full bg-[#1a1a1a] flex flex-col">
+    <div className="w-64 shrink-0 md:block h-screen fixed top-0 left-0 overflow-y-auto bg-white border-r border-gray-200">
+      <div className="w-full h-full bg-white flex flex-col">
         <div className="p-4 flex items-center gap-2 border-b border-gray-200">
           <Image
             src="/logo1.svg"
@@ -127,7 +121,7 @@ function Sidebar() {
             </NavSection>
           </div>
 
-          <div className="mt-auto border-t border-gray-200 py-2">
+          {/* <div className="mt-auto border-t border-gray-200 py-2">
             <div className="flex items-center justify-between px-4 py-3 hover:bg-gray-100 transition-colors cursor-pointer">
               <div className="flex items-center">
                 <Image
@@ -150,55 +144,11 @@ function Sidebar() {
                 <IconLogout size={18} />
               </button>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
   );
 }
-
-interface NavLinkProps {
-  href: string;
-  icon: React.ReactNode;
-  children: React.ReactNode;
-}
-
-const NavLink: React.FC<NavLinkProps> = ({ href, icon, children }) => {
-  const pathname = usePathname();
-  const isActive = pathname === href;
-
-  return (
-    <Link
-      href={href}
-      className={`flex items-center px-4 py-2 text-sm ${
-        isActive ? "text-blue-600 bg-blue-50 font-medium" : "text-gray-700"
-      } hover:bg-gray-100 transition-colors`}
-    >
-      <span className="mr-3 text-gray-500">{icon}</span>
-      {children}
-    </Link>
-  );
-};
-
-interface NavSectionProps {
-  title: string;
-  children: React.ReactNode;
-  className?: string;
-}
-
-const NavSection: React.FC<NavSectionProps> = ({
-  title,
-  children,
-  className = "",
-}) => {
-  return (
-    <div className={`mb-6 ${className}`}>
-      {" "}
-      {/* Add the className prop here */}
-      <h2 className="px-4 mb-2 text-xs font-semibold text-gray-500">{title}</h2>
-      <div>{children}</div>
-    </div>
-  );
-};
 
 export default Sidebar;
