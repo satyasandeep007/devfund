@@ -127,15 +127,15 @@ function Sidebar() {
             <NavSection title="USER PROFILE" className="text-xs mt-4">
               <NavLink
                 href={`/user/profile/github`}
-                activeIcon="/ic_profile_active.svg"
-                inactiveIcon="/ic_profile.svg"
+                activeIcon="/ic_github_active.svg"
+                inactiveIcon="/ic_github.svg"
               >
                 Github
               </NavLink>
               <NavLink
                 href={`/user/profile/wallet`}
-                activeIcon="/ic_wallet_active.svg"
-                inactiveIcon="/ic_wallet.svg"
+                activeIcon="/ic_wallet1_active.svg"
+                inactiveIcon="/ic_wallet1.svg"
               >
                 Wallet
               </NavLink>
