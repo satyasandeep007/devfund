@@ -21,7 +21,7 @@ function Sidebar() {
       <div className="w-full h-full bg-white flex flex-col">
         <div className="p-4 flex items-center gap-2 border-b border-gray-200">
           <Image
-            src="/logo_sidebar.svg"
+            src="/logo1.svg"
             alt="DevFund Logo"
             width={180}
             height={40}
