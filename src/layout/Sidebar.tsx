@@ -17,8 +17,8 @@ function Sidebar() {
   const { data: session }: any = useSession();
 
   return (
-    <div className="w-64 shrink-0 md:block h-screen fixed top-0 left-0 overflow-y-auto bg-white border-r border-gray-200">
-      <div className="w-full h-full bg-white flex flex-col">
+    <div className="w-64 shrink-0 md:block h-screen fixed top-0 left-0 overflow-y-auto bg-[#1a1a1a] border-r border-gray-200">
+      <div className="w-full h-full bg-[#1a1a1a] flex flex-col">
         <div className="p-4 flex items-center gap-2 border-b border-gray-200">
           <Image
             src="/logo1.svg"
@@ -117,7 +117,7 @@ const NavSection: React.FC<NavSectionProps> = ({
       {" "}
       {/* Add the className prop here */}
       <h2 className="px-4 mb-2 text-xs font-semibold text-gray-500">{title}</h2>
-      <div>{children}</div>
+      <div className="ml-4">{children}</div>
     </div>
   );
 };
