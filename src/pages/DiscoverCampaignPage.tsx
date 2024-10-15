@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { CampaignCard } from "@/components/CampaignCard";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import { useAccount } from "wagmi";
 import { toast } from "react-toastify";
 import { useDevFund } from "@/context/DevFundContext";
@@ -32,7 +31,6 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
   campaigns,
 }) => {
   const { address } = useAccount();
-  const { data: session }: any = useSession();
   const {
     fundUSDC,
     fundEth,
@@ -52,8 +50,6 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
   const [usdcBalance, setUSDCBalance] = useState("0");
   const [ethBalance, setETHBalance] = useState("0");
   const [campaignId, setCampaignId]: any = useState(null);
-
-  console.log(tokenBalances, "tokenBalances");
 
   const tabs = [
     { id: "all", label: "All Campaigns" },
@@ -192,6 +188,8 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
               canDonate={true}
               handleDonate={(e) => toggleSendModalOpen(e, campaign.id)}
               isMyCampaign={campaign.owner === address}
+              ethMarketPrice={Number(ethMarketPrice)}
+              usdcMarketPrice={Number(usdcMarketPrice)}
             />
           ))}
         </div>

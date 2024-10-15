@@ -1,8 +1,19 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+
 import Image from "next/image";
-import Link from "next/link";
-import { FollowerPointerCard } from "@/components/ui/following-pointer";
-import { IconEye, IconHeart } from "@tabler/icons-react";
 import { format } from "date-fns";
+import {
+  IconEye,
+  IconHeart,
+  IconBrandGithub,
+  IconStar,
+  IconGitFork,
+} from "@tabler/icons-react";
+
+import ReceiveModal from "@/components/ReceiveModal";
+import { useAccount } from "wagmi";
 
 type Campaign = {
   description: string;
@@ -23,29 +34,41 @@ export function CampaignCard({
   canDonate,
   handleDonate,
   isMyCampaign,
+  ethMarketPrice,
+  usdcMarketPrice,
 }: {
   campaign: Campaign;
   canDonate: boolean;
   handleDonate: (e: React.FormEvent) => any;
   isMyCampaign?: boolean;
+  ethMarketPrice: number;
+  usdcMarketPrice: number;
 }) {
+  const { address }: any = useAccount();
   const repoFullName = campaign.gitUrl.split("/").slice(-2).join("/");
   const repoOwner = repoFullName.split("/")[0];
+
+  const [isReceiveModalOpen, setIsReceiveModalOpen] = useState(false);
 
   const formattedEndDate = campaign?.endDate
     ? format(new Date(parseInt(campaign.endDate) * 1000), "PPP")
     : "N/A";
+  const toggleReceiveModal = () => {
+    setIsReceiveModalOpen(!isReceiveModalOpen);
+  };
+  const progress =
+    (parseFloat(campaign.usdcBalance) / parseFloat(campaign.fundingGoal)) * 100;
+
+  // Calculate total amount raised in USD
+  const totalRaisedUSD =
+    parseFloat(campaign.ethBalance) * ethMarketPrice +
+    parseFloat(campaign.usdcBalance) * usdcMarketPrice;
+
+  console.log(totalRaisedUSD, "tpat;a", ethMarketPrice, usdcMarketPrice);
+  console.log(campaign);
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col">
-      {/* <FollowerPointerCard
-        title={
-          <TitleComponent
-            title={campaign.title}
-            avatar={`https://github.com/${repoOwner}.png`}
-          />
-        }
-      > */}
       <div className="h-48 bg-blue-500 relative">
         <Image
           src={`https://opengraph.githubassets.com/1/${repoFullName}`}
@@ -55,49 +78,103 @@ export function CampaignCard({
           className="group-hover:scale-105 transform object-cover transition duration-200"
         />
       </div>
-      <Link href={`/user/campaigns/view/${campaign.id}`} passHref>
-        <div className="p-6 flex-grow flex flex-col">
-          <h2 className="font-bold text-xl mb-2 text-gray-800 line-clamp-1">
-            {campaign.title}
-          </h2>
-          <p className="text-gray-600 mb-4 flex-grow line-clamp-3">
-            {campaign.description}
-          </p>
-          <div className="flex justify-between items-center mb-4">
-            <div className="flex items-center space-x-2">
-              <IconHeart className="w-5 h-5 text-red-500" />
-              <span className="text-sm text-gray-600">
-                {campaign.donationCount} donations
-              </span>
-              <span>{isMyCampaign ? "Yours" : ""}</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <IconEye className="w-5 h-5 text-blue-500" />
-              <span className="text-sm text-gray-600">{campaign.status}</span>
-            </div>
+      <div className="p-6 flex-grow flex flex-col">
+        <h2 className="font-bold text-xl mb-2 text-gray-800 line-clamp-1">
+          {campaign.title}
+        </h2>
+        <p className="text-gray-600 mb-4 flex-grow line-clamp-3">
+          {campaign.description}
+        </p>
+
+        {/* GitHub Repository Info */}
+        <div className="bg-gray-100 rounded-lg p-4 mb-4">
+          <h3 className="text-lg font-semibold mb-2">GitHub Repository</h3>
+          <div className="flex items-center space-x-4">
+            <IconBrandGithub className="text-xl" />
+            <a
+              href={campaign.gitUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 hover:underline"
+            >
+              {repoFullName}
+            </a>
           </div>
-          <div className="flex justify-between items-center">
-            <span className="text-sm font-semibold text-gray-500">
-              Goal: ${parseInt(campaign.fundingGoal).toLocaleString()}
+          {/* You might want to add stars and forks here if available in the campaign data */}
+        </div>
+
+        {/* Funding Progress */}
+        <div className="mb-4">
+          <h3 className="text-lg font-semibold mb-2">Funding Progress</h3>
+          <div className="mb-2">
+            <span className="text-xl font-bold">
+              $
+              {totalRaisedUSD.toLocaleString(undefined, {
+                maximumFractionDigits: 2,
+              })}
             </span>
-            <span className="text-sm font-semibold text-gray-500">
-              End Date: ${formattedEndDate}
+            <span className="text-gray-600">
+              {" "}
+              raised of ${parseInt(campaign.fundingGoal).toLocaleString()} goal
             </span>
-            {canDonate && (
-              <div className="space-x-2">
-                <button
-                  // disabled={isMyCampaign}
-                  onClick={handleDonate}
-                  className="bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-blue-600 transition-colors"
-                >
-                  Donate
-                </button>
-              </div>
-            )}
+          </div>
+          <div className="w-full bg-gray-200 rounded-full h-2.5 mb-2">
+            <div
+              className="bg-blue-600 h-2.5 rounded-full"
+              style={{ width: `${progress}%` }}
+            ></div>
+          </div>
+          <p className="text-gray-600">{campaign.donationCount} backers</p>
+        </div>
+
+        <div className="flex justify-between items-center mb-4">
+          <div className="flex items-center space-x-2">
+            <IconHeart className="w-5 h-5 text-red-500" />
+            <span className="text-sm text-gray-600">
+              {campaign.donationCount} donations
+            </span>
+            <span>{isMyCampaign ? "Yours" : ""}</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <IconEye className="w-5 h-5 text-blue-500" />
+            <span className="text-sm text-gray-600">{campaign.status}</span>
           </div>
         </div>
-      </Link>
-      {/* </FollowerPointerCard> */}
+        <div className="flex justify-between items-center">
+          <span className="text-sm font-semibold text-gray-500">
+            Goal: ${parseInt(campaign.fundingGoal).toLocaleString()}
+          </span>
+          <span className="text-sm font-semibold text-gray-500">
+            End Date: {formattedEndDate}
+          </span>
+          {canDonate && (
+            <div className="space-x-2">
+              <button
+                onClick={handleDonate}
+                className="bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-blue-600 transition-colors"
+              >
+                Donate
+              </button>
+            </div>
+          )}
+          {isMyCampaign && (
+            <button
+              onClick={toggleReceiveModal}
+              className="bg-green-500 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-green-600 transition-colors"
+            >
+              Withdraw
+            </button>
+          )}
+        </div>
+      </div>
+
+      {isReceiveModalOpen && (
+        <ReceiveModal
+          onClose={toggleReceiveModal}
+          address={address}
+          campaign={campaign}
+        />
+      )}
     </div>
   );
 }

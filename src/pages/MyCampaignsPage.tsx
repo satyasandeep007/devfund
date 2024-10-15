@@ -16,7 +16,15 @@ interface Campaign {
   status: string;
 }
 
-const MyCampaignsPage = ({ campaigns }: { campaigns: Campaign[] }) => {
+const MyCampaignsPage = ({
+  campaigns,
+  usdcMarketPrice,
+  ethMarketPrice,
+}: {
+  campaigns: Campaign[];
+  usdcMarketPrice: any;
+  ethMarketPrice: any;
+}) => {
   return (
     <div className="min-h-screen bg-white">
       <div className="mx-auto px-4 py-8">
@@ -26,8 +34,11 @@ const MyCampaignsPage = ({ campaigns }: { campaigns: Campaign[] }) => {
             <CampaignCard
               key={campaign.id}
               campaign={campaign}
+              usdcMarketPrice={usdcMarketPrice}
+              ethMarketPrice={ethMarketPrice}
               canDonate={false}
               handleDonate={() => {}}
+              isMyCampaign={true}
             />
           ))}
         </div>
