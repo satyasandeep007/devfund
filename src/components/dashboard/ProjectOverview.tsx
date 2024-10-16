@@ -2,7 +2,7 @@ import React from 'react';
 
 const ProjectOverview = () => {
   return (
-    <div className="bg-gray-50 min-h-screen p-8">
+    <div className="bg-white min-h-screen p-8">
       {/* Header */}
       <div className="bg-purple-500 text-white rounded-lg p-8 mb-8">
         <div className="flex justify-between items-center">

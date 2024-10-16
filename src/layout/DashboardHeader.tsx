@@ -6,7 +6,7 @@ const DashboardHeader: React.FC = () => {
   const { isConnected } = useAccount();
 
   return (
-    <header className="w-full py-4 px-8 dark:bg-gray-900 flex justify-between items-center ">
+    <header className="w-full py-4 px-8  flex justify-between items-center ">
       <div className="flex items-center"></div>
       <div className="flex items-center gap-x-4">
         <div className="w-full flex justify-end">
