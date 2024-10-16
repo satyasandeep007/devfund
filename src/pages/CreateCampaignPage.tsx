@@ -61,12 +61,12 @@ export default function CreateCampaignPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
+    <div className="min-h-screen bg-white p-8">
       <div className="px-8 mb-6 flex justify-between items-center">
         
         <h2 className="text-3xl font-bold text-gray-800">Create Campaign</h2>
       </div>
-      <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-md overflow-hidden border">
+      <div className="max-w-6xl mx-auto bg-white rounded-2xl">
         <div className="p-8">
           <form onSubmit={handleSubmit}>
             <div className="space-y-6">
@@ -97,7 +97,7 @@ export default function CreateCampaignPage() {
                   <p className="text-xs text-gray-500 mt-1">You can't change the campaign name.</p>
                 </div>
               </div>
-              <div className="w-3/3 border-t border-gray-200"></div>
+              <div className="w-3/3 border-t border-white"></div>
 
               <div className="flex items-start">
                 <div className="w-1/3">
@@ -132,7 +132,7 @@ export default function CreateCampaignPage() {
                   <p className="text-xs text-gray-500 mt-1">You can't change the repository once selected.</p>
                 </div>
               </div>
-              <div className="w-3/3 border-t border-gray-200"></div>
+              <div className="w-3/3 border-t border-white"></div>
 
               <div className="flex items-start">
                 <div className="w-1/3">
@@ -154,7 +154,7 @@ export default function CreateCampaignPage() {
                   />
                 </div>
               </div>
-              <div className="w-3/3 border-t border-gray-200"></div>
+              <div className="w-3/3 border-t border-white"></div>
               
               <div className="flex items-start">
                 <div className="w-1/3">

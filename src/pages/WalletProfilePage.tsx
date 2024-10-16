@@ -75,7 +75,7 @@ const CryptoWalletDashboard: React.FC = () => {
     <div className="bg-white p-6 font-sans">
       <div className="grid grid-cols-3 gap-6">
         {/* My Wallet Section */}
-        <div className="bg-gray-200 rounded-xl p-6 flex flex-col items-center text-center">
+        <div className=" bg-gradient-to-tr from-blue-500  to-purple-300 rounded-xl p-6 flex flex-col items-center text-center">
           <p className="text-lg font-bold m-2">My Wallet</p>
           <h2 className="text-6xl font-bold mt-4">
             0.13<>ETH</>
