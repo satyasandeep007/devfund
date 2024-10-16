@@ -40,8 +40,8 @@ const CryptoWalletDashboard: React.FC = () => {
                 <IconArrowUp className="h-6 w-6  " />
               </button>
             </div>
-            <button className="bg-yellow-300 p-2 rounded-full">
-              <IconPlus className="h-6 w-6" />
+            <button className="bg-gradient-to-r from-blue-600 to-blue-700 p-2 rounded-full">
+              <IconPlus className="h-6 w-6 text-white" />
             </button>
           </div>
           
