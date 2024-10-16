@@ -6,7 +6,8 @@ import { useSession } from "next-auth/react";
 import { useDevFund } from "@/context/DevFundContext";
 import { useGitHubRepos } from "@/context/GithubContext";
 import { toast } from "react-toastify";
-import { addDays } from "date-fns"; // Make sure to install and import date-fns
+import { addDays } from "date-fns";
+import { IconChevronDown, IconChevronLeft } from "@tabler/icons-react";
 
 export default function CreateCampaignPage() {
   const router = useRouter();
@@ -33,14 +34,12 @@ export default function CreateCampaignPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const chain = 1; // Replace with actual chain ID
+      const chain = 1;
       const currentDate = new Date();
       const endDate = addDays(currentDate, Number(formData.duration));
-      const endDateTimestamp = Math.floor(endDate.getTime() / 1000); // Convert to seconds
+      const endDateTimestamp = Math.floor(endDate.getTime() / 1000);
 
-      console.log(endDateTimestamp, "endDateTimestamp");
-
-      const result = await createCampaign(
+      await createCampaign(
         formData.title,
         formData.gitUrl,
         formData.description,
@@ -48,157 +47,172 @@ export default function CreateCampaignPage() {
         endDateTimestamp,
         chain
       );
-      console.log("Project created:", result);
       await refreshCampaigns();
-      toast("🦄 Project created!", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-      // TODO: Handle successful project creation
-      router.push(`/user/campaigns/me`); // Redirect to dashboard after creation
+      toast.success("🦄 Project created!");
+      router.push(`/user/campaigns/me`);
     } catch (error) {
       console.error("Error creating project:", error);
-      // TODO: Handle error
+      toast.error("Failed to create project. Please try again.");
     }
   };
 
+  const handleGoBack = () => {
+    router.back();
+  };
+
   return (
-    <div className="min-h-screen bg-purple-50 p-8">
-      <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
-        <div className="px-8 py-6 bg-gradient-to-r from-purple-600 to-indigo-600">
-          <h2 className="text-4xl font-extrabold text-white">
-            Create Your Campaign
-          </h2>
-          <p className="mt-2 text-xl text-purple-200">
-            Launch your project and start fundraising today
-          </p>
-        </div>
-        <form onSubmit={handleSubmit} className="px-8 py-6 space-y-6">
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            <div>
-              <label
-                htmlFor="title"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Campaign Title
-              </label>
-              <input
-                type="text"
-                name="title"
-                id="title"
-                value={formData.title}
-                onChange={handleChange}
-                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
-                required
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="gitUrl"
-                className="block text-sm font-medium text-gray-700"
-              >
-                GitHub Repository
-              </label>
-              <select
-                name="gitUrl"
-                id="gitUrl"
-                value={formData.gitUrl}
-                onChange={handleChange}
-                className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm rounded-md"
-                required
-              >
-                <option value="">Select a repository</option>
-                {loading ? (
-                  <option value="" disabled>
-                    Loading repositories...
-                  </option>
-                ) : (
-                  repos.map((repo: any) => (
-                    <option key={repo.id} value={repo.html_url}>
-                      {repo.full_name}
-                    </option>
-                  ))
-                )}
-              </select>
-            </div>
-          </div>
-          <div>
-            <label
-              htmlFor="description"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Campaign Description
-            </label>
-            <textarea
-              name="description"
-              id="description"
-              rows={6}
-              value={formData.description}
-              onChange={handleChange}
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
-              placeholder="Describe your campaign. Markdown is supported!"
-              required
-            />
-          </div>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            <div>
-              <label
-                htmlFor="fundingGoal"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Funding Goal
-              </label>
-              <div className="mt-1 relative rounded-md shadow-sm">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <span className="text-gray-500 sm:text-sm">$</span>
+    <div className="min-h-screen bg-gray-100 p-8">
+      <div className="px-8 mb-6 flex justify-between items-center">
+        
+        <h2 className="text-3xl font-bold text-gray-800">Create Campaign</h2>
+      </div>
+      <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-md overflow-hidden border">
+        <div className="p-8">
+          <form onSubmit={handleSubmit}>
+            <div className="space-y-6">
+              <div className="flex items-center">
+                <div className="w-1/3">
+                  <h3 className="text-lg font-Bold text-gray-900">Campaign Details</h3>
                 </div>
-                <input
-                  type="number"
-                  name="fundingGoal"
-                  id="fundingGoal"
-                  value={formData.fundingGoal}
-                  onChange={handleChange}
-                  className="mt-1 block w-full pl-7 pr-12 border-gray-300 rounded-md focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
-                  placeholder="0.00"
-                  required
-                />
+              </div>
+
+              <div className="flex items-start">
+                <div className="w-1/3">
+                  <label htmlFor="title" className="block text-sm font-semibold text-gray-700">
+                    Campaign Title
+                  </label>
+                  <p className="text-xs text-gray-500 mt-1">Describe your campaign Name !</p>
+                </div>
+                <div className="w-2/3">
+                  <input
+                    type="text"
+                    name="title"
+                    id="title"
+                    value={formData.title}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black"
+                    placeholder="Campaign 209175"
+                    required
+                  />
+                  <p className="text-xs text-gray-500 mt-1">You can't change the campaign name.</p>
+                </div>
+              </div>
+              <div className="w-3/3 border-t border-gray-200"></div>
+
+              <div className="flex items-start">
+                <div className="w-1/3">
+                  <label htmlFor="gitUrl" className="block text-sm font-semibold text-gray-700">
+                    GitHub Repository
+                  </label>
+                  <p className="text-xs text-gray-500 mt-1">Select the repository for your campaign.</p>
+                </div>
+                <div className="w-2/3">
+                  <div className="relative">
+                    <select
+                      name="gitUrl"
+                      id="gitUrl"
+                      value={formData.gitUrl}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-1 focus:ring-black"
+                      required
+                    >
+                      <option value="">Select a repository</option>
+                      {loading ? (
+                        <option value="" disabled>Loading repositories...</option>
+                      ) : (
+                        repos.map((repo: any) => (
+                          <option key={repo.id} value={repo.html_url}>
+                            {repo.full_name}
+                          </option>
+                        ))
+                      )}
+                    </select>
+                    <IconChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  </div>
+                  <p className="text-xs text-gray-500 mt-1">You can't change the repository once selected.</p>
+                </div>
+              </div>
+              <div className="w-3/3 border-t border-gray-200"></div>
+
+              <div className="flex items-start">
+                <div className="w-1/3">
+                  <label htmlFor="description" className="block text-sm font-semibold text-gray-700">
+                    Campaign Description
+                  </label>
+                  <p className="text-xs text-gray-500 mt-1">Describe your campaign.</p>
+                </div>
+                <div className="w-2/3">
+                  <textarea
+                    name="description"
+                    id="description"
+                    rows={4}
+                    value={formData.description}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black"
+                    placeholder="Describe your campaign..."
+                    required
+                  />
+                </div>
+              </div>
+              <div className="w-3/3 border-t border-gray-200"></div>
+              
+              <div className="flex items-start">
+                <div className="w-1/3">
+                  <label className="block text-sm font-semibold text-gray-700 ">
+                    Funding Goal & Duration
+                    <p className="text-xs text-gray-500 mt-1">Describe Fund and Duration of campaign.</p>
+                  </label>
+                </div>
+                <div className="w-2/3 flex space-x-4">
+                  <div className="flex-1 relative">
+                    <input
+                      type="number"
+                      name="fundingGoal"
+                      value={formData.fundingGoal}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black"
+                      placeholder="Enter Amount"
+                      required
+                    />
+                    <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                      USD
+                    </span>
+                  </div>
+                  <div className="flex-1 relative">
+                    <select
+                      name="duration"
+                      value={formData.duration}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-1 focus:ring-black"
+                    >
+                      <option value="30">30 days</option>
+                      <option value="60">60 days</option>
+                      <option value="90">90 days</option>
+                    </select>
+                    <IconChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  </div>
+                </div>
               </div>
             </div>
-            <div>
-              <label
-                htmlFor="duration"
-                className="block text-sm font-medium text-gray-700"
+
+            <div className="mt-8 flex justify-end">
+              <button
+                onClick={handleGoBack}
+                className="flex items-center text-gray-600 hover:text-gray-800 border border-black rounded-md px-4 py-2 mr-4"
               >
-                Duration
-              </label>
-              <select
-                name="duration"
-                id="duration"
-                value={formData.duration}
-                onChange={handleChange}
-                className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm rounded-md"
+                <IconChevronLeft className="w-5 h-5 mr-1" />
+                Back
+              </button>
+              
+              <button
+                type="submit"
+                className="bg-black text-white py-2 px-4 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
               >
-                <option value="30">30 days</option>
-                <option value="60">60 days</option>
-                <option value="90">90 days</option>
-              </select>
+                Create Campaign
+              </button>
             </div>
-          </div>
-          <div className="pt-5">
-            <button
-              type="submit"
-              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-            >
-              Create Campaign
-            </button>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   );
