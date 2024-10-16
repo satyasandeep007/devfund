@@ -1,58 +1,92 @@
-import React from 'react';
-import { IconArrowsUpDown, IconPlus, IconStar, IconDotsVertical, IconChevronDown } from '@tabler/icons-react';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+"use client";
 
-const data = [
-  { time: '06:00', value: 0.86 },
-  { time: '08:00', value: 0.88 },
-  { time: '10:00', value: 0.89 },
-  { time: '12:00', value: 0.90 },
-  { time: '14:00', value: 0.91 },
-  { time: '16:00', value: 0.92 },
-  { time: '18:00', value: 0.92 },
-];
+import React from 'react';
+import { IconArrowsUpDown, IconPlus, IconStar, IconDotsVertical, IconChevronDown, IconArrowDown, IconArrowUp } from '@tabler/icons-react';
 
 const CryptoWalletDashboard: React.FC = () => {
+  // Dummy data for Trending Crypto
+  const cryptoData = [
+    { id: 'bitcoin', name: 'Bitcoin', symbol: 'BTC', image: 'https://assets.coingecko.com/coins/images/1/small/bitcoin.png', current_price: 30000, price_change_percentage_24h: 2.5 },
+    { id: 'ethereum', name: 'Ethereum', symbol: 'ETH', image: 'https://assets.coingecko.com/coins/images/279/small/ethereum.png', current_price: 2000, price_change_percentage_24h: -1.2 },
+    { id: 'tether', name: 'Tether', symbol: 'USDT', image: 'https://assets.coingecko.com/coins/images/325/small/Tether.png', current_price: 1, price_change_percentage_24h: 0.1 },
+  ];
+
+  // Dummy data for NFTs
+  const nftData = [
+    { id: 1, name: 'Bored Ape #1234', collection: 'Bored Ape Yacht Club', image: 'https://assets.coingecko.com/nft_contracts/images/20/standard/bored-ape-yacht-club.png', price: 100, floorPrice: 90 },
+    { id: 2, name: 'CryptoPunk #5678', collection: 'CryptoPunks', image: 'https://assets.coingecko.com/nft_contracts/images/270/standard/cryptopunks.png', price: 80, floorPrice: 75 },
+    { id: 3, name: 'Doodle #9101', collection: 'Pudgy Penguins', image: 'https://assets.coingecko.com/nft_contracts/images/38/standard/da64989d9762c8a61b3c65917edfdf97.png', price: 20, floorPrice: 18 },
+  ];
+
   return (
     <div className="bg-gray-100 p-6 font-sans">
+      {/* <div className="flex justify-end mb-4">
+        <button className="bg-white text-red-500 px-4 py-2 rounded-md text-sm font-medium">
+          Disconnect Wallet
+        </button>
+      </div> */}
       <div className="grid grid-cols-3 gap-6">
         {/* My Wallet Section */}
-        <div className="bg-gray-200 rounded-2xl p-6">
-          <h2 className="text-lg font-semibold mb-2">My Wallet</h2>
-          <p className="text-4xl font-bold mb-1">$128,921</p>
-          <p className="text-sm text-gray-600 mb-4">+ $15,121 last week</p>
-          <div className="flex space-x-4">
-            <button className="bg-black text-white p-2 rounded-full">
-              <IconArrowsUpDown className="h-6 w-6" />
-            </button>
+        <div className="bg-gray-200 rounded-2xl p-6 flex flex-col items-center text-center">
+          <p className="text-lg font-bold m-2">My Wallet</p>
+          <h2 className="text-6xl font-bold mt-4">0.13<>ETH</></h2>
+          <p className="text-sm text-gray-600 mb-4 mt-4">USD 15,121</p>
+          <div className="flex space-x-4 mb-4">
+            <div className="bg-black text-white rounded-full flex">
+              <button className="p-2 border-r rounded-full ">
+                <IconArrowDown className="h-6 w-6" />
+              </button>
+              <button className="p-2 rounded-full">
+                <IconArrowUp className="h-6 w-6  " />
+              </button>
+            </div>
             <button className="bg-yellow-300 p-2 rounded-full">
               <IconPlus className="h-6 w-6" />
             </button>
           </div>
+          
         </div>
 
-        {/* Watchlist Section */}
+        {/* Cryptocurrency Prices Live */}
         <div className="col-span-1 bg-white rounded-2xl p-6">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold">Watchlist</h2>
-            <button className="text-gray-500">
-              <IconDotsVertical className="h-6 w-6" />
-            </button>
+            <h2 className="text-lg font-semibold">Trending Crypto</h2>
           </div>
-          {['Bitcoin', 'Litecoin', 'Solana', 'Tether'].map((coin, index) => (
-            <div key={coin} className="flex justify-between items-center mb-4">
+          {cryptoData.map((coin) => (
+            <div key={coin.id} className="flex justify-between items-center mb-4">
               <div className="flex items-center">
-                <div className={`w-8 h-8 rounded-full mr-3 ${index % 2 === 0 ? 'bg-yellow-400' : 'bg-blue-400'}`}></div>
+                <img src={coin.image} alt={coin.name} className="w-8 h-8 rounded-full mr-3" />
                 <div>
-                  <p className="font-semibold">{coin}</p>
-                  <p className="text-xs text-gray-500">{coin.slice(0, 3).toUpperCase()}</p>
+                  <p className="font-semibold">{coin.name}</p>
+                  <p className="text-xs text-gray-500">{coin.symbol.toUpperCase()}</p>
                 </div>
               </div>
               <div className="text-right">
-                <p className="font-semibold">${(Math.random() * 5000 + 2000).toFixed(2)}</p>
-                <p className={`text-xs ${index % 2 === 0 ? 'text-green-500' : 'text-red-500'}`}>
-                  {index % 2 === 0 ? '▲' : '▼'} {(Math.random() * 2).toFixed(2)}%
+                <p className="font-semibold">${coin.current_price.toFixed(2)}</p>
+                <p className={`text-xs ${coin.price_change_percentage_24h >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                  {coin.price_change_percentage_24h >= 0 ? '▲' : '▼'} {Math.abs(coin.price_change_percentage_24h).toFixed(2)}%
                 </p>
+              </div>
+            </div>
+          ))}
+        </div>
+        {/* NFT */}
+        <div className="col-span-1 bg-white rounded-2xl p-6">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg font-semibold">NFT</h2>
+          </div>
+          {nftData.map((nft) => (
+            <div key={nft.id} className="flex justify-between items-center mb-4">
+              <div className="flex items-center">
+                <img src={nft.image} alt={nft.name} className="w-12 h-12 rounded-lg mr-3 object-cover" />
+                <div>
+                  <p className="font-semibold">{nft.name}</p>
+                  <p className="text-xs text-gray-500">{nft.collection}</p>
+                </div>
+              </div>
+              <div className="text-right">
+                <p className="font-semibold">{nft.price} ETH</p>
+                <p className="text-xs text-gray-500">Floor: {nft.floorPrice} ETH</p>
               </div>
             </div>
           ))}
@@ -96,34 +130,34 @@ const CryptoWalletDashboard: React.FC = () => {
         </div>
 
         {/* Swap Currencies Section */}
-        <div className="bg-white rounded-2xl p-6">
-          <h2 className="text-lg font-semibold mb-4">Swap Currencies</h2>
-          <div className="bg-yellow-100 rounded-xl p-4 mb-4">
-            <p className="text-sm mb-1">You send</p>
+        <div className="bg-gradient-to-br from-purple-100 to-blue-100 rounded-2xl p-8 min-h-[600px] flex flex-col">
+          <h2 className="text-xl font-semibold mb-6">Swap Currencies</h2>
+          <div className="bg-yellow-50 border rounded-xl p-6 mb-6">
+            <p className="text-sm mb-2">You send</p>
             <div className="flex justify-between items-center">
-              <p className="text-2xl font-bold">5,134</p>
-              <button className="bg-white px-3 py-1 rounded-full text-sm flex items-center">
-                Tether <IconChevronDown className="h-4 w-4 ml-1" />
+              <p className="text-3xl font-bold">5,134</p>
+              <button className="bg-gray-200 px-4 py-2 rounded-full text-sm flex items-center">
+                Base <IconChevronDown className="h-4 w-4 ml-2" />
               </button>
             </div>
-            <p className="text-sm text-right mt-1">Balance: $2,356.11</p>
+            <p className="text-sm text-right mt-2">Balance: $2,356.11</p>
           </div>
-          <div className="bg-green-100 rounded-xl p-4 mb-4">
-            <p className="text-sm mb-1">You get</p>
+          <div className="bg-green-50 border rounded-xl p-6 mb-6">
+            <p className="text-sm mb-2">You get</p>
             <div className="flex justify-between items-center">
-              <p className="text-2xl font-bold">66.65</p>
-              <button className="bg-white px-3 py-1 rounded-full text-sm flex items-center">
-                Litecoin <IconChevronDown className="h-4 w-4 ml-1" />
+              <p className="text-3xl font-bold">66.65</p>
+              <button className="bg-white px-4 py-2 rounded-full text-sm flex items-center">
+                USD <IconChevronDown className="h-4 w-4 ml-2" />
               </button>
             </div>
-            <p className="text-sm text-right mt-1">Balance: $5,131.00</p>
+            <p className="text-sm text-right mt-2">Balance: $5,131.00</p>
           </div>
-          <div className="text-sm mb-4">
-            <div className="flex justify-between mb-1">
+          <div className="text-sm mb-6 flex-grow">
+            <div className="flex justify-between mb-2">
               <span>Rate</span>
               <span>1 USDT = 0.0130 LTC</span>
             </div>
-            <div className="flex justify-between mb-1">
+            <div className="flex justify-between mb-2">
               <span>Service fee</span>
               <span>0.0121574415 USDT ($0.12)</span>
             </div>
@@ -132,7 +166,7 @@ const CryptoWalletDashboard: React.FC = () => {
               <span>$5,254</span>
             </div>
           </div>
-          <button className="w-full bg-black text-white py-3 rounded-xl font-semibold">
+          <button className="w-full bg-black text-white py-4 rounded-xl font-semibold text-lg">
             Buy 66.65 LTC
           </button>
         </div>
