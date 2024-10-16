@@ -9,7 +9,7 @@ const Home: React.FC = () => {
   const { isConnected } = useAccount();
 
   return (
-    <main className="h-screen bg-[#f0f0f0] dark:bg-[#1a1a1a]">
+    <main className="h-screen bg-[#f0f0f0]">
       <Header isConnected={isConnected} />
       <Hero />
     </main>

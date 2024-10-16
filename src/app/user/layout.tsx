@@ -22,14 +22,16 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
         />
       </AnimatePresence>
 
-      <div className="hidden md:block w-40  h-screen fixed top-0 left-0">
+      <div className="hidden md:block w-40  h-screen fixed z-10 top-0 left-0">
         <Sidebar />
       </div>
 
       <div className="flex-1 md:ml-60 overflow-x-hidden">
         <div className="w-full overflow-x-auto max-w-[1440px] mx-auto">
-          <DashboardHeader />
-          {children}
+          <div className="fixed top-0 left-0 w-full bg-white">
+            <DashboardHeader />
+          </div>
+          <div className="mt-20">{children}</div>
         </div>
       </div>
     </motion.div>

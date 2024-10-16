@@ -40,7 +40,7 @@ const NavLink: React.FC<NavLinkProps> = ({
           className="mr-3"
         />
         <span
-          className={`text-xs font-semibold ${
+          className={`text-md font-thin ${
             isActive ? "text-white" : "text-gray-400"
           }`}
         >
@@ -66,7 +66,7 @@ const NavSection: React.FC<NavSectionProps> = ({
     <div className={`mb-6 ${className}`}>
       {" "}
       {/* Add the className prop here */}
-      <h2 className="px-4 mb-2 text-xs font-semibold text-gray-500">{title}</h2>
+      <h2 className="px-4 mb-2 text-md font-semibold text-gray-500">{title}</h2>
       <div>{children}</div>
     </div>
   );
@@ -76,9 +76,9 @@ function Sidebar() {
   const { data: session }: any = useSession();
 
   return (
-    <div className="w-64 shrink-0 md:block h-screen fixed top-0 left-0 overflow-y-auto bg-white border-r border-gray-200">
+    <div className="w-64 shrink-0 md:block h-screen fixed top-0 left-0 overflow-y-auto bg-white">
       <div className="w-full h-full bg-white flex flex-col">
-        <div className="p-4 flex items-center gap-2 border-b border-gray-200">
+        <div className="p-4 flex items-center gap-2">
           <h1 className="text-2xl font-bold mr-8 flex items-center">
             <Image
               src="/logo.svg"
@@ -93,7 +93,7 @@ function Sidebar() {
           </h1>
         </div>
 
-        <div className="flex flex-col flex-grow justify-between py-4">
+        <div className="flex flex-col flex-grow justify-between py-4 pt-32">
           <div className="space-y-4">
             <NavSection title="MY DASHBOARD" className="mb-4 text-xs">
               <NavLink
@@ -104,7 +104,7 @@ function Sidebar() {
                 Overview
               </NavLink>
             </NavSection>
-            <div className="my-4 border-t border-gray-200"></div>
+            <div className="my-4 px "></div>
 
             <NavSection title="CAMPAIGNS" className="text-xs mt-4">
               <NavLink
@@ -122,7 +122,7 @@ function Sidebar() {
                 My Campaigns
               </NavLink>
             </NavSection>
-            <div className="my-4 border-t border-gray-200"></div>
+            <div className="my-4 "></div>
 
             <NavSection title="USER PROFILE" className="text-xs mt-4">
               <NavLink

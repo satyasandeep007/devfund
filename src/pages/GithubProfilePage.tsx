@@ -144,7 +144,7 @@ const GithubProfilePage: React.FC = () => {
   }
 
   return (
-    <div className="profile-page bg-gray-100 min-h-screen p-8">
+    <div className="profile-page bg-white min-h-screen p-8">
       <div className="max-w-7xl mx-auto">
         {session ? (
           <div>
