@@ -66,7 +66,7 @@ const Hero = () => {
               <h3 className="mx-auto font-semibold text-lg">
                 Only on Base
               </h3>
-              <Image src="/base.svg" width={200} height={200} alt="Base" />
+              <Image src="/hero_base.png" width={250} height={250} alt="Base" />
             </div>
             <div>
               {" "}
