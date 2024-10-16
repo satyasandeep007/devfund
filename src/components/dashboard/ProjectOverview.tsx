@@ -1,212 +1,155 @@
-import React from "react";
-import { IconChartBar, IconCurrencyDollar, IconCode, IconStar } from "@tabler/icons-react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUp, faArrowDown, faBuilding } from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
 
-// StatCard Component
-interface StatCardProps {
-  title: string;
-  value: string;
-  icon: React.ElementType;
-}
-
-const StatCard: React.FC<StatCardProps> = ({ title, value, unit, color, icon: Icon }) => {
-  const getColorClasses = (color: string) => {
-    const colorMap: { [key: string]: { bg: string; text: string } } = {
-      pink: { bg: "bg-pink-100", text: "text-pink-500" },
-      yellow: { bg: "bg-yellow-100", text: "text-yellow-500" },
-      green: { bg: "bg-green-100", text: "text-green-500" },
-      purple: { bg: "bg-purple-100", text: "text-purple-500" },
-    };
-    return colorMap[color] || { bg: "bg-gray-100", text: "text-gray-500" };
-  };
-
-  const { bg, text } = getColorClasses(color);
-
+const ProjectOverview = () => {
   return (
-    <div className={`${bg} rounded-lg p-4 flex flex-col w-48`}>
-      <div className="flex items-center mb-2">
-        <div className={`${text} rounded-full w-10 h-10 flex items-center justify-center mr-3`}>
-          <Icon size={20} stroke={1.5} />
-        </div>
-        <span className="text-sm text-gray-600">{title}</span>
-      </div>
-      <div className="flex items-baseline">
-        <span className="text-2xl font-bold">{value}</span>
-        {unit && <span className="text-lg ml-1">{unit}</span>}
-      </div>
-    </div>
-  );
-};
-
-// GraphCard Component
-const GraphCard: React.FC = () => {
-  return (
-    <div className="bg-white rounded-lg p-6">
-      <h3 className="text-gray-600 mb-2">Trending Campaigns</h3>
-      <div className="h-32 bg-gray-100 rounded-lg flex justify-center items-center">
-        {/* Simulate Graph */}
-        <div className="w-full h-full flex justify-between items-end">
-          <div className="bg-blue-500 h-20 w-4"></div>
-          <div className="bg-black h-12 w-4"></div>
-          <div className="bg-blue-500 h-10 w-4"></div>
-          <div className="bg-black h-24 w-4"></div>
-          <div className="bg-blue-500 h-16 w-4"></div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// TopContributors Component
-const TopContributors: React.FC = () => {
-  return (
-    <div className="bg-white rounded-lg p-6">
-      <h3 className="text-gray-600 mb-4">Top Contributors</h3>
-      <div className="flex space-x-4">
-        <img src="/avatar1.png" alt="Avatar" className="w-10 h-10 rounded-full" />
-        <img src="/avatar2.png" alt="Avatar" className="w-10 h-10 rounded-full" />
-        <img src="/avatar3.png" alt="Avatar" className="w-10 h-10 rounded-full" />
-        <img src="/avatar4.png" alt="Avatar" className="w-10 h-10 rounded-full" />
-      </div>
-    </div>
-  );
-};
-
-// FundHistory Component
-const FundHistory: React.FC = () => {
-  return (
-    <div className="bg-white rounded-lg p-6">
-      <h3 className="text-gray-600 mb-4">Fund History</h3>
-      <ul className="space-y-2">
-        <li className="flex justify-between text-sm">
-          <span>Avalanche Staking</span>
-          <span>+8,082847</span>
-        </li>
-        <li className="flex justify-between text-sm">
-          <span>Atom Staking</span>
-          <span>Producing</span>
-        </li>
-        <li className="flex justify-between text-sm">
-          <span>Cardano Staking</span>
-          <span>Delegated</span>
-        </li>
-      </ul>
-    </div>
-  );
-};
-
-// BaseValueChart Component
-const BaseValueChart: React.FC = () => {
-  return (
-    <div className="bg-white rounded-lg p-6">
-      <h3 className="text-gray-600 mb-2">Base Value</h3>
-      <div className="h-32 bg-gray-100 rounded-lg flex items-center justify-center">
-        {/* Simulated Chart */}
-        <svg viewBox="0 0 100 50" className="w-full h-full">
-          <polyline
-            fill="none"
-            stroke="#FF6347"
-            strokeWidth="2"
-            points="0,40 10,30 20,35 30,20 40,25 50,15 60,10 70,15 80,5 90,10"
-          />
-        </svg>
-      </div>
-    </div>
-  );
-};
-
-// Main Overview Component
-const ProjectOverview: React.FC = () => {
-  return (
-    <div className="min-h-screen bg-gray-50 p-8 space-y-8">
-      <h1 className="text-2xl font-semibold text-black">Overview</h1>
-      <div className="grid grid-cols-4 gap-6">
-        {/* Stat Cards Section */}
-        {[
-          { title: "Active Campaigns", value: "20k", color: "pink", icon: IconChartBar },
-          { title: "Amount Raised", value: "125", unit: "Base", color: "green", icon: IconCurrencyDollar },
-          { title: "Total Repos", value: "35", color: "purple", icon: IconCode },
-          { title: "Stars", value: "08", color: "yellow", icon: IconStar },
-        ].map((card, idx) => (
-          <StatCard key={idx} {...card} />
-        ))}
-
-        {/* Top Contributors */}
-        <div className="col-span-2 bg-white rounded-lg shadow-md p-6">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-lg font-semibold">Top Contributors</h2>
-            <a href="#" className="text-sm text-gray-400">See all</a>
-          </div>
-          <div className="space-y-6">
-            {[
-              { type: 'Send Funds', amount: '-11.320000', date: '23/09/2022, 11:48', positive: false },
-              { type: 'Received Funds', amount: '+30.000000', date: '23/09/2022, 11:48', positive: true },
-              { type: 'Send Funds', amount: '-11.320000', date: '23/09/2022, 11:48', positive: false },
-            ].map((transaction, idx) => (
-              <div key={idx} className="flex justify-between items-center">
-                <div className="flex items-center space-x-4">
-                  <div
-                    className={`p-2 rounded-full ${
-                      transaction.positive ? 'bg-red-100 text-red-500' : 'bg-gray-100 text-gray-500'
-                    }`}
-                  >
-                    <FontAwesomeIcon
-                      icon={transaction.positive ? faArrowUp : faArrowDown}
-                      size="sm"
-                    />
-                  </div>
-                  <div>
-                    <p className="font-medium">{transaction.type}</p>
-                    <p className="text-sm text-gray-400">{transaction.date}</p>
-                  </div>
-                </div>
-                <p
-                  className={`font-semibold ${
-                    transaction.positive ? 'text-red-500' : 'text-gray-800'
-                  }`}
-                >
-                  {transaction.amount}
-                </p>
-              </div>
-            ))}
-          </div>
-          <button className="mt-6 w-full bg-gray-100 py-2 rounded-lg text-sm text-gray-500">
-            Address book
+    <div className="bg-gray-50 min-h-screen p-8">
+      {/* Header */}
+      <div className="bg-purple-500 text-white rounded-lg p-8 mb-8">
+        <div className="flex justify-between items-center">
+          <h1 className="text-2xl font-semibold">
+            Sharpen Your Skills with Professional Online Courses
+          </h1>
+          <button className="bg-black py-2 px-4 rounded-full text-white hover:bg-gray-700">
+            Join Now
           </button>
         </div>
+      </div>
 
-        {/* Trending Campaigns */}
-        <GraphCard />
-
-        {/* Base Value */}
-        <BaseValueChart />
-
-        {/* Top Repos */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-lg font-semibold">Top Repos</h2>
-            <a href="#" className="text-sm text-gray-400">See all</a>
+      {/* Main Dashboard Section */}
+      <div className="flex gap-6">
+        {/* Left Section */}
+        <div className="flex-1">
+          {/* Dashboard Overview */}
+          <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+            <h2 className="text-xl font-semibold text-blue-500 mb-4">Dashboard Overview</h2>
+            <div className="grid grid-cols-3 gap-6">
+              {/* New Subscriptions */}
+              <div className="bg-gray-100 p-4 rounded-lg">
+                <h3 className="text-lg font-medium">New Subscriptions</h3>
+                <div className="text-green-500 text-2xl font-bold mt-2">22</div>
+                <p className="text-sm text-gray-500">+15% compared to last week</p>
+              </div>
+              {/* New Orders */}
+              <div className="bg-gray-100 p-4 rounded-lg">
+                <h3 className="text-lg font-medium">New Orders</h3>
+                <div className="text-orange-500 text-2xl font-bold mt-2">320</div>
+                <p className="text-sm text-gray-500">-4% compared to last week</p>
+              </div>
+              {/* Average Order Revenue */}
+              <div className="bg-gray-100 p-4 rounded-lg">
+                <h3 className="text-lg font-medium">Avg. Order Revenue</h3>
+                <div className="text-green-500 text-2xl font-bold mt-2">$1,080</div>
+                <p className="text-sm text-gray-500">+8% compared to last week</p>
+              </div>
+            </div>
           </div>
-          <ul className="space-y-4">
-            {['Cardano', 'Atom', 'Avalanche'].map((repo, idx) => (
-              <li key={idx} className="flex justify-between items-center">
-                <div className="flex items-center space-x-4">
-                  <img
-                    src={`https://placehold.co/40x40?text=${repo[0]}`}
-                    alt={repo}
-                    className="w-10 h-10 rounded-full"
-                  />
-                  <p className="text-gray-700">{repo} Staking (1/2)</p>
-                </div>
-                <p className="text-gray-500">{(Math.random() * 100).toFixed(2)}</p>
-              </li>
-            ))}
-          </ul>
+
+          {/* Continue Watching */}
+          <div className="bg-white p-6 rounded-lg shadow-md h-48">
+            <h2 className="text-xl font-semibold mb-4">Continue Watching</h2>
+            <div className="flex items-center justify-center h-full text-gray-400">
+              No content available.
+            </div>
+          </div>
         </div>
 
-        {/* Fund History */}
-        <FundHistory />
+        {/* Right Section - Mentor List */}
+        <div className="w-1/4">
+          <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+            <h2 className="text-xl font-semibold mb-4">Your mentor</h2>
+            <div className="flex flex-col gap-4">
+              {/* Mentor 1 */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <img
+                    className="w-10 h-10 rounded-full"
+                    src="https://via.placeholder.com/150"
+                    alt="Mentor 1"
+                  />
+                  <div>
+                    <p className="font-medium">Padhang Satrio</p>
+                    <p className="text-sm text-gray-500">Mentor</p>
+                  </div>
+                </div>
+                <button className="text-blue-500 hover:underline">Follow</button>
+              </div>
+
+              {/* Mentor 2 */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <img
+                    className="w-10 h-10 rounded-full"
+                    src="https://via.placeholder.com/150"
+                    alt="Mentor 2"
+                  />
+                  <div>
+                    <p className="font-medium">Zakir Horizontal</p>
+                    <p className="text-sm text-gray-500">Mentor</p>
+                  </div>
+                </div>
+                <button className="text-blue-500 hover:underline">Follow</button>
+              </div>
+
+              {/* Mentor 3 */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <img
+                    className="w-10 h-10 rounded-full"
+                    src="https://via.placeholder.com/150"
+                    alt="Mentor 3"
+                  />
+                  <div>
+                    <p className="font-medium">Leonardo Samsul</p>
+                    <p className="text-sm text-gray-500">Mentor</p>
+                  </div>
+                </div>
+                <button className="text-blue-500 hover:underline">Follow</button>
+              </div>
+
+              <button className="mt-4 bg-purple-100 py-2 px-4 rounded-lg text-purple-600">
+                See All
+              </button>
+            </div>
+          </div>
+
+          {/* Repeating Mentor List for demonstration */}
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h2 className="text-xl font-semibold mb-4">Your mentor</h2>
+            <div className="flex flex-col gap-4">
+              {/* Mentor 4 */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <img
+                    className="w-10 h-10 rounded-full"
+                    src="https://via.placeholder.com/150"
+                    alt="Mentor 4"
+                  />
+                  <div>
+                    <p className="font-medium">Padhang Satrio</p>
+                    <p className="text-sm text-gray-500">Mentor</p>
+                  </div>
+                </div>
+                <button className="text-blue-500 hover:underline">Follow</button>
+              </div>
+
+              {/* Mentor 5 */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <img
+                    className="w-10 h-10 rounded-full"
+                    src="https://via.placeholder.com/150"
+                    alt="Mentor 5"
+                  />
+                  <div>
+                    <p className="font-medium">Zakir Horizontal</p>
+                    <p className="text-sm text-gray-500">Mentor</p>
+                  </div>
+                </div>
+                <button className="text-blue-500 hover:underline">Follow</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
