@@ -40,10 +40,15 @@ interface ContributionData {
   count: number;
 }
 
-interface ContributionDay {
-  date: string;
-  count: number;
-}
+const StatCard: React.FC<{ title: string; value: number }> = ({
+  title,
+  value,
+}) => (
+  <div className="bg-white rounded-lg shadow p-4">
+    <h3 className="text-lg font-semibold mb-2">{title}</h3>
+    <p className="text-3xl font-bold">{value}</p>
+  </div>
+);
 
 const GithubProfilePage: React.FC = () => {
   const { status, data: session }: any = useSession();
@@ -144,30 +149,30 @@ const GithubProfilePage: React.FC = () => {
   }
 
   return (
-    <div className="profile-page bg-white min-h-screen p-8">
+    <div className="profile-page bg-white h-screen p-8">
       <div className="max-w-7xl mx-auto">
         {session ? (
           <div>
             <div className="flex items-start space-x-8">
               <div className="w-1/4">
-                <div className="bg-white rounded-lg shadow overflow-hidden">
+                <div className="bg-white overflow-hidden">
                   <Image
                     src={user?.avatar_url || "/api/placeholder/300/300"}
                     alt="Profile"
                     width={300}
                     height={300}
-                    className="w-full h-auto"
+                    className="w-full h-auto rounded-xl object-cover"
                   />
                   <div className="p-4">
                     <h2 className="text-2xl font-bold">
-                      {user?.login || "vinay G"}
+                      {session?.user?.name || "loading..."}
                     </h2>
                     <p className="text-gray-600">
-                      {user?.login?.toLowerCase() || "vinay4656"}
+                      {user?.login?.toLowerCase() || "..."}
                     </p>
                   </div>
                 </div>
-                <div className="mt-auto border-t border-gray-200 py-2">
+                <div className="mt-auto border rounded-xl border-gray-200 py-2">
                   <div className="flex items-center justify-between px-4 py-3 hover:bg-gray-100 transition-colors cursor-pointer">
                     <div className="flex items-center">
                       <Image
@@ -200,47 +205,23 @@ const GithubProfilePage: React.FC = () => {
 
               <div className="w-3/4">
                 <h2 className="text-xl font-semibold mb-4">
-                  Popular repositories
+                  Good Morning, {session?.user?.name}
                 </h2>
-                <div className="grid grid-cols-2 gap-4">
-                  {popularRepos &&
-                    popularRepos.length > 0 &&
-                    popularRepos.map((repo) => (
-                      <div
-                        key={repo.name}
-                        className="bg-white rounded-lg shadow p-4"
-                      >
-                        <div className="flex justify-between items-center mb-2">
-                          <h3 className="text-blue-500 font-semibold">
-                            {repo.name}
-                          </h3>
-                          <span className="text-gray-500 text-sm">
-                            {repo.visibility}
-                          </span>
-                        </div>
-                        <div className="flex items-center">
-                          <span
-                            className={`w-3 h-3 rounded-full mr-2 ${
-                              repo.language === "CSS"
-                                ? "bg-purple-500"
-                                : repo.language === "SCSS"
-                                ? "bg-pink-500"
-                                : repo.language === "HTML"
-                                ? "bg-orange-500"
-                                : "bg-gray-500"
-                            }`}
-                          ></span>
-                          <span className="text-sm text-gray-600">
-                            {repo.language}
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                </div>
+                <div className="grid grid-cols-4 gap-4 mb-8">
+                {stats && (
+                  <>
+                    <StatCard title="Public Repos" value={stats.public_repos} />
+                    <StatCard title="Followers" value={stats.followers} />
+                    <StatCard title="Following" value={stats.following} />
+                    <StatCard title="Public Gists" value={stats.public_gists} />
+                  </>
+                )}
+              </div>
               </div>
             </div>
 
             <div className="mt-8">
+            <h2 className="text-xl font-semibold mb-4">Repos</h2>
               {otherRepos &&
                 otherRepos.length > 0 &&
                 otherRepos.map((repo) => (
@@ -265,49 +246,23 @@ const GithubProfilePage: React.FC = () => {
             </div>
 
             <div className="w-3/4">
-              <h2 className="text-xl font-semibold mb-4">GitHub Stats</h2>
-              <div className="grid grid-cols-4 gap-4 mb-8">
-                {stats && (
-                  <>
-                    <StatCard title="Public Repos" value={stats.public_repos} />
-                    <StatCard title="Followers" value={stats.followers} />
-                    <StatCard title="Following" value={stats.following} />
-                    <StatCard title="Public Gists" value={stats.public_gists} />
-                  </>
-                )}
-              </div>
+              
+              
 
-              <h2 className="text-xl font-semibold mb-4">
-                Contribution Activity
-              </h2>
-              <div className="bg-white rounded-lg shadow p-4 mb-8">
-                <ResponsiveContainer width="100%" height={200}>
-                  <BarChart data={contributionData}>
-                    <XAxis dataKey="date" />
-                    <YAxis />
-                    <Tooltip />
-                    <Bar dataKey="count" fill="#8884d8" />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
+              
+              
             </div>
-
-            {/* <div className="mt-8">
-          <h2 className="text-xl font-semibold mb-4">Contributions</h2>
-          <ContributionGraph data={contributionData} />
-        </div> */}
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center h-screen">
-            <h1 className="text-2xl font-bold mb-4">
-              Welcome to GitHub Profile Viewer
-            </h1>
-            <button
-              className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
-              onClick={handleSignIn}
-            >
-              Sign In with GitHub
-            </button>
+          <div className="flex flex-row items-center justify-center h-[80vh]">
+            <div className="flex flex-col items-center justify-center ">
+              <button
+                className="px-4 py-2 bg-black text-white rounded-md hover:bg-black/80"
+                onClick={handleSignIn}
+              >
+                Sign In with GitHub
+              </button>
+            </div>
           </div>
         )}
       </div>
@@ -315,47 +270,6 @@ const GithubProfilePage: React.FC = () => {
   );
 };
 
-const StatCard: React.FC<{ title: string; value: number }> = ({
-  title,
-  value,
-}) => (
-  <div className="bg-white rounded-lg shadow p-4">
-    <h3 className="text-lg font-semibold mb-2">{title}</h3>
-    <p className="text-3xl font-bold">{value}</p>
-  </div>
-);
 
-const ContributionGraph: React.FC<{ data: ContributionDay[] }> = ({ data }) => {
-  const getColor = (count: number) => {
-    if (count === 0) return "bg-gray-100";
-    if (count >= 1) return "bg-green-200";
-    if (count >= 3) return "bg-green-300";
-    if (count >= 5) return "bg-green-400";
-    return "bg-green-500";
-  };
-
-  const weeks = [];
-  for (let i = 0; i < data.length; i += 7) {
-    weeks.push(data.slice(i, i + 7));
-  }
-
-  return (
-    <div className="bg-white rounded-lg shadow p-4 overflow-x-auto">
-      <div className="flex">
-        {weeks.map((week, weekIndex) => (
-          <div key={weekIndex} className="flex flex-col">
-            {week.map((day, dayIndex) => (
-              <div
-                key={`${weekIndex}-${dayIndex}`}
-                className={`w-3 h-3 m-0.5 ${getColor(day.count)}`}
-                title={`${day.date}: ${day.count} contributions`}
-              />
-            ))}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
 
 export default GithubProfilePage;

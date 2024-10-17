@@ -99,39 +99,22 @@ export function CampaignCard({
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col">
-      <div className="h-48 bg-blue-500 relative">
+      <div className="h-48 bg-white relative">
         <Image
           src={`https://opengraph.githubassets.com/1/${repoFullName}`}
           alt={campaign.title}
           layout="fill"
-          objectFit="cover"
-          className="group-hover:scale-105 transform object-cover transition duration-200"
+          objectFit="contain"
+          className="group-hover:scale-105 transform object-contain transition duration-200"
         />
       </div>
       <div className="p-6 flex-grow flex flex-col">
         <h2 className="font-bold text-xl mb-2 text-gray-800 line-clamp-1">
           {campaign.title}
         </h2>
-        <p className="text-gray-600 mb-4 flex-grow line-clamp-3">
+        <p className="text-gray-600 mb-4 flex-grow line-clamp-3 text-sm">
           {campaign.description}
         </p>
-
-        {/* GitHub Repository Info */}
-        <div className="bg-gray-100 rounded-lg p-4 mb-4">
-          <h3 className="text-lg font-semibold mb-2">GitHub Repository</h3>
-          <div className="flex items-center space-x-4">
-            <IconBrandGithub className="text-xl" />
-            <a
-              href={campaign.gitUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500 hover:underline"
-            >
-              {repoFullName}
-            </a>
-          </div>
-          {/* You might want to add stars and forks here if available in the campaign data */}
-        </div>
 
         {/* Funding Progress */}
         <div className="mb-4">
@@ -155,6 +138,22 @@ export function CampaignCard({
             ></div>
           </div>
           <p className="text-gray-600">{campaign.donationCount} backers</p>
+        </div>
+
+        {/* GitHub Repository Info */}
+        <div className="bg-gray-100 rounded-lg p-4 mb-4">
+          <h3 className="text-lg font-semibold mb-2">GitHub Repository</h3>
+          <div className="flex items-center space-x-4">
+            <IconBrandGithub className="text-xl" />
+            <a
+              href={campaign.gitUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 hover:underline"
+            >
+              {repoFullName}
+            </a>
+          </div>
         </div>
 
         <div className="flex justify-between items-center mb-4">
@@ -211,22 +210,3 @@ export function CampaignCard({
     </div>
   );
 }
-
-const TitleComponent = ({
-  title,
-  avatar,
-}: {
-  title: string;
-  avatar: string;
-}) => (
-  <div className="flex space-x-2 items-center">
-    <Image
-      src={avatar}
-      height={20}
-      width={20}
-      alt="avatar"
-      className="rounded-full border-2 border-white"
-    />
-    <p>{title}</p>
-  </div>
-);

@@ -4,8 +4,6 @@ import React from "react";
 import {
   IconArrowsUpDown,
   IconPlus,
-  IconStar,
-  IconDotsVertical,
   IconChevronDown,
   IconArrowDown,
   IconArrowUp,
@@ -72,21 +70,21 @@ const CryptoWalletDashboard: React.FC = () => {
   ];
 
   return (
-    <div className="bg-white p-6 font-sans">
+    <div className="bg-white p-6">
       <div className="grid grid-cols-3 gap-6">
         {/* My Wallet Section */}
-        <div className=" bg-gradient-to-tr from-blue-500  to-purple-300 rounded-xl p-6 flex flex-col items-center text-center">
-          <p className="text-lg font-bold m-2">My Wallet</p>
-          <h2 className="text-6xl font-bold mt-4">
+        <div className=" bg-gradient-to-tr from-blue-700  to-purple-500 rounded-xl p-6 flex flex-col items-center text-center">
+          <p className="text-lg font-bold m-2 text-white">My Wallet</p>
+          <h2 className="text-6xl font-bold mt-4 text-white">
             0.13<>ETH</>
           </h2>
-          <p className="text-sm text-gray-600 mb-4 mt-4">USD 15,121</p>
+          <p className="text-sm  mb-4 mt-4 text-white">USD 15,121</p>
           <div className="flex space-x-4 mb-4">
-            <div className="bg-black text-white rounded-full flex">
-              <button className="p-2 border-r rounded-full ">
+            <div className="bg-black text-white rounded-full flex  border-t border-b border-blue-700">
+              <button className="p-2 border  rounded-full border-blue-700">
                 <IconArrowDown className="h-6 w-6" />
               </button>
-              <button className="p-2 rounded-full">
+              <button className="p-2 rounded-full border-r border-blue-700">
                 <IconArrowUp className="h-6 w-6  " />
               </button>
             </div>
@@ -97,9 +95,9 @@ const CryptoWalletDashboard: React.FC = () => {
         </div>
 
         {/* Cryptocurrency Prices Live */}
-        <div className="col-span-1 bg-blue-100/20 rounded-xl p-6 border border-blue-100/50">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold">Trending Crypto</h2>
+        <div className="col-span-1 bg-blue-100/20 rounded-xl p-6 border border-blue-100">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-lg font-semibold">Tokens</h2>
           </div>
           {cryptoData.map((coin) => (
             <div
@@ -120,7 +118,7 @@ const CryptoWalletDashboard: React.FC = () => {
                 </div>
               </div>
               <div className="text-right">
-                <p className="font-semibold">
+                <p className="font-normal text-lg">
                   ${coin.current_price.toFixed(2)}
                 </p>
                 <p
@@ -138,8 +136,8 @@ const CryptoWalletDashboard: React.FC = () => {
           ))}
         </div>
         {/* NFT */}
-        <div className="col-span-1 bg-blue-100/20 rounded-xl p-6 border border-blue-100/50">
-          <div className="flex justify-between items-center mb-4">
+        <div className="col-span-1 bg-blue-100/20 rounded-xl p-6 border border-blue-100">
+          <div className="flex justify-between items-center mb-6">
             <h2 className="text-lg font-semibold">NFT</h2>
           </div>
           {nftData.map((nft) => (
@@ -155,11 +153,11 @@ const CryptoWalletDashboard: React.FC = () => {
                 />
                 <div>
                   <p className="font-semibold">{nft.name}</p>
-                  <p className="text-xs text-gray-500">{nft.collection}</p>
+                  <p className="text-xs text-gray-500 italic">{nft.collection}</p>
                 </div>
               </div>
               <div className="text-right">
-                <p className="font-semibold">{nft.price} ETH</p>
+                <p className="font-normal text-lg">{nft.price} ETH</p>
                 <p className="text-xs text-gray-500">
                   Floor: {nft.floorPrice} ETH
                 </p>
@@ -169,8 +167,8 @@ const CryptoWalletDashboard: React.FC = () => {
         </div>
 
         {/* Wallet Transactions Section */}
-        <div className="col-span-2 bg-blue-100/20 rounded-xl p-6 border border-blue-100/50">
-          <h2 className="text-lg font-semibold mb-4">Recent Transactions</h2>
+        <div className="col-span-2 bg-blue-100/20 rounded-xl p-6 border border-blue-100">
+          <h2 className="text-lg font-semibold mb-6">Recent Transactions</h2>
           {[
             {
               icon: "deposit",
@@ -246,7 +244,7 @@ const CryptoWalletDashboard: React.FC = () => {
                 </div>
                 <div>
                   <p className="font-semibold">{transaction.label}</p>
-                  <p className="text-xs text-gray-500">{transaction.date}</p>
+                  <p className="text-xs text-gray-500 italic font-thin">{transaction.date}</p>
                 </div>
               </div>
               <div
@@ -256,7 +254,7 @@ const CryptoWalletDashboard: React.FC = () => {
                     : "text-red-500"
                 }`}
               >
-                <p className="font-semibold">{transaction.amount}</p>
+                <p className="font-normal text-lg">{transaction.amount}</p>
                 {transaction.type === "crypto" && (
                   <p className="text-xs text-gray-500">{transaction.symbol}</p>
                 )}
@@ -266,44 +264,31 @@ const CryptoWalletDashboard: React.FC = () => {
         </div>
 
         {/* Swap Currencies Section */}
-        <div className="bg-gradient-to-br from-purple-100 to-blue-100 rounded-xl p-8 min-h-[600px] flex flex-col">
+        <div className="bg-gradient-to-br from-purple-200 to-blue-300 rounded-xl p-8  flex flex-col">
           <h2 className="text-xl font-semibold mb-6">Swap Currencies</h2>
-          <div className="bg-yellow-50 border rounded-xl p-6 mb-6">
-            <p className="text-sm mb-2">You send</p>
+          <div className="bg-slate-100/50  rounded-xl p-6 mb-6">
+            <p className="text-sm mb-2 text-gray-500">You send</p>
             <div className="flex justify-between items-center">
-              <p className="text-3xl font-bold">5,134</p>
-              <button className="bg-gray-200 px-4 py-2 rounded-full text-sm flex items-center">
-                Base <IconChevronDown className="h-4 w-4 ml-2" />
+              <p className="text-3xl font-normal">1</p>
+              <button className="bg-white px-4 py-2 rounded-full text-sm flex items-center">
+                ETH <IconChevronDown className="h-4 w-4 ml-2" />
               </button>
             </div>
             <p className="text-sm text-right mt-2">Balance: $2,356.11</p>
           </div>
-          <div className="bg-green-50 border rounded-xl p-6 mb-6">
-            <p className="text-sm mb-2">You get</p>
+          <div className="bg-slate-100/50 rounded-xl p-6 mb-6 ">
+            <p className="text-sm mb-2 text-gray-500">You get</p>
             <div className="flex justify-between items-center">
-              <p className="text-3xl font-bold">66.65</p>
+              <p className="text-3xl font-normal">2304.65</p>
               <button className="bg-white px-4 py-2 rounded-full text-sm flex items-center">
-                USD <IconChevronDown className="h-4 w-4 ml-2" />
+                USDC <IconChevronDown className="h-4 w-4 ml-2" />
               </button>
             </div>
             <p className="text-sm text-right mt-2">Balance: $5,131.00</p>
           </div>
-          <div className="text-sm mb-6 flex-grow">
-            <div className="flex justify-between mb-2">
-              <span>Rate</span>
-              <span>1 USDT = 0.0130 LTC</span>
-            </div>
-            <div className="flex justify-between mb-2">
-              <span>Service fee</span>
-              <span>0.0121574415 USDT ($0.12)</span>
-            </div>
-            <div className="flex justify-between font-semibold">
-              <span>Total</span>
-              <span>$5,254</span>
-            </div>
-          </div>
+          
           <button className="w-full bg-black text-white py-4 rounded-xl font-semibold text-lg">
-            Buy 66.65 LTC
+            Buy 2304.65 USDC
           </button>
         </div>
       </div>

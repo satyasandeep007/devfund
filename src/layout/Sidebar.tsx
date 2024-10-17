@@ -97,7 +97,7 @@ function Sidebar() {
           <div className="space-y-4">
             <NavSection title="MY DASHBOARD" className="mb-4 text-xs">
               <NavLink
-                href={`/user/dashboard`}
+                href={`/user/profile/wallet`}
                 activeIcon="/ic_dashbaord_active.svg"
                 inactiveIcon="/ic_dashbaord.svg"
               >
@@ -132,13 +132,7 @@ function Sidebar() {
               >
                 Github
               </NavLink>
-              <NavLink
-                href={`/user/profile/wallet`}
-                activeIcon="/ic_wallet1_active.svg"
-                inactiveIcon="/ic_wallet1.svg"
-              >
-                Wallet
-              </NavLink>
+              
             </NavSection>
           </div>
         </div>
