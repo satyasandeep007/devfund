@@ -11,7 +11,7 @@ import {
   getChainConfig,
 } from "@/lib/contractUtil/constants";
 import * as contractFunctions from "@/lib/contractUtil/contractFunctions";
-import { getWalletBalancesApi } from "@/lib/api/balance";
+import { getWalletBalancesCore, getWalletNftsCore } from "@/lib/api/balance";
 import { useAccount } from "wagmi";
 import { getMarketPricesApi } from "@/lib/api/marketPrice";
 
@@ -110,10 +110,11 @@ export const DevFundProvider: React.FC<{ children: ReactNode }> = ({
     if (address) {
       try {
         setWalletBalancesLoading(true);
-        const apiData = await getWalletBalancesApi(address);
+        const apiData = await getWalletBalancesCore(address);
+        const nftData = await getWalletNftsCore(address);
 
-        setTokenBalances(apiData.tokens);
-        setNftBalances(apiData.nfts);
+        setTokenBalances(apiData);
+        setNftBalances(nftData);
         setWalletBalancesLoading(false);
       } catch (error) {
         console.error("Error fetching balances:", error);

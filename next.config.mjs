@@ -12,6 +12,7 @@ const nextConfig = {
       "logos.covalenthq.com",
       "www.datocms-assets.com",
       "placehold.co",
+      "via.placeholder.com",
     ],
   },
   webpack: (config) => {
