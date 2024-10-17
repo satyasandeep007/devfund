@@ -166,43 +166,51 @@ const CryptoWalletDashboard: React.FC = () => {
           <h2 className="text-lg font-semibold mb-6">Recent Transactions</h2>
 
           {recentTxns && recentTxns.length > 0 ? (
-            recentTxns.map((transaction) => (
+            recentTxns.map((transaction, index) => (
               <div
-                key={transaction.uniqueId}
-                className="flex justify-between items-center mb-4 p-4 bg-white shadow-md rounded-lg hover:shadow-lg transition-shadow duration-200"
+                key={index}
+                className="flex justify-between items-center py-3 border-b last:border-b-0"
               >
                 <div className="flex items-center">
-                  {/* Sent/Received Icon */}
-                  {transaction.from === address ? (
-                    <IconArrowUp className="h-5 w-5 text-green-500 mr-2" />
-                  ) : (
-                    <IconArrowDown className="h-5 w-5 text-red-500 mr-2" />
-                  )}
+                  <div
+                    className={`w-10 h-10 rounded-full mr-3 flex items-center justify-center ${
+                      transaction.from === address
+                        ? "bg-gray-200"
+                        : "bg-orange-500"
+                    }`}
+                  >
+                    {transaction.from === address ? (
+                      <IconArrowUp className="h-5 w-5 text-green-500 mr-2" />
+                    ) : (
+                      <IconArrowDown className="h-5 w-5 text-red-500 mr-2" />
+                    )}
+                  </div>
                   <div>
                     <p className="font-semibold">
+                      {" "}
                       {transaction.from === address ? "Sent" : "Received"}{" "}
                       {transaction.value}{" "}
                       {transaction.category !== "erc721"
                         ? transaction.asset
                         : "NFT"}
                     </p>
-                    <p className="text-xs text-gray-500">
-                      Transaction Hash: {transaction.hash}
+                    <p className="text-xs text-gray-500 italic font-thin">
+                      {transaction.hash}
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center">
+                <div
+                  className={`text-right ${
+                    transaction.from === address
+                      ? "text-green-500"
+                      : "text-red-500"
+                  }`}
+                >
+                  <p className="font-normal text-lg">{transaction.value}</p>
+
                   <p className="text-xs text-gray-500">
-                    {transaction.category}
+                    {transaction.asset || "NFT"}
                   </p>
-                  <a
-                    href={`https://sepolia.basescan.org/tx/${transaction.hash}`} // Link to view transaction
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="ml-4 text-blue-500 hover:underline"
-                  >
-                    <IconCornerUpRight className="h-5 w-5" />
-                  </a>
                 </div>
               </div>
             ))
@@ -212,9 +220,32 @@ const CryptoWalletDashboard: React.FC = () => {
         </div>
 
         {/* Swap Currencies Section */}
-        <div className="bg-gradient-to-br from-purple-200 to-blue-300 rounded-xl p-8 flex flex-col">
+        <div className="bg-gradient-to-br from-purple-200 to-blue-300 rounded-xl p-8  flex flex-col">
           <h2 className="text-xl font-semibold mb-6">Swap Currencies</h2>
-          {/* Swap UI can be added here */}
+          <div className="bg-slate-100/50  rounded-xl p-6 mb-6">
+            <p className="text-sm mb-2 text-gray-500">You send</p>
+            <div className="flex justify-between items-center">
+              <p className="text-3xl font-normal">1</p>
+              <button className="bg-white px-4 py-2 rounded-full text-sm flex items-center">
+                ETH <IconChevronDown className="h-4 w-4 ml-2" />
+              </button>
+            </div>
+            <p className="text-sm text-right mt-2">Balance: $2,356.11</p>
+          </div>
+          <div className="bg-slate-100/50 rounded-xl p-6 mb-6 ">
+            <p className="text-sm mb-2 text-gray-500">You get</p>
+            <div className="flex justify-between items-center">
+              <p className="text-3xl font-normal">2304.65</p>
+              <button className="bg-white px-4 py-2 rounded-full text-sm flex items-center">
+                USDC <IconChevronDown className="h-4 w-4 ml-2" />
+              </button>
+            </div>
+            <p className="text-sm text-right mt-2">Balance: $5,131.00</p>
+          </div>
+
+          <button className="w-full bg-black text-white py-4 rounded-xl font-semibold text-lg">
+            Buy 2304.65 USDC
+          </button>
         </div>
       </div>
     </div>
