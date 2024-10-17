@@ -11,7 +11,12 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { IconLogout,IconUser,IconBrandGithub,IconStar } from "@tabler/icons-react";
+import {
+  IconLogout,
+  IconUser,
+  IconBrandGithub,
+  IconStar,
+} from "@tabler/icons-react";
 
 interface GithubUser {
   login: string;
@@ -52,7 +57,7 @@ const StatCard: React.FC<{ title: string; value: number }> = ({
 
 const GithubProfilePage: React.FC = () => {
   const { status, data: session }: any = useSession();
-  const [user, setUser] = useState<GithubUser | null>(null);
+  const [user, setUser] = useState<any | null>(null);
   const [popularRepos, setPopularRepos] = useState<GithubRepo[]>([]);
   const [otherRepos, setOtherRepos] = useState<GithubRepo[]>([]);
   const [stats, setStats] = useState<GithubStats | null>(null);
@@ -94,47 +99,47 @@ const GithubProfilePage: React.FC = () => {
       const otherReposData = await otherReposResponse.json();
       setOtherRepos(otherReposData);
 
-      const statsResponse = await fetch(
-        `https://api.github.com/users/${username}`
-      );
-      const statsData = await statsResponse.json();
-      setStats(statsData);
+      // const statsResponse = await fetch(
+      //   `https://api.github.com/users/${username}`
+      // );
+      // const statsData = await statsResponse.json();
+      // setStats(statsData);
 
       // Fetch contribution data (last 30 days)
-      const contributionResponse = await fetch(
-        `https://api.github.com/users/${username}/events?per_page=100`
-      );
-      const contributionEvents = await contributionResponse.json();
+      // const contributionResponse = await fetch(
+      //   `https://api.github.com/users/${username}/events?per_page=100`
+      // );
+      // const contributionEvents = await contributionResponse.json();
 
-      const oneYearAgo = new Date();
-      oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+      // const oneYearAgo = new Date();
+      // oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
 
-      const contributionMap = new Map<string, number>();
+      // const contributionMap = new Map<string, number>();
 
-      for (
-        let d = new Date(oneYearAgo);
-        d <= new Date();
-        d.setDate(d.getDate() + 1)
-      ) {
-        contributionMap.set(d.toISOString().split("T")[0], 0);
-      }
+      // for (
+      //   let d = new Date(oneYearAgo);
+      //   d <= new Date();
+      //   d.setDate(d.getDate() + 1)
+      // ) {
+      //   contributionMap.set(d.toISOString().split("T")[0], 0);
+      // }
 
-      contributionEvents.forEach((event: any) => {
-        const date = new Date(event.created_at);
-        if (date >= oneYearAgo) {
-          const dateString = date.toISOString().split("T")[0];
-          contributionMap.set(
-            dateString,
-            (contributionMap.get(dateString) || 0) + 1
-          );
-        }
-      });
+      // contributionEvents.forEach((event: any) => {
+      //   const date = new Date(event.created_at);
+      //   if (date >= oneYearAgo) {
+      //     const dateString = date.toISOString().split("T")[0];
+      //     contributionMap.set(
+      //       dateString,
+      //       (contributionMap.get(dateString) || 0) + 1
+      //     );
+      //   }
+      // });
 
-      const contributionArray = Array.from(
-        contributionMap,
-        ([date, count]) => ({ date, count })
-      );
-      setContributionData(contributionArray);
+      // const contributionArray = Array.from(
+      //   contributionMap,
+      //   ([date, count]) => ({ date, count })
+      // );
+      // setContributionData(contributionArray);
     } catch (error) {
       console.error("Error fetching GitHub data:", error);
     }
@@ -163,7 +168,6 @@ const GithubProfilePage: React.FC = () => {
                     height={300}
                     className="w-full h-auto rounded-xl object-cover"
                   />
-                 
                 </div>
                 <div className="mt-auto border rounded-xl border-gray-200 py-2">
                   <div className="flex items-center justify-between px-4 py-3 hover:bg-gray-100 transition-colors cursor-pointer">
@@ -201,30 +205,36 @@ const GithubProfilePage: React.FC = () => {
                   Good Morning, {session?.user?.name}
                 </h2>
                 <div className="grid grid-cols-4 gap-4 mb-8">
-                {stats && (
-                  <>
-                    <StatCard title="Public Repos" value={stats.public_repos} />
-                    <StatCard title="Followers" value={stats.followers} />
-                    <StatCard title="Following" value={stats.following} />
-                    <StatCard title="Public Gists" value={stats.public_gists} />
-                  </>
-                )}
-              </div>
-              <div className="bg-white rounded-lg  p-4 border border-gray-200">
-                <ResponsiveContainer width="100%" height={200}>
-                  <BarChart data={contributionData}>
-                    <XAxis dataKey="date" />
-                    <YAxis />
-                    <Tooltip />
-                    <Bar dataKey="count" fill="#8884d8" />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
+                  {user && (
+                    <>
+                      <StatCard
+                        title="Public Repos"
+                        value={user.public_repos}
+                      />
+                      <StatCard title="Followers" value={user.followers} />
+                      <StatCard title="Following" value={user.following} />
+                      <StatCard
+                        title="Public Gists"
+                        value={user.public_gists}
+                      />
+                    </>
+                  )}
+                </div>
+                <div className="bg-white rounded-lg  p-4 border border-gray-200">
+                  <ResponsiveContainer width="100%" height={200}>
+                    <BarChart data={contributionData}>
+                      <XAxis dataKey="date" />
+                      <YAxis />
+                      <Tooltip />
+                      <Bar dataKey="count" fill="#8884d8" />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
               </div>
             </div>
 
             <div className="mt-8">
-            <h2 className="text-xl font-semibold mb-4">Repos</h2>
+              <h2 className="text-xl font-semibold mb-4">Repos</h2>
               {otherRepos &&
                 otherRepos.length > 0 &&
                 otherRepos.map((repo) => (
@@ -238,7 +248,7 @@ const GithubProfilePage: React.FC = () => {
                       </h3>
                       <p className="text-sm text-gray-600 py-2 flex items-center space-x-2">
                         <span className="flex items-center">
-                        <IconBrandGithub className="w-4 h-4 mr-1" />
+                          <IconBrandGithub className="w-4 h-4 mr-1" />
                           Forks {repo.forks_count}
                         </span>
                         <span className="flex items-center">
@@ -257,8 +267,6 @@ const GithubProfilePage: React.FC = () => {
                   </div>
                 ))}
             </div>
-
-           
           </div>
         ) : (
           <div className="flex flex-row items-center justify-center h-[80vh]">
@@ -276,7 +284,5 @@ const GithubProfilePage: React.FC = () => {
     </div>
   );
 };
-
-
 
 export default GithubProfilePage;
