@@ -7,6 +7,8 @@ import {
   IconChevronDown,
   IconArrowDown,
   IconArrowUp,
+  IconChevronRight,
+  IconCornerUpRight,
 } from "@tabler/icons-react";
 
 import { useAccount } from "wagmi";
@@ -14,14 +16,21 @@ import { useDevFund } from "@/context/DevFundContext";
 import Image from "next/image";
 
 const CryptoWalletDashboard: React.FC = () => {
-  const { tokenBalances, nftBalances, ethMarketPrice, usdcMarketPrice } =
-    useDevFund();
+  const {
+    tokenBalances,
+    nftBalances,
+    ethMarketPrice,
+    usdcMarketPrice,
+    recentTxns,
+  } = useDevFund();
+  const { address } = useAccount();
 
   const [usdcBalance, setUSDCBalance] = useState("0");
   const [ethBalance, setETHBalance] = useState("0");
 
   console.log(tokenBalances, "tokenBalances");
   console.log(nftBalances, "nftBalances");
+  console.log(recentTxns, "recentTxns");
 
   useEffect(() => {
     if (tokenBalances && tokenBalances.length > 0) {
@@ -155,7 +164,51 @@ const CryptoWalletDashboard: React.FC = () => {
         {/* Wallet Transactions Section */}
         <div className="col-span-2 bg-blue-100/20 rounded-xl p-6 border border-blue-100">
           <h2 className="text-lg font-semibold mb-6">Recent Transactions</h2>
-          {/* Transaction data can be added here */}
+
+          {recentTxns && recentTxns.length > 0 ? (
+            recentTxns.map((transaction) => (
+              <div
+                key={transaction.uniqueId}
+                className="flex justify-between items-center mb-4 p-4 bg-white shadow-md rounded-lg hover:shadow-lg transition-shadow duration-200"
+              >
+                <div className="flex items-center">
+                  {/* Sent/Received Icon */}
+                  {transaction.from === address ? (
+                    <IconArrowUp className="h-5 w-5 text-green-500 mr-2" />
+                  ) : (
+                    <IconArrowDown className="h-5 w-5 text-red-500 mr-2" />
+                  )}
+                  <div>
+                    <p className="font-semibold">
+                      {transaction.from === address ? "Sent" : "Received"}{" "}
+                      {transaction.value}{" "}
+                      {transaction.category !== "erc721"
+                        ? transaction.asset
+                        : "NFT"}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      Transaction Hash: {transaction.hash}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center">
+                  <p className="text-xs text-gray-500">
+                    {transaction.category}
+                  </p>
+                  <a
+                    href={`https://sepolia.basescan.org/tx/${transaction.hash}`} // Link to view transaction
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="ml-4 text-blue-500 hover:underline"
+                  >
+                    <IconCornerUpRight className="h-5 w-5" />
+                  </a>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-500">No recent transactions.</p>
+          )}
         </div>
 
         {/* Swap Currencies Section */}

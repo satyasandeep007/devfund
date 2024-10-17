@@ -147,3 +147,25 @@ export const getWalletNftsCore = async (address: string) => {
   });
   return formattedNftBalances;
 };
+
+export const getLatestTransactionsApiFrom = async (address: string) => {
+  const responseFrom = await alchemyClient?.core?.getAssetTransfers({
+    fromBlock: "0x0",
+    toBlock: "latest",
+    fromAddress: address,
+    category: ["erc20", "erc721", "erc1155", "external", "specialnft"],
+    maxCount: 3,
+    order: "desc",
+  });
+
+  const responseTo = await alchemyClient?.core?.getAssetTransfers({
+    fromBlock: "0x0",
+    toBlock: "latest",
+    toAddress: address,
+    category: ["erc20", "erc721", "erc1155", "external", "specialnft"],
+    maxCount: 3,
+    order: "desc",
+  });
+
+  return [...responseFrom.transfers, ...responseTo.transfers];
+};

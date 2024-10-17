@@ -11,7 +11,11 @@ import {
   getChainConfig,
 } from "@/lib/contractUtil/constants";
 import * as contractFunctions from "@/lib/contractUtil/contractFunctions";
-import { getWalletBalancesCore, getWalletNftsCore } from "@/lib/api/balance";
+import {
+  getLatestTransactionsApiFrom,
+  getWalletBalancesCore,
+  getWalletNftsCore,
+} from "@/lib/api/balance";
 import { useAccount } from "wagmi";
 import { getMarketPricesApi } from "@/lib/api/marketPrice";
 
@@ -30,6 +34,7 @@ interface DevFundContextType {
   refreshCampaigns: () => Promise<void>;
   tokenBalances: any[] | null;
   nftBalances: any[] | null;
+  recentTxns: any[] | null;
   fetchWalletBalances: (address: string) => Promise<void>;
   campaigns: Campaign[];
   isLoading: boolean;
@@ -65,6 +70,7 @@ export const DevFundProvider: React.FC<{ children: ReactNode }> = ({
   const [isLoading, setIsLoading] = useState(true);
   const [tokenBalances, setTokenBalances] = useState<any[] | null>(null);
   const [nftBalances, setNftBalances] = useState<any[] | null>(null);
+  const [recentTxns, setRecentTxns] = useState<any[] | null>(null);
   const [walletBalancesLoading, setWalletBalancesLoading] =
     useState<boolean>(false);
   const [ethMarketPrice, setETHMarketPrice] = useState(0);
@@ -112,9 +118,12 @@ export const DevFundProvider: React.FC<{ children: ReactNode }> = ({
         setWalletBalancesLoading(true);
         const apiData = await getWalletBalancesCore(address);
         const nftData = await getWalletNftsCore(address);
+        const tx = await getLatestTransactionsApiFrom(address);
+        console.log(tx, "recent");
 
         setTokenBalances(apiData);
         setNftBalances(nftData);
+        setRecentTxns(tx);
         setWalletBalancesLoading(false);
       } catch (error) {
         console.error("Error fetching balances:", error);
@@ -138,6 +147,7 @@ export const DevFundProvider: React.FC<{ children: ReactNode }> = ({
     isLoading,
     tokenBalances,
     nftBalances,
+    recentTxns,
     fetchWalletBalances,
     walletBalancesLoading,
     ethMarketPrice,
