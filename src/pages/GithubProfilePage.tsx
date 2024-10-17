@@ -11,7 +11,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { IconLogout } from "@tabler/icons-react";
+import { IconLogout,IconUser,IconBrandGithub,IconStar } from "@tabler/icons-react";
 
 interface GithubUser {
   login: string;
@@ -44,8 +44,8 @@ const StatCard: React.FC<{ title: string; value: number }> = ({
   title,
   value,
 }) => (
-  <div className="bg-white rounded-lg shadow p-4">
-    <h3 className="text-lg font-semibold mb-2">{title}</h3>
+  <div className="bg-gradient-to-t from-indigo-100 to-blue-100 rounded-lg border border-blue-200 p-4 flex flex-col items-center justify-center">
+    <h3 className="text-lg font-narmal mb-2">{title}</h3>
     <p className="text-3xl font-bold">{value}</p>
   </div>
 );
@@ -155,7 +155,7 @@ const GithubProfilePage: React.FC = () => {
           <div>
             <div className="flex items-start space-x-8">
               <div className="w-1/4">
-                <div className="bg-white overflow-hidden">
+                <div className="bg-white overflow-hidden mb-4">
                   <Image
                     src={user?.avatar_url || "/api/placeholder/300/300"}
                     alt="Profile"
@@ -163,14 +163,7 @@ const GithubProfilePage: React.FC = () => {
                     height={300}
                     className="w-full h-auto rounded-xl object-cover"
                   />
-                  <div className="p-4">
-                    <h2 className="text-2xl font-bold">
-                      {session?.user?.name || "loading..."}
-                    </h2>
-                    <p className="text-gray-600">
-                      {user?.login?.toLowerCase() || "..."}
-                    </p>
-                  </div>
+                 
                 </div>
                 <div className="mt-auto border rounded-xl border-gray-200 py-2">
                   <div className="flex items-center justify-between px-4 py-3 hover:bg-gray-100 transition-colors cursor-pointer">
@@ -204,7 +197,7 @@ const GithubProfilePage: React.FC = () => {
               </div>
 
               <div className="w-3/4">
-                <h2 className="text-xl font-semibold mb-4">
+                <h2 className="text-2xl font-bold mb-4">
                   Good Morning, {session?.user?.name}
                 </h2>
                 <div className="grid grid-cols-4 gap-4 mb-8">
@@ -217,6 +210,16 @@ const GithubProfilePage: React.FC = () => {
                   </>
                 )}
               </div>
+              <div className="bg-white rounded-lg  p-4 border border-gray-200">
+                <ResponsiveContainer width="100%" height={200}>
+                  <BarChart data={contributionData}>
+                    <XAxis dataKey="date" />
+                    <YAxis />
+                    <Tooltip />
+                    <Bar dataKey="count" fill="#8884d8" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
               </div>
             </div>
 
@@ -227,31 +230,35 @@ const GithubProfilePage: React.FC = () => {
                 otherRepos.map((repo) => (
                   <div
                     key={repo.name}
-                    className="bg-white rounded-lg shadow p-4 mb-4 flex justify-between items-center"
+                    className="bg-white border-1px border-b border-gray p-4 mb-4 flex justify-between items-center"
                   >
                     <div>
                       <h3 className="text-blue-500 font-semibold">
                         {repo.name}
                       </h3>
-                      <p className="text-sm text-gray-600">
-                        Forks {repo.forks_count} · Stars {repo.stargazers_count}{" "}
-                        · Created by {user?.login}
+                      <p className="text-sm text-gray-600 py-2 flex items-center space-x-2">
+                        <span className="flex items-center">
+                        <IconBrandGithub className="w-4 h-4 mr-1" />
+                          Forks {repo.forks_count}
+                        </span>
+                        <span className="flex items-center">
+                          <IconStar className="w-4 h-4 mr-1" />
+                          Stars {repo.stargazers_count}
+                        </span>
+                        <span className="flex items-center">
+                          <IconUser className="w-4 h-4 mr-1" />
+                          Created by {user?.login}
+                        </span>
                       </p>
                     </div>
-                    <button className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+                    <button className="px-4 py-2 bg-black text-white rounded-sm hover:bg-black/80">
                       Create Campaign
                     </button>
                   </div>
                 ))}
             </div>
 
-            <div className="w-3/4">
-              
-              
-
-              
-              
-            </div>
+           
           </div>
         ) : (
           <div className="flex flex-row items-center justify-center h-[80vh]">
