@@ -52,7 +52,7 @@ const StatCard: React.FC<{ title: string; value: number }> = ({
 
 const GithubProfilePage: React.FC = () => {
   const { status, data: session }: any = useSession();
-  const [user, setUser] = useState<GithubUser | null>(null);
+  const [user, setUser] = useState<any | null>(null);
   const [popularRepos, setPopularRepos] = useState<GithubRepo[]>([]);
   const [otherRepos, setOtherRepos] = useState<GithubRepo[]>([]);
   const [stats, setStats] = useState<GithubStats | null>(null);
@@ -94,47 +94,47 @@ const GithubProfilePage: React.FC = () => {
       const otherReposData = await otherReposResponse.json();
       setOtherRepos(otherReposData);
 
-      const statsResponse = await fetch(
-        `https://api.github.com/users/${username}`
-      );
-      const statsData = await statsResponse.json();
-      setStats(statsData);
+      // const statsResponse = await fetch(
+      //   `https://api.github.com/users/${username}`
+      // );
+      // const statsData = await statsResponse.json();
+      // setStats(statsData);
 
       // Fetch contribution data (last 30 days)
-      const contributionResponse = await fetch(
-        `https://api.github.com/users/${username}/events?per_page=100`
-      );
-      const contributionEvents = await contributionResponse.json();
+      // const contributionResponse = await fetch(
+      //   `https://api.github.com/users/${username}/events?per_page=100`
+      // );
+      // const contributionEvents = await contributionResponse.json();
 
-      const oneYearAgo = new Date();
-      oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+      // const oneYearAgo = new Date();
+      // oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
 
-      const contributionMap = new Map<string, number>();
+      // const contributionMap = new Map<string, number>();
 
-      for (
-        let d = new Date(oneYearAgo);
-        d <= new Date();
-        d.setDate(d.getDate() + 1)
-      ) {
-        contributionMap.set(d.toISOString().split("T")[0], 0);
-      }
+      // for (
+      //   let d = new Date(oneYearAgo);
+      //   d <= new Date();
+      //   d.setDate(d.getDate() + 1)
+      // ) {
+      //   contributionMap.set(d.toISOString().split("T")[0], 0);
+      // }
 
-      contributionEvents.forEach((event: any) => {
-        const date = new Date(event.created_at);
-        if (date >= oneYearAgo) {
-          const dateString = date.toISOString().split("T")[0];
-          contributionMap.set(
-            dateString,
-            (contributionMap.get(dateString) || 0) + 1
-          );
-        }
-      });
+      // contributionEvents.forEach((event: any) => {
+      //   const date = new Date(event.created_at);
+      //   if (date >= oneYearAgo) {
+      //     const dateString = date.toISOString().split("T")[0];
+      //     contributionMap.set(
+      //       dateString,
+      //       (contributionMap.get(dateString) || 0) + 1
+      //     );
+      //   }
+      // });
 
-      const contributionArray = Array.from(
-        contributionMap,
-        ([date, count]) => ({ date, count })
-      );
-      setContributionData(contributionArray);
+      // const contributionArray = Array.from(
+      //   contributionMap,
+      //   ([date, count]) => ({ date, count })
+      // );
+      // setContributionData(contributionArray);
     } catch (error) {
       console.error("Error fetching GitHub data:", error);
     }
@@ -208,20 +208,26 @@ const GithubProfilePage: React.FC = () => {
                   Good Morning, {session?.user?.name}
                 </h2>
                 <div className="grid grid-cols-4 gap-4 mb-8">
-                {stats && (
-                  <>
-                    <StatCard title="Public Repos" value={stats.public_repos} />
-                    <StatCard title="Followers" value={stats.followers} />
-                    <StatCard title="Following" value={stats.following} />
-                    <StatCard title="Public Gists" value={stats.public_gists} />
-                  </>
-                )}
-              </div>
+                  {user && (
+                    <>
+                      <StatCard
+                        title="Public Repos"
+                        value={user.public_repos}
+                      />
+                      <StatCard title="Followers" value={user.followers} />
+                      <StatCard title="Following" value={user.following} />
+                      <StatCard
+                        title="Public Gists"
+                        value={user.public_gists}
+                      />
+                    </>
+                  )}
+                </div>
               </div>
             </div>
 
             <div className="mt-8">
-            <h2 className="text-xl font-semibold mb-4">Repos</h2>
+              <h2 className="text-xl font-semibold mb-4">Repos</h2>
               {otherRepos &&
                 otherRepos.length > 0 &&
                 otherRepos.map((repo) => (
@@ -245,13 +251,7 @@ const GithubProfilePage: React.FC = () => {
                 ))}
             </div>
 
-            <div className="w-3/4">
-              
-              
-
-              
-              
-            </div>
+            <div className="w-3/4"></div>
           </div>
         ) : (
           <div className="flex flex-row items-center justify-center h-[80vh]">
@@ -269,7 +269,5 @@ const GithubProfilePage: React.FC = () => {
     </div>
   );
 };
-
-
 
 export default GithubProfilePage;
