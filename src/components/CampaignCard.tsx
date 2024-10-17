@@ -108,17 +108,28 @@ export function CampaignCard({
           className="group-hover:scale-105 transform object-contain transition duration-200"
         />
       </div>
-      <div className="p-6 flex-grow flex flex-col">
-        <h2 className="font-bold text-xl mb-2 text-gray-800 line-clamp-1">
-          {campaign.title}
-        </h2>
-        <p className="text-gray-600 mb-4 flex-grow line-clamp-3 text-sm">
-          {campaign.description}
-        </p>
+      <div className="p-6 flex-grow flex flex-col gap-6">
+        <div className="flex justify-between items-center">
+          <div className="py-3">
+            <h2 className="font-bold text-xl  text-gray-800 ">
+              {campaign.title}
+            </h2>
+
+            <p className="text-gray-600    text-sm">{campaign.description}</p>
+          </div>
+
+          <a
+            href={campaign.gitUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-black bg-gray-100 rounded-full p-4"
+          >
+            <IconBrandGithub className="text-xl" />
+          </a>
+        </div>
 
         {/* Funding Progress */}
         <div className="mb-4">
-          <h3 className="text-lg font-semibold mb-2">Funding Progress</h3>
           <div className="mb-2">
             <span className="text-xl font-bold">
               $
@@ -137,50 +148,29 @@ export function CampaignCard({
               style={{ width: `${progress}%` }}
             ></div>
           </div>
-          <p className="text-gray-600">{campaign.donationCount} backers</p>
-        </div>
-
-        {/* GitHub Repository Info */}
-        <div className="bg-gray-100 rounded-lg p-4 mb-4">
-          <h3 className="text-lg font-semibold mb-2">GitHub Repository</h3>
-          <div className="flex items-center space-x-4">
-            <IconBrandGithub className="text-xl" />
-            <a
-              href={campaign.gitUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500 hover:underline"
-            >
-              {repoFullName}
-            </a>
+          <div className="w-full flex justify-end gap-2">
+            <IconHeart className="w-5 h-5 text-red-500" />
+            <span className="text-sm text-gray-600">
+              {campaign.donationCount} donations
+            </span>
           </div>
         </div>
 
         <div className="flex justify-between items-center mb-4">
           <div className="flex items-center space-x-2">
-            <IconHeart className="w-5 h-5 text-red-500" />
-            <span className="text-sm text-gray-600">
-              {campaign.donationCount} donations
-            </span>
-            <span>{isMyCampaign ? "Yours" : ""}</span>
+            <span className="font-bold">{isMyCampaign ? "Yours" : ""}</span>
           </div>
           <div className="flex items-center space-x-2">
             <IconEye className="w-5 h-5 text-blue-500" />
             <span className="text-sm text-gray-600">{campaign.status}</span>
           </div>
         </div>
-        <div className="flex justify-between items-center">
-          <span className="text-sm font-semibold text-gray-500">
-            Goal: ${parseInt(campaign.fundingGoal).toLocaleString()}
-          </span>
-          <span className="text-sm font-semibold text-gray-500">
-            End Date: {formattedEndDate}
-          </span>
+        <div className="flex justify-center gap-4 items-center">
           {canDonate && (
             <div className="space-x-2">
               <button
                 onClick={handleDonate}
-                className="bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-blue-600 transition-colors"
+                className="bg-black text-white px-4 py-2 rounded-sm text-sm font-semibold hover:bg-black/80 transition-colors"
               >
                 Donate
               </button>
@@ -189,7 +179,7 @@ export function CampaignCard({
           {isMyCampaign && (
             <button
               onClick={toggleReceiveModal}
-              className="bg-green-500 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-green-600 transition-colors"
+              className="bg-blue-700 text-white px-4 py-2 rounded-sm text-sm font-semibold hover:bg-blue-600 transition-colors"
             >
               Withdraw
             </button>
