@@ -85,7 +85,7 @@ const CryptoWalletDashboard: React.FC = () => {
                       "https://via.placeholder.com/150/0000FF/FFFFFF?text=" +
                       token.symbol
                     }
-                    alt={token.contractAddress}
+                    alt={token.symbol}
                     className="w-8 h-8 rounded-full mr-3"
                     width={20}
                     height={20}
@@ -137,7 +137,7 @@ const CryptoWalletDashboard: React.FC = () => {
                       nft.symbol
                     } // Updated to goof placeholder image
                     alt={nft.symbol || "Unnamed NFT"}
-                    className="w-12 h-12 rounded-lg mr-3 object-cover"
+                    className="w-8 h-8 rounded-full mr-3"
                     width={20}
                     height={20}
                   />
