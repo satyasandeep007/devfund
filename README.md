@@ -9,7 +9,7 @@
 ## 🚀 Quick Start
 
 - **GitHub Repo**: [DevFund](https://github.com/satyasandeep007/devfund)
-- **Demo Video**: [Watch on YouTube](https://www.youtube.com)
+- **Demo Video**: [Watch on YouTube](https://youtu.be/gJgZK04CUXU)
 
 ## 🌟 Problem
 
