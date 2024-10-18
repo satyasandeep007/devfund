@@ -116,7 +116,7 @@ export const getWalletBalancesCore = async (address: string) => {
     symbol: "ETH",
   };
   const newTokenBalances = [...tokenBalancesNew, nativeTokenBalance];
-  return newTokenBalances;
+  return newTokenBalances.filter((i) => i.symbol !== "USDC");
 };
 
 export const getWalletNftsCore = async (address: string) => {
@@ -145,7 +145,11 @@ export const getWalletNftsCore = async (address: string) => {
       timeLastUpdated,
     };
   });
-  return formattedNftBalances;
+
+  // Sort by timeLastUpdated and limit to top 3 records
+  return formattedNftBalances
+    .sort((a, b) => b.timeLastUpdated - a.timeLastUpdated) // Sort in descending order
+    .slice(0, 3); // Limit to top 3 records
 };
 
 export const getLatestTransactionsApiFrom = async (address: string) => {

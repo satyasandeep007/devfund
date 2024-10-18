@@ -121,7 +121,9 @@ const CryptoWalletDashboard: React.FC = () => {
                   />
                   <div>
                     <p className="font-semibold">
-                      {token.symbol.toUpperCase()}
+                      {token.symbol.toUpperCase() === "TRNSK"
+                        ? "USDC"
+                        : token.symbol.toUpperCase()}
                     </p>
                     <p className="text-xs text-gray-500">
                       {token.contractAddress}
@@ -165,15 +167,13 @@ const CryptoWalletDashboard: React.FC = () => {
                       "https://via.placeholder.com/150/0000FF/FFFFFF?text=" +
                       nft.symbol
                     } // Updated to goof placeholder image
-                    alt={nft.symbol || "Unnamed NFT"}
+                    alt={nft.symbol || "  NFT"}
                     className="w-8 h-8 rounded-full mr-3"
                     width={20}
                     height={20}
                   />
                   <div>
-                    <p className="font-semibold">
-                      {nft.symbol || "Unnamed NFT"}
-                    </p>
+                    <p className="font-semibold">{nft.symbol || "  NFT"}</p>
                     <p className="text-xs text-gray-500 italic">{nft.name}</p>
                   </div>
                 </div>
@@ -220,7 +220,9 @@ const CryptoWalletDashboard: React.FC = () => {
                       {transaction.from === address ? "Sent" : "Received"}{" "}
                       {transaction.value}{" "}
                       {transaction.category !== "erc721"
-                        ? transaction.asset
+                        ? transaction.asset === "TRNSK"
+                          ? "USDC"
+                          : transaction.asset
                         : "NFT"}
                     </p>
                     <p className="text-xs text-gray-500 italic font-thin">
@@ -238,7 +240,9 @@ const CryptoWalletDashboard: React.FC = () => {
                   <p className="font-normal text-lg">{transaction.value}</p>
 
                   <p className="text-xs text-gray-500">
-                    {transaction.asset || "NFT"}
+                    {transaction.asset === "TRNSK"
+                      ? "USDC"
+                      : transaction.asset || "NFT"}
                   </p>
                 </div>
               </div>
