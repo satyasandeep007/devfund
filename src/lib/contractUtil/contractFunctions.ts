@@ -54,7 +54,7 @@ export const getAllCampaigns = async () => {
         (campaign: any, index: number) => ({
           id: index,
           title: campaign[0],
-          usdcBalance: ethers.formatUnits(campaign[1], 6), // USDC has 6 decimal places
+          usdcBalance: ethers.formatUnits(campaign[1], 18), // USDC has 6 decimal places
           ethBalance: ethers.formatEther(campaign[2]), // ETH has 18 decimal places
 
           owner: campaign[3],
@@ -151,7 +151,7 @@ export const fundUSDC = async (
       );
 
       // Convert amount to Wei
-      const amountWei = ethers.parseUnits(amount.toString(), 6); // USDC has 6 decimal places
+      const amountWei = ethers.parseUnits(amount.toString(), 18); // USDC has 6 decimal places
 
       // Approve USDC transfer
       const approveTx = await usdcContract.approve(contractAddress, amountWei);

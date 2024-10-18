@@ -139,7 +139,7 @@ const ReceiveModal: React.FC<ReceiveModalProps> = ({
           </div>
         </div>
 
-        <div>Address: {address}</div>
+        <div className="bg-white p-6">Address: {address}</div>
         <div className="bg-white p-6">
           <div className="flex space-x-4">
             <button
