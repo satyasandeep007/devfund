@@ -14,6 +14,8 @@ import {
 import { useAccount } from "wagmi";
 import { useDevFund } from "@/context/DevFundContext";
 import Image from "next/image";
+import { openTransak } from "@/lib/onramp";
+import { toast } from "react-toastify";
 
 const CryptoWalletDashboard: React.FC = () => {
   const {
@@ -27,6 +29,7 @@ const CryptoWalletDashboard: React.FC = () => {
 
   const [usdcBalance, setUSDCBalance] = useState("0");
   const [ethBalance, setETHBalance] = useState("0");
+  const [isBuying, setIsBuying] = useState(false);
 
   console.log(tokenBalances, "tokenBalances");
   console.log(nftBalances, "nftBalances");
@@ -39,6 +42,28 @@ const CryptoWalletDashboard: React.FC = () => {
       setUSDCBalance(_usdcBal);
     }
   }, [tokenBalances]);
+
+  const handleBuyCrypto = async (e: any) => {
+    e.preventDefault();
+
+    await openTransak("BUY", address, setIsBuying, handleNotif);
+  };
+
+  const handleNotif = async (isSuccess: boolean) => {
+    await toast(
+      `${isSuccess ? "🎉 Buy Crypto successful!" : "Error making purchase:"}`,
+      {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
+    );
+  };
 
   return (
     <div className="bg-white p-6">
@@ -221,30 +246,36 @@ const CryptoWalletDashboard: React.FC = () => {
 
         {/* Swap Currencies Section */}
         <div className="bg-gradient-to-br from-purple-200 to-blue-300 rounded-xl p-8  flex flex-col">
-          <h2 className="text-xl font-semibold mb-6">Swap Currencies</h2>
+          <h2 className="text-xl font-semibold mb-6">Buy Crypto</h2>
           <div className="bg-slate-100/50  rounded-xl p-6 mb-6">
-            <p className="text-sm mb-2 text-gray-500">You send</p>
+            <p className="text-sm mb-2 text-gray-500">Fiat Amount</p>
             <div className="flex justify-between items-center">
-              <p className="text-3xl font-normal">1</p>
+              <p className="text-3xl font-normal">20</p>
               <button className="bg-white px-4 py-2 rounded-full text-sm flex items-center">
-                ETH <IconChevronDown className="h-4 w-4 ml-2" />
+                EUR <IconChevronDown className="h-4 w-4 ml-2" />
               </button>
             </div>
-            <p className="text-sm text-right mt-2">Balance: $2,356.11</p>
+            {/* <p className="text-sm text-right mt-2">Balance: $2,356.11</p> */}
           </div>
           <div className="bg-slate-100/50 rounded-xl p-6 mb-6 ">
-            <p className="text-sm mb-2 text-gray-500">You get</p>
+            <p className="text-sm mb-2 text-gray-500">Crypto Amount</p>
             <div className="flex justify-between items-center">
-              <p className="text-3xl font-normal">2304.65</p>
+              <p className="text-3xl font-normal">19.88</p>
               <button className="bg-white px-4 py-2 rounded-full text-sm flex items-center">
                 USDC <IconChevronDown className="h-4 w-4 ml-2" />
               </button>
             </div>
-            <p className="text-sm text-right mt-2">Balance: $5,131.00</p>
+            <p className="text-sm text-right mt-2">
+              0.926838 EUR = 1 USDC Rate
+            </p>
           </div>
 
-          <button className="w-full bg-black text-white py-4 rounded-xl font-semibold text-lg">
-            Buy 2304.65 USDC
+          <button
+            onClick={handleBuyCrypto}
+            disabled={isBuying}
+            className="w-full bg-black text-white py-4 rounded-xl font-semibold text-lg"
+          >
+            {!isBuying ? "Buy USDC" : "Please wait ..."}
           </button>
         </div>
       </div>
