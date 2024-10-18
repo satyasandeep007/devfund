@@ -1,3 +1,4 @@
+"use client";
 import GithubProfilePage from "@/pages/GithubProfilePage";
 
 export default function GithubProfile() {
