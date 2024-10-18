@@ -106,40 +106,40 @@ const GithubProfilePage: React.FC = () => {
       // setStats(statsData);
 
       // Fetch contribution data (last 30 days)
-      // const contributionResponse = await fetch(
-      //   `https://api.github.com/users/${username}/events?per_page=100`
-      // );
-      // const contributionEvents = await contributionResponse.json();
+      const contributionResponse = await fetch(
+        `https://api.github.com/users/${username}/events?per_page=100`
+      );
+      const contributionEvents = await contributionResponse.json();
 
-      // const oneYearAgo = new Date();
-      // oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+      const oneYearAgo = new Date();
+      oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
 
-      // const contributionMap = new Map<string, number>();
+      const contributionMap = new Map<string, number>();
 
-      // for (
-      //   let d = new Date(oneYearAgo);
-      //   d <= new Date();
-      //   d.setDate(d.getDate() + 1)
-      // ) {
-      //   contributionMap.set(d.toISOString().split("T")[0], 0);
-      // }
+      for (
+        let d = new Date(oneYearAgo);
+        d <= new Date();
+        d.setDate(d.getDate() + 1)
+      ) {
+        contributionMap.set(d.toISOString().split("T")[0], 0);
+      }
 
-      // contributionEvents.forEach((event: any) => {
-      //   const date = new Date(event.created_at);
-      //   if (date >= oneYearAgo) {
-      //     const dateString = date.toISOString().split("T")[0];
-      //     contributionMap.set(
-      //       dateString,
-      //       (contributionMap.get(dateString) || 0) + 1
-      //     );
-      //   }
-      // });
+      contributionEvents.forEach((event: any) => {
+        const date = new Date(event.created_at);
+        if (date >= oneYearAgo) {
+          const dateString = date.toISOString().split("T")[0];
+          contributionMap.set(
+            dateString,
+            (contributionMap.get(dateString) || 0) + 1
+          );
+        }
+      });
 
-      // const contributionArray = Array.from(
-      //   contributionMap,
-      //   ([date, count]) => ({ date, count })
-      // );
-      // setContributionData(contributionArray);
+      const contributionArray = Array.from(
+        contributionMap,
+        ([date, count]) => ({ date, count })
+      );
+      setContributionData(contributionArray);
     } catch (error) {
       console.error("Error fetching GitHub data:", error);
     }

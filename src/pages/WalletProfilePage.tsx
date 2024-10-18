@@ -24,8 +24,9 @@ const CryptoWalletDashboard: React.FC = () => {
     ethMarketPrice,
     usdcMarketPrice,
     recentTxns,
+    fetchWalletBalances,
   } = useDevFund();
-  const { address } = useAccount();
+  const { address }: any = useAccount();
 
   const [usdcBalance, setUSDCBalance] = useState("0");
   const [ethBalance, setETHBalance] = useState("0");
@@ -50,6 +51,9 @@ const CryptoWalletDashboard: React.FC = () => {
   };
 
   const handleNotif = async (isSuccess: boolean) => {
+    setTimeout(async () => {
+      await fetchWalletBalances(address);
+    }, 1000);
     await toast(
       `${isSuccess ? "🎉 Buy Crypto successful!" : "Error making purchase:"}`,
       {
@@ -258,9 +262,11 @@ const CryptoWalletDashboard: React.FC = () => {
             {/* <p className="text-sm text-right mt-2">Balance: $2,356.11</p> */}
           </div>
           <div className="bg-slate-100/50 rounded-xl p-6 mb-6 ">
-            <p className="text-sm mb-2 text-gray-500">Crypto Amount</p>
+            <p className="text-sm mb-2 text-gray-500">
+              Crypto Amount (estimate)
+            </p>
             <div className="flex justify-between items-center">
-              <p className="text-3xl font-normal">19.88</p>
+              <p className="text-3xl font-normal">20.43</p>
               <button className="bg-white px-4 py-2 rounded-full text-sm flex items-center">
                 USDC <IconChevronDown className="h-4 w-4 ml-2" />
               </button>
