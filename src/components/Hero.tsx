@@ -9,12 +9,14 @@ const Hero = () => {
       <main className="flex flex-row justify-between  h-full">
         <div className="h-full flex flex-col justify-between">
           <h2 className="text-7xl font-bold leading-tight">
-            Open source,
-            <br />
-            cross-platform
-            <br />
+            Support the{" "}
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-700">
-              To Refine Code
+              software
+            </span>
+            <br />
+            that powers the
+            <span className="bg-clip-text text-transparent ml-2 bg-gradient-to-r from-blue-600 to-blue-700">
+              world
             </span>
           </h2>
           <div className="p-4">
@@ -57,22 +59,18 @@ const Hero = () => {
         <div className="md:w-1/3 py-6">
           <div className="h-full flex flex-col justify-between items-center">
             <p className="text-lg font-thin ">
-              Audacity is an easy-to-use, multi-track audio <br /> editor and
-              recorder. Audacity is free, open <br /> source, and cross-platform
-              software.
+              Devfund is an easy-to-use platform <br /> to crowdfund open source
+              projects <br /> on GitHub.
             </p>
 
             <div className="flex flex-col items-center">
-              <h3 className="mx-auto font-semibold text-lg">
-                Only on Base
-              </h3>
+              <h3 className="mx-auto font-semibold text-lg">Only on Base</h3>
               <Image src="/hero_base.png" width={250} height={250} alt="Base" />
             </div>
             <div>
               {" "}
               <p className="text-lg font-thin">
-                Contribute to Audacity by helping us with code, documentation,
-                translations, user support and by testing our latest code.
+                Combines the power of crypto with the simplicity of web2.
               </p>
             </div>
           </div>
