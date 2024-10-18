@@ -1,10 +1,7 @@
 import { defaultWagmiConfig } from "@web3modal/wagmi/react/config";
 
 import { cookieStorage, createStorage } from "wagmi";
-import {
-  base,
-  baseSepolia,
-} from "wagmi/chains";
+import { base, baseSepolia } from "wagmi/chains";
 
 // Get projectId from https://cloud.walletconnect.com
 export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
@@ -12,9 +9,9 @@ export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
 if (!projectId) throw new Error("Project ID is not defined");
 
 export const metadata = {
-  name: "Base India 2024",
-  description: "Base India 2024",
-  url: "https://baseindia2024.com",
+  name: "DevFund",
+  description: "DevFund",
+  url: "https://devfund.vercel.app",
   icons: ["https://avatars.githubusercontent.com/u/37784886"],
 };
 
@@ -30,7 +27,7 @@ export const config = defaultWagmiConfig({
   }),
   auth: {
     email: true,
-    socials: ["github", "google"],
+    // socials: ["github", "google"],
     walletFeatures: false,
   },
 });

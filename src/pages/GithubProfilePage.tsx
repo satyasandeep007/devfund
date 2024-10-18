@@ -27,13 +27,6 @@ interface GithubRepo {
   visibility: string;
 }
 
-interface GithubStats {
-  public_repos: number;
-  followers: number;
-  following: number;
-  public_gists: number;
-}
-
 interface ContributionData {
   date: string;
   count: number;
@@ -57,6 +50,8 @@ const GithubProfilePage: React.FC = () => {
   const [contributionData, setContributionData] = useState<ContributionData[]>(
     []
   );
+
+  useEffect(() => {}, [session]);
 
   useEffect(() => {
     if (session?.user?.username) {

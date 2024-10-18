@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useSession } from "next-auth/react";
 import React from "react";
 
 interface NavLinkProps {
@@ -73,8 +72,6 @@ const NavSection: React.FC<NavSectionProps> = ({
 };
 
 function Sidebar() {
-  const { data: session }: any = useSession();
-
   return (
     <div className="w-64 shrink-0 md:block h-screen fixed top-0 left-0 overflow-y-auto bg-white">
       <div className="w-full h-full bg-white flex flex-col">
@@ -132,7 +129,6 @@ function Sidebar() {
               >
                 Github
               </NavLink>
-              
             </NavSection>
           </div>
         </div>
