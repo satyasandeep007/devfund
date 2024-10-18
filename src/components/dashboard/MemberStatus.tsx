@@ -1,4 +1,5 @@
 import React from "react";
+import Image from 'next/image';
 
 interface MemberData {
   id: number;
@@ -76,10 +77,12 @@ const MemberStatus: React.FC = () => {
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="flex items-center">
                   <div className="flex-shrink-0 h-10 w-10">
-                    <img
+                    <Image
                       className="h-10 w-10 rounded-full"
                       src={member.avatar}
-                      alt=""
+                      alt={`Avatar of ${member.name}`}
+                      width={10}
+                      height={10}
                     />
                   </div>
                   <div className="ml-4">

@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconArrowsUpDown } from '@tabler/icons-react';
+import Image from 'next/image';
 
 const ProjectOverview = () => {
   return (
@@ -98,7 +99,7 @@ const ProjectOverview = () => {
                 <React.Fragment key={index}>
                   <div className="flex items-center justify-between py-2">
                     <div className="flex items-center gap-2">
-                      <img
+                      <Image
                         className="w-8 h-8 rounded-full"
                         src={`https://via.placeholder.com/150?text=${contributor.name.charAt(0)}`}
                         alt={contributor.name}
