@@ -107,16 +107,7 @@ const CryptoWalletDashboard: React.FC = () => {
                 className="flex justify-between items-center mb-4"
               >
                 <div className="flex items-center">
-                  <Image
-                    src={
-                      "https://via.placeholder.com/150/0000FF/FFFFFF?text=" +
-                      token.symbol
-                    }
-                    alt={token.symbol}
-                    className="w-8 h-8 rounded-full mr-3"
-                    width={20}
-                    height={20}
-                  />
+                  <div className="w-8 h-8 rounded-full mr-3 bg-green-300"></div>
                   <div>
                     <p className="font-semibold">
                       {token.symbol.toUpperCase() === "TRNSK"
@@ -203,13 +194,13 @@ const CryptoWalletDashboard: React.FC = () => {
                     className={`w-10 h-10 rounded-full mr-3 flex items-center justify-center ${
                       transaction.from === address
                         ? "bg-gray-200"
-                        : "bg-orange-500"
+                        : "bg-orange-200"
                     }`}
                   >
                     {transaction.from === address ? (
-                      <IconArrowUp className="h-5 w-5 text-green-500 mr-2" />
+                      <IconArrowUp className="h-5 w-5 text-green-500" />
                     ) : (
-                      <IconArrowDown className="h-5 w-5 text-red-500 mr-2" />
+                      <IconArrowDown className="h-5 w-5 text-red-500" />
                     )}
                   </div>
                   <div>
