@@ -5,6 +5,8 @@ import React, {
   useState,
   useEffect,
 } from "react";
+import { useAccount } from "wagmi";
+import { useSession } from "next-auth/react";
 import {
   CONFIG,
   getContractConfig,
@@ -16,11 +18,12 @@ import {
   getWalletBalancesCore,
   getWalletNftsCore,
 } from "@/lib/api/balance";
-import { useAccount } from "wagmi";
 import { getMarketPricesApi } from "@/lib/api/marketPrice";
+import { fetchGitHubRepos } from "@/lib/githubUtil";
+import { parseLinkHeader } from "@/lib/helper";
 
 // Define the shape of the context
-interface DevFundContextType {
+interface GlobalContextType {
   createCampaign: typeof contractFunctions.createCampaign;
   fundUSDC: typeof contractFunctions.fundUSDC;
   fundEth: typeof contractFunctions.fundEth;
@@ -41,6 +44,12 @@ interface DevFundContextType {
   walletBalancesLoading: boolean;
   ethMarketPrice: number;
   usdcMarketPrice: number;
+  repos: any[];
+  loading: boolean;
+  nextPage: string | null;
+  prevPage: string | null;
+  currentPage: number;
+  setCurrentPage: (page: number) => void;
 }
 
 type Campaign = {
@@ -58,14 +67,16 @@ type Campaign = {
 };
 
 // Create the context
-const DevFundContext = createContext<DevFundContextType | undefined>(undefined);
+const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
 
 // Create a provider component
-export const DevFundProvider: React.FC<{ children: ReactNode }> = ({
+export const GlobalProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const { address }: any = useAccount();
+  const { data: session }: any = useSession();
 
+  // DevFund state
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [tokenBalances, setTokenBalances] = useState<any[] | null>(null);
@@ -76,6 +87,13 @@ export const DevFundProvider: React.FC<{ children: ReactNode }> = ({
   const [ethMarketPrice, setETHMarketPrice] = useState(0);
   const [usdcMarketPrice, setUSDCMarketPrice] = useState(0);
 
+  // GitHub state
+  const [repos, setRepos] = useState<any[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [nextPage, setNextPage] = useState<string | null>(null);
+  const [prevPage, setPrevPage] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     fetchCampaigns();
     fetchMarketPrices();
@@ -83,15 +101,34 @@ export const DevFundProvider: React.FC<{ children: ReactNode }> = ({
 
   useEffect(() => {
     if (!address) return;
-
     fetchWalletBalances(address);
   }, [address]);
+
+  useEffect(() => {
+    const getRepos = async () => {
+      if (session) {
+        try {
+          setLoading(true);
+          const data = await fetchGitHubRepos(session.user.username);
+          setRepos(data);
+
+          const links = parseLinkHeader(data.headers.get("Link"));
+          setNextPage(links.next || null);
+          setPrevPage(links.prev || null);
+        } catch (error: any) {
+          console.error("Error fetching GitHub repos:", error.message);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    getRepos();
+  }, [session, currentPage]);
 
   const fetchMarketPrices = async () => {
     try {
       const { usdcPriceInUSD, ethPriceInUSD } = await getMarketPricesApi();
-      console.log(usdcPriceInUSD, ethPriceInUSD, "marktey");
-
       setETHMarketPrice(ethPriceInUSD);
       setUSDCMarketPrice(usdcPriceInUSD);
     } catch (error) {
@@ -102,8 +139,7 @@ export const DevFundProvider: React.FC<{ children: ReactNode }> = ({
   const fetchCampaigns = async () => {
     try {
       setIsLoading(true);
-      const campaignData = await contractFunctions.getAllCampaigns(); // Assuming this function exists in your context
-      console.log(campaignData);
+      const campaignData = await contractFunctions.getAllCampaigns();
       setCampaigns(campaignData);
     } catch (error) {
       console.error("Error fetching campaigns:", error);
@@ -119,8 +155,6 @@ export const DevFundProvider: React.FC<{ children: ReactNode }> = ({
         const apiData = await getWalletBalancesCore(address);
         const nftData = await getWalletNftsCore(address);
         const tx = await getLatestTransactionsApiFrom(address);
-        console.log(tx, "recent");
-
         setTokenBalances(apiData);
         setNftBalances(nftData);
         setRecentTxns(tx);
@@ -131,7 +165,7 @@ export const DevFundProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
-  const value: DevFundContextType = {
+  const value: GlobalContextType = {
     createCampaign: contractFunctions.createCampaign,
     fundUSDC: contractFunctions.fundUSDC,
     fundEth: contractFunctions.fundEth,
@@ -152,18 +186,24 @@ export const DevFundProvider: React.FC<{ children: ReactNode }> = ({
     walletBalancesLoading,
     ethMarketPrice,
     usdcMarketPrice,
+    repos,
+    loading,
+    nextPage,
+    prevPage,
+    currentPage,
+    setCurrentPage,
   };
 
   return (
-    <DevFundContext.Provider value={value}>{children}</DevFundContext.Provider>
+    <GlobalContext.Provider value={value}>{children}</GlobalContext.Provider>
   );
 };
 
 // Create a custom hook to use the context
-export const useDevFund = () => {
-  const context = useContext(DevFundContext);
+export const useGlobalContext = () => {
+  const context = useContext(GlobalContext);
   if (context === undefined) {
-    throw new Error("useDevFund must be used within a DevFundProvider");
+    throw new Error("useGlobalContext must be used within a GlobalProvider");
   }
   return context;
 };

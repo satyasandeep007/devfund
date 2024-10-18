@@ -1,9 +1,9 @@
 "use client";
 import DiscoverCampaignPage from "@/pages/DiscoverCampaignPage";
-import { useDevFund } from "@/context/DevFundContext";
+import { useGlobalContext } from "@/app/GlobalContext";
 
 export default function DiscoverCampaigns() {
-  const { campaigns, isLoading } = useDevFund();
+  const { campaigns, isLoading } = useGlobalContext();
 
   if (isLoading) return <div>Loading...</div>;
 

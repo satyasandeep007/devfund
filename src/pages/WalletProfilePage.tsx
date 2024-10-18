@@ -9,7 +9,7 @@ import {
 } from "@tabler/icons-react";
 
 import { useAccount } from "wagmi";
-import { useDevFund } from "@/context/DevFundContext";
+import { useGlobalContext } from "@/app/GlobalContext";
 import Image from "next/image";
 import { openTransak } from "@/lib/onramp";
 import { toast } from "react-toastify";
@@ -22,7 +22,7 @@ const CryptoWalletDashboard: React.FC = () => {
     usdcMarketPrice,
     recentTxns,
     fetchWalletBalances,
-  } = useDevFund();
+  } = useGlobalContext();
   const { address }: any = useAccount();
 
   const [usdcBalance, setUSDCBalance] = useState("0");
@@ -34,7 +34,9 @@ const CryptoWalletDashboard: React.FC = () => {
 
   useEffect(() => {
     if (tokenBalances && tokenBalances.length > 0) {
-      const _usdcBal = tokenBalances?.find((i) => i.symbol === "TRNSK")?.amount;
+      const _usdcBal = tokenBalances?.find(
+        (i: any) => i.symbol === "TRNSK"
+      )?.amount;
 
       setUSDCBalance(_usdcBal);
     }
@@ -99,7 +101,7 @@ const CryptoWalletDashboard: React.FC = () => {
             <h2 className="text-lg font-semibold">Tokens</h2>
           </div>
           {tokenBalances && tokenBalances.length > 0 ? (
-            tokenBalances.map((token) => (
+            tokenBalances.map((token: any) => (
               <div
                 key={token.contractAddress}
                 className="flex justify-between items-center mb-4"
@@ -152,7 +154,7 @@ const CryptoWalletDashboard: React.FC = () => {
             <h2 className="text-lg font-semibold">NFTs</h2>
           </div>
           {nftBalances && nftBalances.length > 0 ? (
-            nftBalances.map((nft) => (
+            nftBalances.map((nft: any) => (
               <div
                 key={nft.tokenId}
                 className="flex justify-between items-center mb-4"
@@ -191,7 +193,7 @@ const CryptoWalletDashboard: React.FC = () => {
           <h2 className="text-lg font-semibold mb-6">Recent Transactions</h2>
 
           {recentTxns && recentTxns.length > 0 ? (
-            recentTxns.map((transaction, index) => (
+            recentTxns.map((transaction: any, index: any) => (
               <div
                 key={index}
                 className="flex justify-between items-center py-3 border-b last:border-b-0"

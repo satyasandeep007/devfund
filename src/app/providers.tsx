@@ -6,7 +6,7 @@ import { createWeb3Modal } from "@web3modal/wagmi/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
 import { SessionProvider } from "next-auth/react";
-import { GlobalProvider } from "@/context/GlobalContext";
+import { GlobalProvider } from "@/app/GlobalContext";
 const queryClient = new QueryClient();
 
 if (!projectId) throw new Error("Project ID is not defined");

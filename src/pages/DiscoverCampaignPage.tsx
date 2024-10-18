@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAccount } from "wagmi";
 import { toast } from "react-toastify";
-import { useDevFund } from "@/context/DevFundContext";
+import { useGlobalContext } from "@/app/GlobalContext";
 import SendModal from "@/components/SendModal";
 
 interface Campaign {
@@ -38,7 +38,7 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
     tokenBalances,
     ethMarketPrice,
     usdcMarketPrice,
-  } = useDevFund();
+  } = useGlobalContext();
 
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("all");

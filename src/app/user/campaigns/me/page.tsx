@@ -1,16 +1,16 @@
 "use client";
 
 import MyCampaignsPage from "@/pages/MyCampaignsPage";
-import { useDevFund } from "@/context/DevFundContext";
+import { useGlobalContext } from "@/app/GlobalContext";
 import { useAccount } from "wagmi";
 
 export default function MyCampaigns() {
   const { campaigns, isLoading, ethMarketPrice, usdcMarketPrice } =
-    useDevFund();
+    useGlobalContext();
   const { address } = useAccount();
 
   const myCampaigns = campaigns?.filter(
-    (campaign) => campaign.owner === address
+    (campaign: any) => campaign.owner === address
   );
 
   if (isLoading) return <div>Loading...</div>;

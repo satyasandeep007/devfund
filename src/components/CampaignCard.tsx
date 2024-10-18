@@ -8,7 +8,7 @@ import { IconEye, IconHeart, IconBrandGithub } from "@tabler/icons-react";
 
 import ReceiveModal from "@/components/ReceiveModal";
 import { useAccount } from "wagmi";
-import { useDevFund } from "@/context/DevFundContext";
+import { useGlobalContext } from "@/app/GlobalContext";
 import { toast } from "react-toastify";
 
 type Campaign = {
@@ -43,7 +43,7 @@ export function CampaignCard({
   const { address }: any = useAccount();
 
   const { withdrawEth, withdrawUSDC, refreshCampaigns, tokenBalances } =
-    useDevFund();
+    useGlobalContext();
 
   const repoFullName = campaign.gitUrl.split("/").slice(-2).join("/");
   const repoOwner = repoFullName.split("/")[0];

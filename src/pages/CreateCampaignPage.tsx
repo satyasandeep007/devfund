@@ -2,16 +2,15 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useDevFund } from "@/context/DevFundContext";
-import { useGitHubRepos } from "@/context/GithubContext";
+import { useGlobalContext } from "@/app/GlobalContext";
 import { toast } from "react-toastify";
 import { addDays } from "date-fns";
 import { IconChevronDown, IconChevronLeft } from "@tabler/icons-react";
 
 export default function CreateCampaignPage() {
   const router = useRouter();
-  const { createCampaign, refreshCampaigns } = useDevFund();
-  const { repos, loading } = useGitHubRepos();
+  const { createCampaign, refreshCampaigns, repos, loading } =
+    useGlobalContext();
 
   const [formData, setFormData] = useState({
     title: "",
