@@ -59,20 +59,10 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
 
   useEffect(() => {
     if (tokenBalances && tokenBalances.length > 0) {
-      const _usdcBal = tokenBalances?.find(
-        (i) => i.contract_ticker_symbol === "TRNSK"
-      );
-      const usdcBal: any = (
-        parseFloat(_usdcBal.balance) /
-        10 ** _usdcBal.contract_decimals
-      ).toFixed(4);
-      const _ethBal = tokenBalances?.find(
-        (i) => i.contract_ticker_symbol === "ETH"
-      );
-      const ethBal: any = (
-        parseFloat(_ethBal.balance) /
-        10 ** _ethBal.contract_decimals
-      ).toFixed(4);
+      const _usdcBal = tokenBalances?.find((i) => i.symbol === "TRNSK");
+      const usdcBal = _usdcBal.amount;
+      const _ethBal = tokenBalances?.find((i) => i.symbol === "ETH");
+      const ethBal = _ethBal.amount;
 
       setUSDCBalance(usdcBal);
       setETHBalance(ethBal);
