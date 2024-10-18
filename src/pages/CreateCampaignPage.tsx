@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import { useDevFund } from "@/context/DevFundContext";
 import { useGitHubRepos } from "@/context/GithubContext";
 import { toast } from "react-toastify";
@@ -11,7 +10,6 @@ import { IconChevronDown, IconChevronLeft } from "@tabler/icons-react";
 
 export default function CreateCampaignPage() {
   const router = useRouter();
-  const { data: session }: any = useSession();
   const { createCampaign, refreshCampaigns } = useDevFund();
   const { repos, loading } = useGitHubRepos();
 
@@ -63,7 +61,6 @@ export default function CreateCampaignPage() {
   return (
     <div className="min-h-screen bg-white p-8">
       <div className="px-8 mb-6 flex justify-between items-center">
-        
         <h2 className="text-3xl font-bold text-gray-800">Create Campaign</h2>
       </div>
       <div className="max-w-6xl mx-auto bg-white rounded-2xl">
@@ -72,16 +69,23 @@ export default function CreateCampaignPage() {
             <div className="space-y-6">
               <div className="flex items-center">
                 <div className="w-1/3">
-                  <h3 className="text-lg font-Bold text-gray-900">Campaign Details</h3>
+                  <h3 className="text-lg font-Bold text-gray-900">
+                    Campaign Details
+                  </h3>
                 </div>
               </div>
 
               <div className="flex items-start">
                 <div className="w-1/3">
-                  <label htmlFor="title" className="block text-sm font-semibold text-gray-700">
+                  <label
+                    htmlFor="title"
+                    className="block text-sm font-semibold text-gray-700"
+                  >
                     Campaign Title
                   </label>
-                  <p className="text-xs text-gray-500 mt-1">Describe your campaign Name !</p>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Describe your campaign Name !
+                  </p>
                 </div>
                 <div className="w-2/3">
                   <input
@@ -94,17 +98,24 @@ export default function CreateCampaignPage() {
                     placeholder="Campaign 209175"
                     required
                   />
-                  <p className="text-xs text-gray-500 mt-1">You can't change the campaign name.</p>
+                  <p className="text-xs text-gray-500 mt-1">
+                    You can`&apos;t change the campaign name.
+                  </p>
                 </div>
               </div>
               <div className="w-3/3 border-t border-white"></div>
 
               <div className="flex items-start">
                 <div className="w-1/3">
-                  <label htmlFor="gitUrl" className="block text-sm font-semibold text-gray-700">
+                  <label
+                    htmlFor="gitUrl"
+                    className="block text-sm font-semibold text-gray-700"
+                  >
                     GitHub Repository
                   </label>
-                  <p className="text-xs text-gray-500 mt-1">Select the repository for your campaign.</p>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Select the repository for your campaign.
+                  </p>
                 </div>
                 <div className="w-2/3">
                   <div className="relative">
@@ -118,7 +129,9 @@ export default function CreateCampaignPage() {
                     >
                       <option value="">Select a repository</option>
                       {loading ? (
-                        <option value="" disabled>Loading repositories...</option>
+                        <option value="" disabled>
+                          Loading repositories...
+                        </option>
                       ) : (
                         repos.map((repo: any) => (
                           <option key={repo.id} value={repo.html_url}>
@@ -129,17 +142,24 @@ export default function CreateCampaignPage() {
                     </select>
                     <IconChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                   </div>
-                  <p className="text-xs text-gray-500 mt-1">You can't change the repository once selected.</p>
+                  <p className="text-xs text-gray-500 mt-1">
+                    You can`&apos;t change the repository once selected.
+                  </p>
                 </div>
               </div>
               <div className="w-3/3 border-t border-white"></div>
 
               <div className="flex items-start">
                 <div className="w-1/3">
-                  <label htmlFor="description" className="block text-sm font-semibold text-gray-700">
+                  <label
+                    htmlFor="description"
+                    className="block text-sm font-semibold text-gray-700"
+                  >
                     Campaign Description
                   </label>
-                  <p className="text-xs text-gray-500 mt-1">Describe your campaign.</p>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Describe your campaign.
+                  </p>
                 </div>
                 <div className="w-2/3">
                   <textarea
@@ -155,12 +175,14 @@ export default function CreateCampaignPage() {
                 </div>
               </div>
               <div className="w-3/3 border-t border-white"></div>
-              
+
               <div className="flex items-start">
                 <div className="w-1/3">
                   <label className="block text-sm font-semibold text-gray-700 ">
                     Funding Goal & Duration
-                    <p className="text-xs text-gray-500 mt-1">Describe Fund and Duration of campaign.</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Describe Fund and Duration of campaign.
+                    </p>
                   </label>
                 </div>
                 <div className="w-2/3 flex space-x-4">
@@ -203,7 +225,7 @@ export default function CreateCampaignPage() {
                 <IconChevronLeft className="w-5 h-5 mr-1" />
                 Back
               </button>
-              
+
               <button
                 type="submit"
                 className="bg-black text-white py-2 px-4 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"

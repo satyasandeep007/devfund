@@ -20,6 +20,12 @@ const nextConfig = {
       test: /\.svg$/,
       use: ["@svgr/webpack"],
     });
+    // Exclude Hardhat directory from the build
+    config.module.rules.push({
+      test: /\.js$/, // Adjust this if you need to target other file types
+      exclude: /hardhat/, // {{ edit_1 }}
+    });
+
     return config;
   },
 };

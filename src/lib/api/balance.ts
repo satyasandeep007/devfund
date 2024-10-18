@@ -2,7 +2,7 @@ import axios from "axios";
 
 import { Alchemy, Network } from "alchemy-sdk";
 
-const alchemyClient = new Alchemy({
+const alchemyClient: any = new Alchemy({
   network: Network.BASE_SEPOLIA,
   apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
 });
@@ -148,16 +148,15 @@ export const getWalletNftsCore = async (address: string) => {
 
   // Sort by timeLastUpdated and limit to top 3 records
   return formattedNftBalances
-    .sort((a, b) => b.timeLastUpdated - a.timeLastUpdated) // Sort in descending order
+    .sort((a: any, b: any) => b.timeLastUpdated - a.timeLastUpdated) // Sort in descending order
     .slice(0, 3); // Limit to top 3 records
 };
-
 export const getLatestTransactionsApiFrom = async (address: string) => {
   const responseFrom = await alchemyClient?.core?.getAssetTransfers({
     fromBlock: "0x0",
     toBlock: "latest",
     fromAddress: address,
-    category: ["erc20", "erc721", "erc1155", "external", "specialnft"],
+    category: ["erc20", "erc721", "erc1155", "external"],
     maxCount: 3,
     order: "desc",
   });

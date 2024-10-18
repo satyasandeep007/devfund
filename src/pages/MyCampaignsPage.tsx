@@ -31,7 +31,7 @@ const MyCampaignsPage = ({
     <div className="min-h-screen bg-white">
       <div className="mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-6">My Campaigns</h1>
-        {campaigns.length > 0 ? (
+        {campaigns && campaigns.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {campaigns.map((campaign) => (
               <CampaignCard

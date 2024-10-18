@@ -43,7 +43,7 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("all");
   const [donationAmount, setDonationAmount] = useState("1");
-  const [donationType, setDonationType] = useState("USDC"); // or 'USDC'
+  const [donationType, setDonationType] = useState("USDC");
 
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
 
@@ -170,7 +170,7 @@ const DiscoverCampaignPage: React.FC<DiscoverCampaignPageProps> = ({
         </div>
 
         {/* Campaign Cards */}
-        {campaigns.length > 0 ? (
+        {campaigns && campaigns.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {campaigns.map((campaign) => (
               <CampaignCard

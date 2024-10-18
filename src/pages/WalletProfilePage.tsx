@@ -2,13 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import {
-  IconArrowsUpDown,
   IconPlus,
   IconChevronDown,
   IconArrowDown,
   IconArrowUp,
-  IconChevronRight,
-  IconCornerUpRight,
 } from "@tabler/icons-react";
 
 import { useAccount } from "wagmi";
@@ -29,7 +26,6 @@ const CryptoWalletDashboard: React.FC = () => {
   const { address }: any = useAccount();
 
   const [usdcBalance, setUSDCBalance] = useState("0");
-  const [ethBalance, setETHBalance] = useState("0");
   const [isBuying, setIsBuying] = useState(false);
 
   console.log(tokenBalances, "tokenBalances");

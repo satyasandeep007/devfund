@@ -18,12 +18,6 @@ import {
   IconStar,
 } from "@tabler/icons-react";
 
-interface GithubUser {
-  login: string;
-  avatar_url: string;
-  html_url: string;
-}
-
 interface GithubRepo {
   name: string;
   html_url: string;
@@ -58,9 +52,8 @@ const StatCard: React.FC<{ title: string; value: number }> = ({
 const GithubProfilePage: React.FC = () => {
   const { status, data: session }: any = useSession();
   const [user, setUser] = useState<any | null>(null);
-  const [popularRepos, setPopularRepos] = useState<GithubRepo[]>([]);
+  // const [popularRepos, setPopularRepos] = useState<GithubRepo[]>([]);
   const [otherRepos, setOtherRepos] = useState<GithubRepo[]>([]);
-  const [stats, setStats] = useState<GithubStats | null>(null);
   const [contributionData, setContributionData] = useState<ContributionData[]>(
     []
   );
@@ -87,11 +80,11 @@ const GithubProfilePage: React.FC = () => {
       const userData = await userResponse.json();
       setUser(userData);
 
-      const popularReposResponse = await fetch(
-        `https://api.github.com/users/${username}/repos?sort=stars&per_page=6`
-      );
-      const popularReposData = await popularReposResponse.json();
-      setPopularRepos(popularReposData);
+      // const popularReposResponse = await fetch(
+      //   `https://api.github.com/users/${username}/repos?sort=stars&per_page=6`
+      // );
+      // const popularReposData = await popularReposResponse.json();
+      // setPopularRepos(popularReposData);
 
       const otherReposResponse = await fetch(
         `https://api.github.com/users/${username}/repos?sort=updated&per_page=4`
