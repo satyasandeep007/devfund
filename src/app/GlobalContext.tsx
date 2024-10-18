@@ -66,10 +66,66 @@ type Campaign = {
   usdcBalance: string;
 };
 
-// Create the context
-const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
+// Define the initial state for the context
+const initialState: GlobalContextType = {
+  createCampaign: () => Promise.resolve(), // Placeholder function
+  fundUSDC: () => Promise.resolve(), // Placeholder function
+  fundEth: () => Promise.resolve(), // Placeholder function
+  withdrawUSDC: () => Promise.resolve(), // Placeholder function
+  withdrawEth: () => Promise.resolve(), // Placeholder function
+  getProjectFundInUSD: async (projectNo: number = 0, chain: number = 0) =>
+    Promise.resolve({ ethBalance: "0.00", usdcBalance: "0.00" }), // Default return value
+  CONFIG,
+  getContractConfig,
+  getChainConfig,
+  refreshCampaigns: () => Promise.resolve(),
+  getCampaignById: async (
+    campaignId: number = 0,
+    chain: number = 0
+  ): Promise<{
+    title: any;
+    usdcBalance: any;
+    ethBalance: any;
+    owner: any;
+    gitUrl: any;
+    description: any;
+    fundingGoal: any;
+    donationCount: any;
+    endDate: any;
+    status: any;
+  }> =>
+    Promise.resolve({
+      title: "",
+      usdcBalance: "0",
+      ethBalance: "0",
+      owner: "",
+      gitUrl: "",
+      description: "",
+      fundingGoal: "0",
+      donationCount: "0",
+      endDate: "0",
+      status: "",
+    }),
+  tokenBalances: [], // Initial state as an empty array
+  nftBalances: [], // Initial state as an empty array
+  recentTxns: [], // Initial state as an empty array
+  fetchWalletBalances: async (address: string) => {}, // Placeholder function
+  campaigns: [], // Initial state as an empty array
+  isLoading: false, // Initial loading state
+  walletBalancesLoading: false, // Initial loading state
+  ethMarketPrice: 0, // Initial price as 0
+  usdcMarketPrice: 0, // Initial price as 0
+  repos: [], // Initial state as an empty array
+  loading: false, // Initial loading state
+  nextPage: null, // Initial next page as null
+  prevPage: null, // Initial previous page as null
+  currentPage: 1, // Initial page number
+  setCurrentPage: () => {}, // Placeholder function
+};
 
-// Create a provider component
+// Create the context with the initial state
+const GlobalContext = createContext<GlobalContextType>(initialState);
+
 export const GlobalProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
@@ -78,21 +134,21 @@ export const GlobalProvider: React.FC<{ children: ReactNode }> = ({
 
   // DevFund state
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [tokenBalances, setTokenBalances] = useState<any[] | null>(null);
-  const [nftBalances, setNftBalances] = useState<any[] | null>(null);
-  const [recentTxns, setRecentTxns] = useState<any[] | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [tokenBalances, setTokenBalances] = useState<any[]>([]);
+  const [nftBalances, setNftBalances] = useState<any[]>([]);
+  const [recentTxns, setRecentTxns] = useState<any[]>([]);
   const [walletBalancesLoading, setWalletBalancesLoading] =
     useState<boolean>(false);
-  const [ethMarketPrice, setETHMarketPrice] = useState(0);
-  const [usdcMarketPrice, setUSDCMarketPrice] = useState(0);
+  const [ethMarketPrice, setETHMarketPrice] = useState<number>(0); // Initial price as 0
+  const [usdcMarketPrice, setUSDCMarketPrice] = useState<number>(0); // Initial price as 0
 
   // GitHub state
-  const [repos, setRepos] = useState<any[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [nextPage, setNextPage] = useState<string | null>(null);
-  const [prevPage, setPrevPage] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [repos, setRepos] = useState<any[]>([]); // Initial state as an empty array
+  const [currentPage, setCurrentPage] = useState<number>(1); // Initial page number
+  const [nextPage, setNextPage] = useState<string | null>(null); // Initial next page as null
+  const [prevPage, setPrevPage] = useState<string | null>(null); // Initial previous page as null
+  const [loading, setLoading] = useState<boolean>(true); // Initial loading state
 
   useEffect(() => {
     fetchCampaigns();
