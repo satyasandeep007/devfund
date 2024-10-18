@@ -29,8 +29,8 @@ export const config = defaultWagmiConfig({
     storage: cookieStorage,
   }),
   auth: {
-    // email: true,
-    // socials: ["github", "google"],
+    email: true,
+    socials: ["github", "google"],
     walletFeatures: false,
   },
 });
