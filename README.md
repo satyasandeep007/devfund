@@ -1,5 +1,7 @@
 # DevFund
 
+![Devfund logo](./demo/cover.png)
+
 DevFund is a platform for developers to fund open source projects. It connects developers with potential sponsors who are interested in supporting innovative and impactful projects.
 
 ## 🚀 Quick Start
@@ -10,7 +12,7 @@ DevFund is a platform for developers to fund open source projects. It connects d
 - **Live App**: [devfund.vercel.app](https://devfund.vercel.app)
 
 
-![DAG Snap Demo](./demo/home.png)
+![Devfund Demo](./demo/home.png)
 
 ### Features
 
