@@ -155,7 +155,7 @@ const GithubProfilePage: React.FC = () => {
               <div className="w-1/4">
                 <div className="bg-white overflow-hidden mb-4">
                   <Image
-                    src={user?.avatar_url || "/api/placeholder/300/300"}
+                    src={user?.avatar_url}
                     alt="Profile"
                     width={300}
                     height={300}
